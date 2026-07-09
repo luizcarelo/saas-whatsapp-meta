@@ -8,9 +8,11 @@ import { HealthModule } from './modules/health/health.module';
 import { UsersModule } from './modules/users/users.module';
 import { WebhooksModule } from './modules/webhooks/webhooks.module';
 import { WhatsappAccountsModule } from './modules/whatsapp-accounts/whatsapp-accounts.module';
+import { OperationalAuditModule } from './modules/operational-audit/operational-audit.module';
 
 @Module({
   imports: [
+    OperationalAuditModule,
     ConfigurationModule,
     DatabaseModule,
     HealthModule,

@@ -1,4 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import {
+  MessageDirection,
+  MessageStatus,
+  MessageType,
+  WebhookEventStatus,
+  WhatsappAccountStatus
+} from '@prisma/client';
 import { PrismaService } from '../database/prisma.service';
 import type {
   OperationalAuditMessagesResponse,
@@ -29,89 +36,24 @@ export class OperationalAuditService {
       accountsActive,
       accountsDeleted
     ] = await Promise.all([
-      this.prismaService.message.count({
-        where: {
-          tenantId
-        }
-      }),
-      this.prismaService.message.count({
-        where: {
-          tenantId,
-          status: 'sent'
-        }
-      }),
-      this.prismaService.message.count({
-        where: {
-          tenantId,
-          status: 'delivered'
-        }
-      }),
-      this.prismaService.message.count({
-        where: {
-          tenantId,
-          status: 'read'
-        }
-      }),
-      this.prismaService.message.count({
-        where: {
-          tenantId,
-          status: 'failed'
-        }
-      }),
-      this.prismaService.message.count({
-        where: {
-          tenantId,
-          status: 'pending'
-        }
-      }),
-      this.prismaService.message.count({
-        where: {
-          tenantId,
-          status: 'received'
-        }
-      }),
-      this.prismaService.webhookEvent.count({
-        where: {
-          tenantId
-        }
-      }),
-      this.prismaService.webhookEvent.count({
-        where: {
-          tenantId,
-          status: 'received'
-        }
-      }),
-      this.prismaService.webhookEvent.count({
-        where: {
-          tenantId,
-          status: 'processed'
-        }
-      }),
-      this.prismaService.webhookEvent.count({
-        where: {
-          tenantId,
-          status: 'failed'
-        }
-      }),
-      this.prismaService.conversation.count({
-        where: {
-          tenantId,
-          deletedAt: null
-        }
-      }),
-      this.prismaService.conversation.count({
-        where: {
-          tenantId,
-          deletedAt: {
-            not: null
-          }
-        }
-      }),
+      this.prismaService.message.count({ where: { tenantId } }),
+      this.prismaService.message.count({ where: { tenantId, status: MessageStatus.sent } }),
+      this.prismaService.message.count({ where: { tenantId, status: MessageStatus.delivered } }),
+      this.prismaService.message.count({ where: { tenantId, status: MessageStatus.read } }),
+      this.prismaService.message.count({ where: { tenantId, status: MessageStatus.failed } }),
+      this.prismaService.message.count({ where: { tenantId, status: MessageStatus.pending } }),
+      this.prismaService.message.count({ where: { tenantId, status: MessageStatus.received } }),
+      this.prismaService.webhookEvent.count({ where: { tenantId } }),
+      this.prismaService.webhookEvent.count({ where: { tenantId, status: WebhookEventStatus.received } }),
+      this.prismaService.webhookEvent.count({ where: { tenantId, status: WebhookEventStatus.processed } }),
+      this.prismaService.webhookEvent.count({ where: { tenantId, status: WebhookEventStatus.failed } }),
+      this.prismaService.conversation.count({ where: { tenantId, deletedAt: null } }),
+      this.prismaService.conversation.count({ where: { tenantId, deletedAt: { not: null } } }),
       this.prismaService.whatsappAccount.count({
         where: {
           tenantId,
           deletedAt: null,
-          status: 'active'
+          status: WhatsappAccountStatus.active
         }
       }),
       this.prismaService.whatsappAccount.count({
@@ -164,9 +106,9 @@ export class OperationalAuditService {
     const messages = await this.prismaService.message.findMany({
       where: {
         tenantId,
-        ...(query.status ? { status: query.status as never } : {}),
-        ...(query.direction ? { direction: query.direction as never } : {}),
-        ...(query.type ? { type: query.type as never } : {})
+        ...(query.status ? { status: query.status as MessageStatus } : {}),
+        ...(query.direction ? { direction: query.direction as MessageDirection } : {}),
+        ...(query.type ? { type: query.type as MessageType } : {})
       },
       include: {
         contact: true
@@ -208,7 +150,7 @@ export class OperationalAuditService {
     const webhooks = await this.prismaService.webhookEvent.findMany({
       where: {
         tenantId,
-        ...(query.status ? { status: query.status as never } : {}),
+        ...(query.status ? { status: query.status as WebhookEventStatus } : {}),
         ...(query.type ? { eventType: query.type } : {})
       },
       orderBy: {
