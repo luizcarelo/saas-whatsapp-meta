@@ -1,3 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJECT_NAME="saas-whatsapp-meta"
+BASE_DIR="${HOME}/${PROJECT_NAME}"
+DOCS_DIR="${BASE_DIR}/docs"
+SCRIPTS_DIR="${BASE_DIR}/scripts"
+LOGS_DIR="${BASE_DIR}/logs"
+BACKUPS_DIR="${BASE_DIR}/backups"
+STAMP="$(date '+%Y%m%d_%H%M%S')"
+LOG_FILE="${LOGS_DIR}/setup_06.log"
+
+echo "== Etapa 06: Documentacao de seguranca =="
+
+cd "${BASE_DIR}"
+
+mkdir -p "${DOCS_DIR}"
+mkdir -p "${SCRIPTS_DIR}"
+mkdir -p "${LOGS_DIR}"
+mkdir -p "${BACKUPS_DIR}"
+
+echo "Criando backups..."
+
+if [ -f "${DOCS_DIR}/SEGURANCA.md" ]; then
+  cp "${DOCS_DIR}/SEGURANCA.md" "${BACKUPS_DIR}/SEGURANCA_${STAMP}.md"
+fi
+
+if [ -f "${BASE_DIR}/00_CONTROLE.md" ]; then
+  cp "${BASE_DIR}/00_CONTROLE.md" "${BACKUPS_DIR}/00_CONTROLE_${STAMP}.md"
+fi
+
+if [ -f "${BASE_DIR}/MANIFESTO.md" ]; then
+  cp "${BASE_DIR}/MANIFESTO.md" "${BACKUPS_DIR}/MANIFESTO_${STAMP}.md"
+fi
+
+echo "Gerando docs/SEGURANCA.md..."
+
+cat > "${DOCS_DIR}/SEGURANCA.md" <<'DOC'
 # Seguranca do Sistema
 
 ## Visao geral
@@ -521,3 +559,140 @@ A seguranca inicial do sistema sera baseada em:
 - Validacao de entrada em todas as rotas
 - Logs sem dados sensiveis
 - Workers com validacao de tenant
+DOC
+
+echo "Atualizando 00_CONTROLE.md..."
+
+cat > "${BASE_DIR}/00_CONTROLE.md" <<'DOC'
+# Controle do Projeto
+
+Projeto: SaaS de Chatbot WhatsApp com API Oficial da Meta
+
+Este arquivo registra o controle das etapas de criacao da documentacao e estrutura inicial.
+
+## Etapas
+
+- [x] Etapa 01 - Preparacao do ambiente de documentacao
+- [x] Etapa 02 - Criacao do README principal
+- [x] Etapa 03 - Documentacao de arquitetura
+- [x] Etapa 04 - Documentacao do banco de dados
+- [x] Etapa 05 - Documentacao da API
+- [x] Etapa 06 - Documentacao de seguranca
+- [ ] Etapa 07 - Documentacao de webhooks da Meta
+- [ ] Etapa 08 - Documentacao do frontend
+- [ ] Etapa 09 - Documentacao do backend
+- [ ] Etapa 10 - Documentacao de deploy
+- [ ] Etapa 11 - Manifesto final e validacao
+
+## Ultima etapa executada
+
+Etapa 06 - Documentacao de seguranca.
+
+## Proxima etapa sugerida
+
+Etapa 07 - Criar docs/WEBHOOKS_META.md com a documentacao dos webhooks da Meta.
+DOC
+
+echo "Atualizando MANIFESTO.md..."
+
+cat > "${BASE_DIR}/MANIFESTO.md" <<'DOC'
+# Manifesto da Documentacao
+
+Este manifesto lista os arquivos esperados da documentacao inicial do projeto.
+
+## Pasta base
+
+saas-whatsapp-meta/
+
+## Arquivos principais
+
+- README.md
+- MANIFESTO.md
+- 00_CONTROLE.md
+
+## Documentos tecnicos
+
+- docs/ARQUITETURA.md
+- docs/BANCO_DADOS.md
+- docs/API.md
+- docs/SEGURANCA.md
+- docs/WEBHOOKS_META.md
+- docs/FRONTEND.md
+- docs/BACKEND.md
+- docs/DEPLOY.md
+
+## Pastas de apoio
+
+- scripts/
+- logs/
+- backups/
+
+## Etapas concluidas
+
+- Etapa 01 - Preparacao do ambiente de documentacao
+- Etapa 02 - Criacao do README principal
+- Etapa 03 - Documentacao de arquitetura
+- Etapa 04 - Documentacao do banco de dados
+- Etapa 05 - Documentacao da API
+- Etapa 06 - Documentacao de seguranca
+
+## Proxima etapa
+
+- Etapa 07 - Documentacao de webhooks da Meta
+
+## Arquivos atualizados na Etapa 06
+
+- docs/SEGURANCA.md
+- 00_CONTROLE.md
+- MANIFESTO.md
+- logs/setup_06.log
+DOC
+
+echo "Validando arquivos obrigatorios..."
+
+test -f "${DOCS_DIR}/SEGURANCA.md"
+test -f "${BASE_DIR}/00_CONTROLE.md"
+test -f "${BASE_DIR}/MANIFESTO.md"
+test -d "${DOCS_DIR}"
+test -d "${SCRIPTS_DIR}"
+test -d "${LOGS_DIR}"
+test -d "${BACKUPS_DIR}"
+
+echo "Validando ausencia de caractere proibido nos arquivos gerados..."
+
+BAD_CHAR="$(printf '\052')"
+
+if grep -n "${BAD_CHAR}" "${DOCS_DIR}/SEGURANCA.md" "${BASE_DIR}/00_CONTROLE.md" "${BASE_DIR}/MANIFESTO.md"; then
+  echo "ERRO: caractere proibido encontrado nos arquivos gerados."
+  exit 1
+fi
+
+echo "Gravando log..."
+
+cat > "${LOG_FILE}" <<DOC
+Etapa: 06
+Acao: Documentacao de seguranca
+Data: $(date '+%Y-%m-%d %H:%M:%S')
+Pasta: ${BASE_DIR}
+Arquivos alterados:
+- docs/SEGURANCA.md
+- 00_CONTROLE.md
+- MANIFESTO.md
+Backups:
+- backups/SEGURANCA_${STAMP}.md
+- backups/00_CONTROLE_${STAMP}.md
+- backups/MANIFESTO_${STAMP}.md
+Status: Concluido
+DOC
+
+echo ""
+echo "== Etapa 06 concluida com sucesso =="
+echo ""
+echo "Arquivos principais:"
+find "${BASE_DIR}" -maxdepth 2 -type f | sort
+echo ""
+echo "Resumo de docs/SEGURANCA.md:"
+sed -n '1,160p' "${DOCS_DIR}/SEGURANCA.md"
+echo ""
+echo "Proxima etapa sugerida:"
+echo "Etapa 07 - Criar docs/WEBHOOKS_META.md"
