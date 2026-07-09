@@ -12,10 +12,6 @@ Estrutura real do monorepo iniciada.
 
 Backend base criado.
 
-Frontend base criado.
-
-Docker Compose inicial criado.
-
 ## Pasta base
 
 saas-whatsapp-meta/
@@ -25,7 +21,6 @@ saas-whatsapp-meta/
 - README.md
 - MANIFESTO.md
 - 00_CONTROLE.md
-- docker-compose.yml
 
 ## Documentos tecnicos
 
@@ -40,8 +35,6 @@ saas-whatsapp-meta/
 - docs/VALIDACAO_FINAL.md
 - docs/ESTRUTURA_PROJETO.md
 - docs/BACKEND_BASE.md
-- docs/FRONTEND_BASE.md
-- docs/DOCKER_COMPOSE_BASE.md
 
 ## Estrutura real criada
 
@@ -57,15 +50,16 @@ saas-whatsapp-meta/
 - infra/redis
 - infra/scripts
 
-## Docker base
+## Backend base
 
-- docker-compose.yml
-- infra/docker/backend.Dockerfile
-- infra/docker/frontend.Dockerfile
-- infra/docker/worker.Dockerfile
-- infra/nginx/nginx.conf
-- infra/postgres/init/001_init.sql
-- infra/redis/redis.conf
+- apps/backend/package.json
+- apps/backend/tsconfig.json
+- apps/backend/src/main.ts
+- apps/backend/src/app.module.ts
+- apps/backend/src/health.controller.ts
+- apps/backend/src/config/app.config.ts
+- apps/backend/src/config/env.example.ts
+- apps/backend/src/common/README.md
 
 ## Pastas de apoio
 
@@ -75,18 +69,19 @@ saas-whatsapp-meta/
 
 ## Proxima etapa
 
-- Etapa 16 - Arquivo env example
+- Etapa 14 - Arquivos base do frontend
 
-## Arquivos atualizados na Etapa 15
+## Arquivos atualizados na Etapa 13
 
-- docker-compose.yml
-- infra/docker/backend.Dockerfile
-- infra/docker/frontend.Dockerfile
-- infra/docker/worker.Dockerfile
-- infra/nginx/nginx.conf
-- infra/postgres/init/001_init.sql
-- infra/redis/redis.conf
-- docs/DOCKER_COMPOSE_BASE.md
+- apps/backend/package.json
+- apps/backend/tsconfig.json
+- apps/backend/src/main.ts
+- apps/backend/src/app.module.ts
+- apps/backend/src/health.controller.ts
+- apps/backend/src/config/app.config.ts
+- apps/backend/src/config/env.example.ts
+- apps/backend/src/common/README.md
+- docs/BACKEND_BASE.md
 - 00_CONTROLE.md
 - MANIFESTO.md
-- logs/setup_15.log
+- logs/setup_13.log

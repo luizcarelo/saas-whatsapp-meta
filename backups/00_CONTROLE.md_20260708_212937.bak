@@ -23,14 +23,14 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 - [x] Etapa 12 - Estrutura de pastas do monorepo
 - [x] Etapa 13 - Arquivos base do backend
 - [x] Etapa 14 - Arquivos base do frontend
-- [x] Etapa 15 - Docker Compose inicial
+- [ ] Etapa 15 - Docker Compose inicial
 - [ ] Etapa 16 - Arquivo env example
 - [ ] Etapa 17 - Validacao do ambiente inicial
 
 ## Ultima etapa executada
 
-Etapa 15 - Docker Compose inicial.
+Etapa 14 - Arquivos base do frontend.
 
 ## Proxima etapa sugerida
 
-Etapa 16 - Criar arquivo env example.
+Etapa 15 - Criar Docker Compose inicial.

@@ -1,0 +1,22 @@
+Etapa: 14
+Acao: Arquivos base do frontend
+Data: 2026-07-08 21:28:10
+Pasta: /home/luizcarelo/saas-whatsapp-meta
+Arquivos criados ou atualizados:
+- apps/frontend/package.json
+- apps/frontend/tsconfig.json
+- apps/frontend/tsconfig.node.json
+- apps/frontend/index.html
+- apps/frontend/vite.config.ts
+- apps/frontend/src/main.tsx
+- apps/frontend/src/App.tsx
+- apps/frontend/src/styles.css
+- apps/frontend/src/app/routes.tsx
+- apps/frontend/src/app/providers.tsx
+- apps/frontend/src/services/api.ts
+- apps/frontend/src/stores/auth.store.ts
+- apps/frontend/src/types/api.types.ts
+- docs/FRONTEND_BASE.md
+- 00_CONTROLE.md
+- MANIFESTO.md
+Status: Concluido
