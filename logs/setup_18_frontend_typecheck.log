@@ -1,0 +1,6 @@
+
+> saas-whatsapp-meta-frontend@0.1.0 typecheck
+> tsc -b
+
+tsconfig.node.json(5,25): error TS5108: Option 'moduleResolution=node10' has been removed. Please remove it from your configuration.
+tsconfig.json(17,25): error TS5108: Option 'moduleResolution=node10' has been removed. Please remove it from your configuration.
