@@ -61,12 +61,13 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 ## Fase 08 - Conversas
 
 - [x] Etapa 32 - Frontend de conversas com layout inicial
-- [ ] Etapa 33 - Modulo backend de conversas
+- [x] Etapa 33 - Modulo backend de conversas
+- [ ] Etapa 34 - Frontend de conversas integrado ao backend
 
 ## Ultima etapa executada
 
-Etapa 32 - Frontend de conversas com layout inicial.
+Etapa 33 - Modulo backend de conversas.
 
 ## Proxima etapa sugerida
 
-Etapa 33 - Criar modulo backend de conversas.
+Etapa 34 - Integrar frontend de conversas ao backend.

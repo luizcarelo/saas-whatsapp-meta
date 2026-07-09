@@ -50,6 +50,8 @@ Frontend de contatos integrado criado.
 
 Frontend de conversas com layout inicial criado.
 
+Modulo backend de conversas criado.
+
 ## Arquivos principais
 
 - README.md
@@ -93,11 +95,12 @@ Frontend de conversas com layout inicial criado.
 - docs/BACKEND_CONTACTS.md
 - docs/FRONTEND_CONTACTS.md
 - docs/FRONTEND_CONVERSATIONS_LAYOUT.md
+- docs/BACKEND_CONVERSATIONS.md
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 32 concluidas
+- Etapa 01 ate Etapa 33 concluidas
 
 ## Proxima etapa
 
-- Etapa 33 - Modulo backend de conversas
+- Etapa 34 - Frontend de conversas integrado ao backend
