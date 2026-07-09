@@ -1,4 +1,4 @@
-import { json, urlencoded } from 'express';
+import { json, urlencoded } from 'body-parser';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { rawBodySaver } from './common/middleware/raw-body.middleware';

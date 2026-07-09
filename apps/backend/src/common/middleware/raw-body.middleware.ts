@@ -1,6 +1,4 @@
-import { Request } from 'express';
-
-export type RequestWithRawBody = Request & {
+export type RequestWithRawBody = {
   rawBody?: Buffer;
 };
 
