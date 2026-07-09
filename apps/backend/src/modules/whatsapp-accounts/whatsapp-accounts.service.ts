@@ -4,6 +4,7 @@ import {
   Injectable,
   NotFoundException
 } from '@nestjs/common';
+import { WhatsappAccountStatus } from '@prisma/client';
 import { PrismaService } from '../database/prisma.service';
 import type {
   WhatsappAccountDeleteResponse,
@@ -26,7 +27,7 @@ type AccountShape = {
   phoneNumberId: string;
   displayPhoneNumber: string;
   verifiedName: string | null;
-  status: string;
+  status: WhatsappAccountStatus;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -185,7 +186,9 @@ export class WhatsappAccountsService {
         id: accountId
       },
       data: {
-        ...(payload.wabaId !== undefined ? { wabaId: this.requiredValue(payload.wabaId, 'WABA ID obrigatorio') } : {}),
+        ...(payload.wabaId !== undefined
+          ? { wabaId: this.requiredValue(payload.wabaId, 'WABA ID obrigatorio') }
+          : {}),
         ...(phoneNumberId !== undefined ? { phoneNumberId } : {}),
         ...(payload.displayPhoneNumber !== undefined
           ? {
@@ -226,7 +229,7 @@ export class WhatsappAccountsService {
       },
       data: {
         deletedAt: new Date(),
-        status: 'inactive'
+        status: WhatsappAccountStatus.inactive
       }
     });
 
@@ -300,15 +303,26 @@ export class WhatsappAccountsService {
     return Buffer.from(token, 'utf8').toString('base64');
   }
 
-  private normalizeStatus(value?: string): string {
-    const allowed = ['active', 'inactive', 'pending', 'disconnected', 'error'];
+  private normalizeStatus(value?: string): WhatsappAccountStatus {
     const status = value ? value.trim() : 'pending';
 
-    if (allowed.includes(status)) {
-      return status;
+    if (status === 'active') {
+      return WhatsappAccountStatus.active;
     }
 
-    return 'pending';
+    if (status === 'inactive') {
+      return WhatsappAccountStatus.inactive;
+    }
+
+    if (status === 'disconnected') {
+      return WhatsappAccountStatus.disconnected;
+    }
+
+    if (status === 'error') {
+      return WhatsappAccountStatus.error;
+    }
+
+    return WhatsappAccountStatus.pending;
   }
 
   private parseLimit(value?: string): number {

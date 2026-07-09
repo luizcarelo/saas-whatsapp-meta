@@ -66,12 +66,13 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 
 ## Fase 09 - WhatsApp
 
-- [ ] Etapa 35 - Modulo backend de WhatsApp Accounts
+- [x] Etapa 35 - Modulo backend de WhatsApp Accounts
+- [ ] Etapa 36 - Frontend de WhatsApp Accounts integrado
 
 ## Ultima etapa executada
 
-Etapa 34 - Frontend de conversas integrado ao backend.
+Etapa 35 - Modulo backend de WhatsApp Accounts.
 
 ## Proxima etapa sugerida
 
-Etapa 35 - Criar modulo backend de WhatsApp Accounts.
+Etapa 36 - Criar frontend de WhatsApp Accounts integrado ao backend.

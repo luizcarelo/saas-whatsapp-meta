@@ -54,6 +54,8 @@ Modulo backend de conversas criado.
 
 Frontend de conversas integrado ao backend criado.
 
+Modulo backend de WhatsApp Accounts criado.
+
 ## Arquivos principais
 
 - README.md
@@ -99,11 +101,12 @@ Frontend de conversas integrado ao backend criado.
 - docs/FRONTEND_CONVERSATIONS_LAYOUT.md
 - docs/BACKEND_CONVERSATIONS.md
 - docs/FRONTEND_CONVERSATIONS_INTEGRADO.md
+- docs/BACKEND_WHATSAPP_ACCOUNTS.md
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 34 concluidas
+- Etapa 01 ate Etapa 35 concluidas
 
 ## Proxima etapa
 
-- Etapa 35 - Modulo backend de WhatsApp Accounts
+- Etapa 36 - Frontend de WhatsApp Accounts integrado
