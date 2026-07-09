@@ -62,12 +62,16 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 
 - [x] Etapa 32 - Frontend de conversas com layout inicial
 - [x] Etapa 33 - Modulo backend de conversas
-- [ ] Etapa 34 - Frontend de conversas integrado ao backend
+- [x] Etapa 34 - Frontend de conversas integrado ao backend
+
+## Fase 09 - WhatsApp
+
+- [ ] Etapa 35 - Modulo backend de WhatsApp Accounts
 
 ## Ultima etapa executada
 
-Etapa 33 - Modulo backend de conversas.
+Etapa 34 - Frontend de conversas integrado ao backend.
 
 ## Proxima etapa sugerida
 
-Etapa 34 - Integrar frontend de conversas ao backend.
+Etapa 35 - Criar modulo backend de WhatsApp Accounts.
