@@ -1,3 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJECT_NAME="saas-whatsapp-meta"
+BASE_DIR="${HOME}/${PROJECT_NAME}"
+DOCS_DIR="${BASE_DIR}/docs"
+SCRIPTS_DIR="${BASE_DIR}/scripts"
+LOGS_DIR="${BASE_DIR}/logs"
+BACKUPS_DIR="${BASE_DIR}/backups"
+STAMP="$(date '+%Y%m%d_%H%M%S')"
+LOG_FILE="${LOGS_DIR}/setup_08.log"
+
+echo "== Etapa 08: Documentacao do frontend =="
+
+cd "${BASE_DIR}"
+
+mkdir -p "${DOCS_DIR}"
+mkdir -p "${SCRIPTS_DIR}"
+mkdir -p "${LOGS_DIR}"
+mkdir -p "${BACKUPS_DIR}"
+
+echo "Criando backups..."
+
+if [ -f "${DOCS_DIR}/FRONTEND.md" ]; then
+  cp "${DOCS_DIR}/FRONTEND.md" "${BACKUPS_DIR}/FRONTEND_${STAMP}.md"
+fi
+
+if [ -f "${BASE_DIR}/00_CONTROLE.md" ]; then
+  cp "${BASE_DIR}/00_CONTROLE.md" "${BACKUPS_DIR}/00_CONTROLE_${STAMP}.md"
+fi
+
+if [ -f "${BASE_DIR}/MANIFESTO.md" ]; then
+  cp "${BASE_DIR}/MANIFESTO.md" "${BACKUPS_DIR}/MANIFESTO_${STAMP}.md"
+fi
+
+echo "Gerando docs/FRONTEND.md..."
+
+cat > "${DOCS_DIR}/FRONTEND.md" <<'DOC'
 # Frontend
 
 ## Visao geral
@@ -670,3 +708,142 @@ O frontend sera implementado com:
 - Socket.IO Client
 
 O frontend sera responsavel pela experiencia do usuario, mas toda seguranca critica sera validada no backend.
+DOC
+
+echo "Atualizando 00_CONTROLE.md..."
+
+cat > "${BASE_DIR}/00_CONTROLE.md" <<'DOC'
+# Controle do Projeto
+
+Projeto: SaaS de Chatbot WhatsApp com API Oficial da Meta
+
+Este arquivo registra o controle das etapas de criacao da documentacao e estrutura inicial.
+
+## Etapas
+
+- [x] Etapa 01 - Preparacao do ambiente de documentacao
+- [x] Etapa 02 - Criacao do README principal
+- [x] Etapa 03 - Documentacao de arquitetura
+- [x] Etapa 04 - Documentacao do banco de dados
+- [x] Etapa 05 - Documentacao da API
+- [x] Etapa 06 - Documentacao de seguranca
+- [x] Etapa 07 - Documentacao de webhooks da Meta
+- [x] Etapa 08 - Documentacao do frontend
+- [ ] Etapa 09 - Documentacao do backend
+- [ ] Etapa 10 - Documentacao de deploy
+- [ ] Etapa 11 - Manifesto final e validacao
+
+## Ultima etapa executada
+
+Etapa 08 - Documentacao do frontend.
+
+## Proxima etapa sugerida
+
+Etapa 09 - Criar docs/BACKEND.md com a documentacao do backend.
+DOC
+
+echo "Atualizando MANIFESTO.md..."
+
+cat > "${BASE_DIR}/MANIFESTO.md" <<'DOC'
+# Manifesto da Documentacao
+
+Este manifesto lista os arquivos esperados da documentacao inicial do projeto.
+
+## Pasta base
+
+saas-whatsapp-meta/
+
+## Arquivos principais
+
+- README.md
+- MANIFESTO.md
+- 00_CONTROLE.md
+
+## Documentos tecnicos
+
+- docs/ARQUITETURA.md
+- docs/BANCO_DADOS.md
+- docs/API.md
+- docs/SEGURANCA.md
+- docs/WEBHOOKS_META.md
+- docs/FRONTEND.md
+- docs/BACKEND.md
+- docs/DEPLOY.md
+
+## Pastas de apoio
+
+- scripts/
+- logs/
+- backups/
+
+## Etapas concluidas
+
+- Etapa 01 - Preparacao do ambiente de documentacao
+- Etapa 02 - Criacao do README principal
+- Etapa 03 - Documentacao de arquitetura
+- Etapa 04 - Documentacao do banco de dados
+- Etapa 05 - Documentacao da API
+- Etapa 06 - Documentacao de seguranca
+- Etapa 07 - Documentacao de webhooks da Meta
+- Etapa 08 - Documentacao do frontend
+
+## Proxima etapa
+
+- Etapa 09 - Documentacao do backend
+
+## Arquivos atualizados na Etapa 08
+
+- docs/FRONTEND.md
+- 00_CONTROLE.md
+- MANIFESTO.md
+- logs/setup_08.log
+DOC
+
+echo "Validando arquivos obrigatorios..."
+
+test -f "${DOCS_DIR}/FRONTEND.md"
+test -f "${BASE_DIR}/00_CONTROLE.md"
+test -f "${BASE_DIR}/MANIFESTO.md"
+test -d "${DOCS_DIR}"
+test -d "${SCRIPTS_DIR}"
+test -d "${LOGS_DIR}"
+test -d "${BACKUPS_DIR}"
+
+echo "Validando ausencia de caractere proibido nos arquivos gerados..."
+
+BAD_CHAR="$(printf '\052')"
+
+if grep -n "${BAD_CHAR}" "${DOCS_DIR}/FRONTEND.md" "${BASE_DIR}/00_CONTROLE.md" "${BASE_DIR}/MANIFESTO.md"; then
+  echo "ERRO: caractere proibido encontrado nos arquivos gerados."
+  exit 1
+fi
+
+echo "Gravando log..."
+
+cat > "${LOG_FILE}" <<DOC
+Etapa: 08
+Acao: Documentacao do frontend
+Data: $(date '+%Y-%m-%d %H:%M:%S')
+Pasta: ${BASE_DIR}
+Arquivos alterados:
+- docs/FRONTEND.md
+- 00_CONTROLE.md
+- MANIFESTO.md
+Backups:
+- backups/FRONTEND_${STAMP}.md
+- backups/00_CONTROLE_${STAMP}.md
+- backups/MANIFESTO_${STAMP}.md
+Status: Concluido
+DOC
+
+echo ""
+echo "== Etapa 08 concluida com sucesso =="
+echo ""
+echo "Arquivos principais:"
+find "${BASE_DIR}" -maxdepth 2 -type f | sort
+echo ""
+echo "Resumo de docs/FRONTEND.md:"
+sed -n '1,180p' "${DOCS_DIR}/FRONTEND.md"
+echo ""
+echo "Proxima etapa sugerida:"
+echo "Etapa 09 - Criar docs/BACKEND.md"
