@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import {
   ConversationStatus,
   MessageDirection,
@@ -7,10 +7,12 @@ import {
   WebhookEventStatus,
   WhatsappAccountStatus
 } from '@prisma/client';
+import { createHmac, timingSafeEqual } from 'crypto';
 import { PrismaService } from '../database/prisma.service';
 import type {
   MetaWebhookPayload,
   MetaWebhookPostResponse,
+  MetaWebhookSignatureResult,
   MetaWebhookValue
 } from './meta-webhooks.types';
 
@@ -18,7 +20,79 @@ import type {
 export class MetaWebhooksService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async receivePayload(payload: MetaWebhookPayload): Promise<MetaWebhookPostResponse> {
+  validateSignature(rawBody: Buffer, signatureHeader?: string): MetaWebhookSignatureResult {
+    const required = process.env.META_WEBHOOK_SIGNATURE_REQUIRED === 'true';
+    const appSecret = process.env.META_APP_SECRET || '';
+
+    if (!required) {
+      return {
+        valid: true,
+        required,
+        reason: 'signature_not_required'
+      };
+    }
+
+    if (!appSecret || appSecret === 'change_me_meta_app_secret') {
+      return {
+        valid: false,
+        required,
+        reason: 'missing_app_secret'
+      };
+    }
+
+    if (!signatureHeader || !signatureHeader.startsWith('sha256=')) {
+      return {
+        valid: false,
+        required,
+        reason: 'missing_signature'
+      };
+    }
+
+    const receivedHex = signatureHeader.replace('sha256=', '').trim();
+
+    if (!receivedHex || receivedHex.length !== 64) {
+      return {
+        valid: false,
+        required,
+        reason: 'invalid_signature_format'
+      };
+    }
+
+    const expectedHex = createHmac('sha256', appSecret)
+      .update(rawBody)
+      .digest('hex');
+
+    const received = Buffer.from(receivedHex, 'hex');
+    const expected = Buffer.from(expectedHex, 'hex');
+
+    if (received.length !== expected.length) {
+      return {
+        valid: false,
+        required,
+        reason: 'signature_length_mismatch'
+      };
+    }
+
+    const valid = timingSafeEqual(received, expected);
+
+    return {
+      valid,
+      required,
+      reason: valid ? 'valid' : 'signature_mismatch'
+    };
+  }
+
+  async receivePayload(
+    payload: MetaWebhookPayload,
+    rawBody: Buffer,
+    signatureHeader?: string
+  ): Promise<MetaWebhookPostResponse> {
+    const signature = this.validateSignature(rawBody, signatureHeader);
+
+    if (!signature.valid) {
+      throw new UnauthorizedException('Webhook signature invalid');
+    }
+
     let events = 0;
     let messages = 0;
     let statuses = 0;
@@ -60,7 +134,11 @@ export class MetaWebhooksService {
         received: true,
         events,
         messages,
-        statuses
+        statuses,
+        signature: {
+          required: signature.required,
+          valid: signature.valid
+        }
       },
       meta: {}
     };

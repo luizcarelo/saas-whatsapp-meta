@@ -1,22 +1,33 @@
+import { json, urlencoded } from 'express';
 import { NestFactory } from '@nestjs/core';
-import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
-import { appConfig } from './config/app.config';
+import { rawBodySaver } from './common/middleware/raw-body.middleware';
 
-async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter()
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule, {
+    bodyParser: false
+  });
+
+  app.use(
+    json({
+      limit: '10mb',
+      verify: rawBodySaver
+    })
   );
 
-  app.enableCors({
-    origin: appConfig.frontendUrl,
-    credentials: true
-  });
+  app.use(
+    urlencoded({
+      extended: true,
+      limit: '10mb',
+      verify: rawBodySaver
+    })
+  );
 
   app.setGlobalPrefix('api/v1');
 
-  await app.listen(appConfig.port, '0.0.0.0');
+  const port = Number(process.env.APP_PORT || 3000);
+
+  await app.listen(port, '0.0.0.0');
 }
 
 void bootstrap();

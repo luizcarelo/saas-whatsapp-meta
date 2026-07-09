@@ -44,6 +44,12 @@ export type MetaWebhookPayload = {
   }>;
 };
 
+export type MetaWebhookSignatureResult = {
+  valid: boolean;
+  required: boolean;
+  reason: string;
+};
+
 export type MetaWebhookPostResponse = {
   success: true;
   data: {
@@ -51,6 +57,10 @@ export type MetaWebhookPostResponse = {
     events: number;
     messages: number;
     statuses: number;
+    signature: {
+      required: boolean;
+      valid: boolean;
+    };
   };
   meta: Record<string, never>;
 };

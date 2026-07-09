@@ -3,9 +3,12 @@ import {
   Controller,
   ForbiddenException,
   Get,
+  Headers,
   Post,
-  Query
+  Query,
+  Req
 } from '@nestjs/common';
+import type { RequestWithRawBody } from '../../common/middleware/raw-body.middleware';
 import { MetaWebhooksService } from './meta-webhooks.service';
 import type {
   MetaWebhookPayload,
@@ -31,7 +34,15 @@ export class MetaWebhooksController {
   }
 
   @Post()
-  receiveWebhook(@Body() body: MetaWebhookPayload) {
-    return this.metaWebhooksService.receivePayload(body);
+  receiveWebhook(
+    @Body() body: MetaWebhookPayload,
+    @Req() request: RequestWithRawBody,
+    @Headers('x-hub-signature-256') signatureHeader?: string
+  ) {
+    return this.metaWebhooksService.receivePayload(
+      body,
+      request.rawBody || Buffer.from(''),
+      signatureHeader
+    );
   }
 }
