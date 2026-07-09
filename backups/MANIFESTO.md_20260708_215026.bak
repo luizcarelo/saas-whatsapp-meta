@@ -20,8 +20,6 @@ Env example criado.
 
 Ambiente inicial validado.
 
-Dependencias base instaladas e validadas.
-
 ## Arquivos principais
 
 - README.md
@@ -48,28 +46,22 @@ Dependencias base instaladas e validadas.
 - docs/DOCKER_COMPOSE_BASE.md
 - docs/ENV_EXAMPLE.md
 - docs/VALIDACAO_AMBIENTE.md
-- docs/DEPENDENCIAS_BASE.md
-
-## Dependencias
-
-Arquivos gerados:
-
-- apps/backend/package-lock.json
-- apps/frontend/package-lock.json
-
-Logs gerados:
-
-- logs/setup_18_backend_npm_install.log
-- logs/setup_18_backend_typecheck.log
-- logs/setup_18_frontend_npm_install.log
-- logs/setup_18_frontend_typecheck.log
-- logs/fix_18_v2.log
-- logs/fix_18_v3.log
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 18 concluidas
+- Etapa 01 ate Etapa 17 concluidas
 
 ## Proxima etapa
 
-- Etapa 19 - Ajustar Dockerfiles e validar build dos containers
+- Etapa 18 - Preparar instalacao e validacao de dependencias
+
+## Arquivos atualizados na Etapa 17
+
+- docker-compose.yml
+- apps/frontend/index.html
+- .env.example
+- .env
+- docs/VALIDACAO_AMBIENTE.md
+- 00_CONTROLE.md
+- MANIFESTO.md
+- logs/setup_17.log

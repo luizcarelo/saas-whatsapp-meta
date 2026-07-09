@@ -26,16 +26,11 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 - [x] Etapa 15 - Docker Compose inicial
 - [x] Etapa 16 - Arquivo env example
 - [x] Etapa 17 - Validacao do ambiente inicial
-- [x] Etapa 18 - Instalacao e validacao de dependencias
-
-## Proxima fase sugerida
-
-Fase 03 - Build e execucao inicial com Docker.
 
 ## Ultima etapa executada
 
-Etapa 18 - Instalacao e validacao de dependencias.
+Etapa 17 - Validacao do ambiente inicial.
 
 ## Proxima etapa sugerida
 
-Etapa 19 - Ajustar Dockerfiles e validar build dos containers.
+Etapa 18 - Preparar instalacao e validacao de dependencias.
