@@ -902,3 +902,137 @@ a:hover {
     flex-direction: column;
   }
 }
+
+.whatsapp-layout {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 420px minmax(0, 1fr);
+  margin-top: 28px;
+}
+
+.whatsapp-panel {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 22px;
+  box-shadow: 0 16px 45px rgba(15, 23, 42, 0.08);
+  padding: 24px;
+}
+
+.whatsapp-form {
+  display: grid;
+  gap: 14px;
+}
+
+.whatsapp-form label {
+  color: #374151;
+  display: grid;
+  font-size: 14px;
+  font-weight: 700;
+  gap: 8px;
+}
+
+.whatsapp-form input,
+.whatsapp-form select,
+.whatsapp-search input {
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.whatsapp-form input:focus,
+.whatsapp-form select:focus,
+.whatsapp-search input:focus {
+  border-color: #b91c1c;
+  box-shadow: 0 0 0 4px rgba(185, 28, 28, 0.12);
+  outline: none;
+}
+
+.whatsapp-form button,
+.whatsapp-search button,
+.whatsapp-card button {
+  background: #b91c1c;
+  border: 0;
+  border-radius: 14px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 12px 16px;
+}
+
+.whatsapp-search {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-bottom: 18px;
+}
+
+.whatsapp-list {
+  display: grid;
+  gap: 12px;
+}
+
+.whatsapp-card {
+  align-items: center;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.whatsapp-card strong {
+  display: block;
+}
+
+.whatsapp-card span {
+  color: #374151;
+  display: block;
+  margin-top: 4px;
+}
+
+.whatsapp-card small {
+  color: #6b7280;
+  display: block;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+
+.whatsapp-card-actions {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.whatsapp-card-actions em {
+  background: #f3f4f6;
+  border-radius: 999px;
+  color: #374151;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+  padding: 7px 10px;
+}
+
+@media (max-width: 1100px) {
+  .whatsapp-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .whatsapp-search {
+    grid-template-columns: 1fr;
+  }
+
+  .whatsapp-card {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .whatsapp-card-actions {
+    align-items: flex-start;
+  }
+}

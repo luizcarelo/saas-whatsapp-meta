@@ -10,6 +10,7 @@ import { ContactsPage } from '../pages/contacts/ContactsPage';
 import { ConversationsPage } from '../pages/conversations/ConversationsPage';
 import { LoginPage } from '../pages/login/LoginPage';
 import { ProfilePage } from '../pages/profile/ProfilePage';
+import { WhatsappAccountsPage } from '../pages/whatsapp-accounts/WhatsappAccountsPage';
 import { ProtectedRoute } from './ProtectedRoute';
 
 export function AppRoutes() {
@@ -30,6 +31,7 @@ export function AppRoutes() {
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="contacts" element={<ContactsPage />} />
           <Route path="conversations" element={<ConversationsPage />} />
+          <Route path="whatsapp-accounts" element={<WhatsappAccountsPage />} />
           <Route path="profile" element={<ProfilePage />} />
         </Route>
 

@@ -24,6 +24,10 @@ export function Sidebar() {
           Conversas
         </NavLink>
 
+        <NavLink to="/app/whatsapp-accounts">
+          WhatsApp
+        </NavLink>
+
         <NavLink to="/app/profile">
           Perfil
         </NavLink>

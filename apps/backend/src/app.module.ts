@@ -6,6 +6,7 @@ import { ConversationsModule } from './modules/conversations/conversations.modul
 import { DatabaseModule } from './modules/database/database.module';
 import { HealthModule } from './modules/health/health.module';
 import { UsersModule } from './modules/users/users.module';
+import { WebhooksModule } from './modules/webhooks/webhooks.module';
 import { WhatsappAccountsModule } from './modules/whatsapp-accounts/whatsapp-accounts.module';
 
 @Module({
@@ -17,7 +18,8 @@ import { WhatsappAccountsModule } from './modules/whatsapp-accounts/whatsapp-acc
     UsersModule,
     ContactsModule,
     ConversationsModule,
-    WhatsappAccountsModule
+    WhatsappAccountsModule,
+    WebhooksModule
   ],
   controllers: [],
   providers: []
