@@ -69,10 +69,13 @@ export async function listAuditWebhooksRequest(
 }
 
 export async function previewAuditHygieneRequest(token: string, days: number) {
-  return apiRequest<AuditHygieneData>('/operational-audit/hygiene-preview?days=' + encodeURIComponent(String(days)), {
-    method: 'GET',
-    token
-  });
+  return apiRequest<AuditHygieneData>(
+    '/operational-audit/hygiene-preview?days=' + encodeURIComponent(String(days)),
+    {
+      method: 'GET',
+      token
+    }
+  );
 }
 
 export async function runAuditHygieneRequest(

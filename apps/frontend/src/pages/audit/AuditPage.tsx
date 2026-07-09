@@ -9,9 +9,9 @@ import {
 } from '../../services/operational-audit.service';
 import { useAuthStore } from '../../stores/auth.store';
 import type {
+  AuditHygieneResult,
   AuditMessageItem,
   AuditSummary,
-  AuditHygieneResult,
   AuditWebhookItem
 } from '../../types/operational-audit.types';
 
@@ -63,16 +63,18 @@ export function AuditPage() {
 
   const [summary, setSummary] = useState<AuditSummary>(emptySummary);
   const [messages, setMessages] = useState<AuditMessageItem[]>([]);
-  const [webhooks, setWebhooks] = useState<AuditHygieneResult,
-  AuditWebhookItem[]>([]);
+  const [webhooks, setWebhooks] = useState<AuditWebhookItem[]>([]);
+
   const [messageStatus, setMessageStatus] = useState('');
   const [messageDirection, setMessageDirection] = useState('');
   const [messageType, setMessageType] = useState('');
   const [webhookStatus, setWebhookStatus] = useState('');
   const [webhookType, setWebhookType] = useState('');
+
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
   const [notice, setNotice] = useState('');
+
   const [hygieneDays, setHygieneDays] = useState(90);
   const [hygieneResult, setHygieneResult] = useState<AuditHygieneResult | null>(null);
 
@@ -91,20 +93,16 @@ export function AuditPage() {
     setLoading(true);
     setNotice('');
 
-    const [summaryResponse, messagesResponse, webhooksResponse] = await Promise.all([
-      getAuditSummaryRequest(token),
-      listAuditMessagesRequest(token, {
-        status: messageStatus,
-        direction: messageDirection,
-        type: messageType
-      }),
-      listAuditWebhooksRequest,
-  previewAuditHygieneRequest,
-  runAuditHygieneRequest(token, {
-        status: webhookStatus,
-        type: webhookType
-      })
-    ]);
+    const summaryResponse = await getAuditSummaryRequest(token);
+    const messagesResponse = await listAuditMessagesRequest(token, {
+      status: messageStatus,
+      direction: messageDirection,
+      type: messageType
+    });
+    const webhooksResponse = await listAuditWebhooksRequest(token, {
+      status: webhookStatus,
+      type: webhookType
+    });
 
     if (summaryResponse.success) {
       setSummary(summaryResponse.data);
@@ -139,41 +137,6 @@ export function AuditPage() {
     await loadAudit();
   }
 
-
-  async function handlePreviewHygiene() {
-    const token = getToken();
-
-    if (!token) {
-      return;
-    }
-
-    const response = await previewAuditHygieneRequest(token, hygieneDays);
-
-    if (response.success) {
-      setHygieneResult(response.data);
-      setNotice('Preview de higienizacao carregado.');
-    } else {
-      setNotice(response.error.message || 'Nao foi possivel carregar preview.');
-    }
-  }
-
-  async function handleDryRunHygiene() {
-    const token = getToken();
-
-    if (!token) {
-      return;
-    }
-
-    const response = await runAuditHygieneRequest(token, hygieneDays, true);
-
-    if (response.success) {
-      setHygieneResult(response.data);
-      setNotice('Dry-run de higienizacao executado sem alterar dados.');
-    } else {
-      setNotice(response.error.message || 'Nao foi possivel executar dry-run.');
-    }
-  }
-
   async function handleExport(resource: string, format: string) {
     const token = getToken();
 
@@ -201,12 +164,48 @@ export function AuditPage() {
     }
   }
 
+  async function handlePreviewHygiene() {
+    const token = getToken();
+
+    if (!token) {
+      return;
+    }
+
+    const response = await previewAuditHygieneRequest(token, hygieneDays);
+
+    if (response.success) {
+      setHygieneResult(response.data);
+      setNotice('Preview de higienizacao carregado.');
+      return;
+    }
+
+    setNotice(response.error.message || 'Nao foi possivel carregar preview.');
+  }
+
+  async function handleDryRunHygiene() {
+    const token = getToken();
+
+    if (!token) {
+      return;
+    }
+
+    const response = await runAuditHygieneRequest(token, hygieneDays, true);
+
+    if (response.success) {
+      setHygieneResult(response.data);
+      setNotice('Dry-run de higienizacao executado sem alterar dados.');
+      return;
+    }
+
+    setNotice(response.error.message || 'Nao foi possivel executar dry-run.');
+  }
+
   return (
     <section>
       <div className="page-heading">
         <span>Auditoria</span>
         <h1>Painel de auditoria operacional</h1>
-        <p>Acompanhe mensagens, webhooks, status e erros operacionais sem expor tokens.</p>
+        <p>Acompanhe mensagens, webhooks, status, exportacoes e higienizacao segura.</p>
       </div>
 
       {notice ? <div className="form-message">{notice}</div> : null}
