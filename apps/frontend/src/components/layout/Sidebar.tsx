@@ -32,6 +32,10 @@ export function Sidebar() {
           Meta
         </NavLink>
 
+        <NavLink to="/app/audit">
+          Auditoria
+        </NavLink>
+
         <NavLink to="/app/profile">
           Perfil
         </NavLink>

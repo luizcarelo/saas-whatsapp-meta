@@ -76,12 +76,14 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 - [x] Etapa 42 - Frontend para templates oficiais
 - [x] Etapa 43 - Painel de configuracao operacional da conta Meta
 - [x] Etapa 44 - Limpeza operacional de dados de teste
-- [ ] Etapa 45 - Painel de auditoria operacional
+- [x] Etapa 45 - Painel de auditoria operacional
+- [x] Etapa 46 - Relatorio operacional exportavel
+- [ ] Etapa 47 - Higienizacao de dados de auditoria antigos
 
 ## Ultima etapa executada
 
-Etapa 44 - Limpeza operacional das contas de teste e dados artificiais.
+Etapa 46 - Relatorio operacional exportavel.
 
 ## Proxima etapa sugerida
 
-Etapa 45 - Criar painel de auditoria operacional.
+Etapa 47 - Criar higienizacao de dados de auditoria antigos.

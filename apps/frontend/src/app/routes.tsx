@@ -5,6 +5,7 @@ import {
   Routes
 } from 'react-router-dom';
 import { AppLayout } from '../components/layout/AppLayout';
+import { AuditPage } from '../pages/audit/AuditPage';
 import { ContactsPage } from '../pages/contacts/ContactsPage';
 import { ConversationsPage } from '../pages/conversations/ConversationsPage';
 import { DashboardPage } from '../pages/dashboard/DashboardPage';
@@ -34,6 +35,7 @@ export function AppRoutes() {
           <Route path="conversations" element={<ConversationsPage />} />
           <Route path="whatsapp-accounts" element={<WhatsappAccountsPage />} />
           <Route path="meta-settings" element={<MetaSettingsPage />} />
+          <Route path="audit" element={<AuditPage />} />
           <Route path="profile" element={<ProfilePage />} />
         </Route>
 

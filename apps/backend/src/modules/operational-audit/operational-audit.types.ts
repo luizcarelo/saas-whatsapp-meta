@@ -5,6 +5,20 @@ export type OperationalAuditQuery = {
   limit?: string;
 };
 
+export type OperationalAuditExportQuery = OperationalAuditQuery & {
+  resource?: string;
+  format?: string;
+};
+
+export type OperationalAuditHygieneQuery = {
+  days?: string;
+};
+
+export type OperationalAuditHygienePayload = {
+  days?: number;
+  dryRun?: boolean;
+};
+
 export type OperationalAuditSummaryResponse = {
   success: true;
   data: {
@@ -71,6 +85,31 @@ export type OperationalAuditWebhooksResponse = {
   success: true;
   data: {
     webhooks: OperationalAuditWebhookItem[];
+  };
+  meta: Record<string, never>;
+};
+
+export type OperationalAuditExportResult = {
+  filename: string;
+  contentType: string;
+  content: string;
+};
+
+export type OperationalAuditHygieneResponse = {
+  success: true;
+  data: {
+    dryRun: boolean;
+    days: number;
+    cutoff: string;
+    candidates: {
+      oldMessages: number;
+      oldFailedMessagesWithMetadata: number;
+      oldWebhookEvents: number;
+    };
+    changed: {
+      messagesRedacted: number;
+      webhookEventsRedacted: number;
+    };
   };
   meta: Record<string, never>;
 };

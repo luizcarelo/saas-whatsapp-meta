@@ -74,6 +74,10 @@ Painel de configuracao operacional da conta Meta criado.
 
 Limpeza operacional de dados de teste criada.
 
+Painel de auditoria operacional criado.
+
+Relatorio operacional exportavel criado.
+
 ## Arquivos principais
 
 - README.md
@@ -129,11 +133,13 @@ Limpeza operacional de dados de teste criada.
 - docs/FRONTEND_META_TEMPLATES.md
 - docs/META_OPERATIONAL_PANEL.md
 - docs/OPERATIONAL_CLEANUP.md
+- docs/OPERATIONAL_AUDIT_PANEL.md
+- docs/OPERATIONAL_EXPORT_REPORT.md
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 44 concluidas
+- Etapa 01 ate Etapa 46 concluidas
 
 ## Proxima etapa
 
-- Etapa 45 - Painel de auditoria operacional
+- Etapa 47 - Higienizacao de dados de auditoria antigos
