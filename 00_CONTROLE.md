@@ -31,12 +31,19 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 ## Fase 03 - Build e execucao inicial com Docker
 
 - [x] Etapa 19 - Ajustar Dockerfiles e validar build dos containers
-- [ ] Etapa 20 - Subir containers e validar execucao inicial
+- [x] Etapa 20A - Auditoria e backup do Nginx
+- [x] Etapa 20B - Configurar Nginx para bot.lhsolucao.com.br
+- [x] Etapa 20C - Subir containers e testar dominio
+
+## Fase 04 - Backend real inicial
+
+- [x] Etapa 21 - Health, configuracao e database base
+- [ ] Etapa 22 - ORM e conexao real com PostgreSQL
 
 ## Ultima etapa executada
 
-Etapa 19 - Ajustar Dockerfiles e validar build dos containers.
+Etapa 21 - Health, configuracao e database base.
 
 ## Proxima etapa sugerida
 
-Etapa 20 - Subir containers e validar execucao inicial.
+Etapa 22 - Definir ORM e criar conexao real com PostgreSQL.

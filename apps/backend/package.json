@@ -14,11 +14,12 @@
   },
   "dependencies": {
     "@nestjs/common": "latest",
-    "@nestjs/core": "latest",
-    "@nestjs/platform-fastify": "latest",
     "@nestjs/config": "latest",
+    "@nestjs/core": "latest",
     "@nestjs/jwt": "latest",
     "@nestjs/passport": "latest",
+    "@nestjs/platform-fastify": "latest",
+    "@prisma/client": "^7.8.0",
     "fastify": "latest",
     "reflect-metadata": "latest",
     "rxjs": "latest"
@@ -27,10 +28,10 @@
     "@nestjs/cli": "latest",
     "@nestjs/testing": "latest",
     "@types/node": "latest",
-    "typescript": "latest",
-    "ts-node": "latest",
     "eslint": "latest",
     "jest": "latest",
-    "ts-jest": "latest"
+    "ts-jest": "latest",
+    "ts-node": "latest",
+    "typescript": "latest"
   }
 }

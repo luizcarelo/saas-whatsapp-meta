@@ -24,6 +24,10 @@ Dependencias base instaladas e validadas.
 
 Dockerfiles ajustados e builds validados.
 
+Dominio bot.lhsolucao.com.br configurado e testado.
+
+Backend real inicial iniciado com health, configuracao e database base.
+
 ## Arquivos principais
 
 - README.md
@@ -53,29 +57,14 @@ Dockerfiles ajustados e builds validados.
 - docs/VALIDACAO_AMBIENTE.md
 - docs/DEPENDENCIAS_BASE.md
 - docs/DOCKER_BUILD.md
-
-## Docker
-
-Arquivos:
-
-- infra/docker/backend.Dockerfile
-- infra/docker/frontend.Dockerfile
-- infra/docker/worker.Dockerfile
-
-Logs:
-
-- logs/setup_19_docker_config.log
-- logs/setup_19_backend_build.log
-- logs/setup_19_frontend_build.log
-- logs/setup_19_worker_build.log
-- logs/fix_19_backend_typecheck.log
-- logs/fix_19_backend_rootdir.log
-- logs/setup_19.log
+- docs/NGINX_BOT_LHSOLUCAO.md
+- docs/EXECUCAO_INICIAL_DOMINIO.md
+- docs/BACKEND_HEALTH_CONFIG_DATABASE.md
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 19 concluidas
+- Etapa 01 ate Etapa 21 concluidas
 
 ## Proxima etapa
 
-- Etapa 20 - Subir containers e validar execucao inicial
+- Etapa 22 - ORM e conexao real com PostgreSQL
