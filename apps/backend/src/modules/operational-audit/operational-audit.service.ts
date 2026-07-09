@@ -244,36 +244,33 @@ export class OperationalAuditService {
     const dryRun = payload.dryRun !== false;
     const cutoff = this.cutoffDate(days);
 
-    const [oldMessages, oldFailedMessagesWithMetadata, oldWebhookEvents] = await Promise.all([
-      this.prismaService.message.count({
-        where: {
-          tenantId,
-          createdAt: {
-            lt: cutoff
-          }
+    const oldMessages = await this.prismaService.message.count({
+      where: {
+        tenantId,
+        createdAt: {
+          lt: cutoff
         }
-      }),
-      this.prismaService.message.count({
-        where: {
-          tenantId,
-          status: MessageStatus.failed,
-          metadata: {
-            not: undefined
-          },
-          createdAt: {
-            lt: cutoff
-          }
+      }
+    });
+
+    const oldFailedMessagesWithMetadata = await this.prismaService.message.count({
+      where: {
+        tenantId,
+        status: MessageStatus.failed,
+        createdAt: {
+          lt: cutoff
         }
-      }),
-      this.prismaService.webhookEvent.count({
-        where: {
-          tenantId,
-          createdAt: {
-            lt: cutoff
-          }
+      }
+    });
+
+    const oldWebhookEvents = await this.prismaService.webhookEvent.count({
+      where: {
+        tenantId,
+        createdAt: {
+          lt: cutoff
         }
-      })
-    ]);
+      }
+    });
 
     let messagesRedacted = 0;
     let webhookEventsRedacted = 0;
@@ -444,6 +441,7 @@ export class OperationalAuditService {
 
   private cutoffDate(days: number): Date {
     const date = new Date();
+
     date.setDate(date.getDate() - days);
 
     return date;

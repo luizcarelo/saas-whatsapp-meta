@@ -78,12 +78,13 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 - [x] Etapa 44 - Limpeza operacional de dados de teste
 - [x] Etapa 45 - Painel de auditoria operacional
 - [x] Etapa 46 - Relatorio operacional exportavel
-- [ ] Etapa 47 - Higienizacao de dados de auditoria antigos
+- [x] Etapa 47 - Higienizacao de dados de auditoria antigos
+- [ ] Etapa 48 - Configuracao visual de politica de retencao
 
 ## Ultima etapa executada
 
-Etapa 46 - Relatorio operacional exportavel.
+Etapa 47 - Higienizacao de dados de auditoria antigos.
 
 ## Proxima etapa sugerida
 
-Etapa 47 - Criar higienizacao de dados de auditoria antigos.
+Etapa 48 - Criar configuracao visual de politica de retencao.

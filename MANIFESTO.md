@@ -78,6 +78,8 @@ Painel de auditoria operacional criado.
 
 Relatorio operacional exportavel criado.
 
+Higienizacao de dados de auditoria antigos criada.
+
 ## Arquivos principais
 
 - README.md
@@ -135,11 +137,12 @@ Relatorio operacional exportavel criado.
 - docs/OPERATIONAL_CLEANUP.md
 - docs/OPERATIONAL_AUDIT_PANEL.md
 - docs/OPERATIONAL_EXPORT_REPORT.md
+- docs/AUDIT_DATA_HYGIENE.md
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 46 concluidas
+- Etapa 01 ate Etapa 47 concluidas
 
 ## Proxima etapa
 
-- Etapa 47 - Higienizacao de dados de auditoria antigos
+- Etapa 48 - Configuracao visual de politica de retencao
