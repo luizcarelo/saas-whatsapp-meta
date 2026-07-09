@@ -19,6 +19,10 @@ export function Sidebar() {
         <NavLink to="/app/conversations">
           Conversas
         </NavLink>
+
+        <NavLink to="/app/profile">
+          Perfil
+        </NavLink>
       </nav>
     </aside>
   );

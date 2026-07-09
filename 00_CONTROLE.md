@@ -51,12 +51,16 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 ## Fase 06 - Usuarios e perfil
 
 - [x] Etapa 28 - Modulo backend de usuarios
-- [ ] Etapa 29 - Frontend com perfil detalhado
+- [x] Etapa 29 - Frontend com perfil detalhado
+
+## Fase 07 - Contatos
+
+- [ ] Etapa 30 - Modulo backend de contatos
 
 ## Ultima etapa executada
 
-Etapa 28 - Modulo backend de usuarios e endpoint de perfil detalhado.
+Etapa 29 - Frontend com perfil detalhado.
 
 ## Proxima etapa sugerida
 
-Etapa 29 - Integrar frontend ao endpoint users me para perfil detalhado.
+Etapa 30 - Criar modulo backend de contatos.

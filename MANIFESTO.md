@@ -42,6 +42,8 @@ Layout base e protecao visual de rotas criados.
 
 Modulo backend de usuarios criado.
 
+Frontend com perfil detalhado criado.
+
 ## Arquivos principais
 
 - README.md
@@ -81,11 +83,12 @@ Modulo backend de usuarios criado.
 - docs/FRONTEND_LOGIN_INTEGRADO.md
 - docs/FRONTEND_LAYOUT_PROTECAO_ROTAS.md
 - docs/BACKEND_USERS_PROFILE.md
+- docs/FRONTEND_PROFILE_DETALHADO.md
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 28 concluidas
+- Etapa 01 ate Etapa 29 concluidas
 
 ## Proxima etapa
 
-- Etapa 29 - Frontend com perfil detalhado
+- Etapa 30 - Modulo backend de contatos
