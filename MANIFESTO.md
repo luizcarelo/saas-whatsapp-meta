@@ -26,7 +26,9 @@ Dockerfiles ajustados e builds validados.
 
 Dominio bot.lhsolucao.com.br configurado e testado.
 
-Backend real inicial iniciado com health, configuracao e database base.
+Backend real inicial iniciado.
+
+Prisma configurado com conexao real ao PostgreSQL.
 
 ## Arquivos principais
 
@@ -60,11 +62,12 @@ Backend real inicial iniciado com health, configuracao e database base.
 - docs/NGINX_BOT_LHSOLUCAO.md
 - docs/EXECUCAO_INICIAL_DOMINIO.md
 - docs/BACKEND_HEALTH_CONFIG_DATABASE.md
+- docs/BACKEND_PRISMA_POSTGRES.md
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 21 concluidas
+- Etapa 01 ate Etapa 22 concluidas
 
 ## Proxima etapa
 
-- Etapa 22 - ORM e conexao real com PostgreSQL
+- Etapa 23 - Schema inicial do banco com Prisma

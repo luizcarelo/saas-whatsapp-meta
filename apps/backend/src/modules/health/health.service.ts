@@ -26,20 +26,20 @@ export class HealthService {
     private readonly databaseService: DatabaseService
   ) {}
 
-  getHealth(): HealthResponse {
+  async getHealth(): Promise<HealthResponse> {
     const config = this.configurationService.getPublicConfig();
-    const database = this.databaseService.getStatus();
+    const database = await this.databaseService.getStatus();
 
     return {
       success: true,
       data: {
-        status: 'ok',
+        status: database.connected ? 'ok' : 'degraded',
         service: 'backend',
         timestamp: new Date().toISOString(),
         environment: config.nodeEnv,
         checks: {
           api: 'ok',
-          database: database.configured ? 'configured' : 'not_configured',
+          database: database.connected ? 'ok' : 'error',
           redis: config.redisConfigured ? 'configured' : 'not_configured',
           meta: config.metaConfigured ? 'configured' : 'not_configured'
         }

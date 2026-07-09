@@ -38,12 +38,13 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 ## Fase 04 - Backend real inicial
 
 - [x] Etapa 21 - Health, configuracao e database base
-- [ ] Etapa 22 - ORM e conexao real com PostgreSQL
+- [x] Etapa 22 - ORM e conexao real com PostgreSQL
+- [ ] Etapa 23 - Schema inicial do banco com Prisma
 
 ## Ultima etapa executada
 
-Etapa 21 - Health, configuracao e database base.
+Etapa 22 - ORM e conexao real com PostgreSQL.
 
 ## Proxima etapa sugerida
 
-Etapa 22 - Definir ORM e criar conexao real com PostgreSQL.
+Etapa 23 - Criar schema inicial do banco com Prisma.

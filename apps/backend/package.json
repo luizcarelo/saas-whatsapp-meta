@@ -19,7 +19,7 @@
     "@nestjs/jwt": "latest",
     "@nestjs/passport": "latest",
     "@nestjs/platform-fastify": "latest",
-    "@prisma/client": "^7.8.0",
+    "@prisma/client": "^6.19.0",
     "fastify": "latest",
     "reflect-metadata": "latest",
     "rxjs": "latest"
@@ -30,6 +30,7 @@
     "@types/node": "latest",
     "eslint": "latest",
     "jest": "latest",
+    "prisma": "^6.19.0",
     "ts-jest": "latest",
     "ts-node": "latest",
     "typescript": "latest"

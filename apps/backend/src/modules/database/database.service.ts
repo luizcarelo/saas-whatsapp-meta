@@ -1,23 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigurationService } from '../configuration/configuration.service';
+import { PrismaService } from './prisma.service';
 
 type DatabaseStatus = {
   configured: boolean;
+  connected: boolean;
   provider: string;
   connectionName: string;
+  error: string | null;
 };
 
 @Injectable()
 export class DatabaseService {
-  constructor(private readonly configurationService: ConfigurationService) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
-  getStatus(): DatabaseStatus {
-    const configured = this.configurationService.hasDatabaseUrl();
+  async getStatus(): Promise<DatabaseStatus> {
+    try {
+      await this.prismaService.$queryRawUnsafe('SELECT 1');
 
-    return {
-      configured,
-      provider: 'postgresql',
-      connectionName: configured ? 'primary' : 'not_configured'
-    };
+      return {
+        configured: true,
+        connected: true,
+        provider: 'postgresql',
+        connectionName: 'primary',
+        error: null
+      };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'database_error';
+
+      return {
+        configured: true,
+        connected: false,
+        provider: 'postgresql',
+        connectionName: 'primary',
+        error: message
+      };
+    }
   }
 }
