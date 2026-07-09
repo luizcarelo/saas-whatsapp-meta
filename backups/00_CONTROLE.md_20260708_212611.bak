@@ -21,7 +21,7 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 ## Fase 02 - Estrutura real do projeto
 
 - [x] Etapa 12 - Estrutura de pastas do monorepo
-- [x] Etapa 13 - Arquivos base do backend
+- [ ] Etapa 13 - Arquivos base do backend
 - [ ] Etapa 14 - Arquivos base do frontend
 - [ ] Etapa 15 - Docker Compose inicial
 - [ ] Etapa 16 - Arquivo env example
@@ -29,8 +29,8 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 
 ## Ultima etapa executada
 
-Etapa 13 - Arquivos base do backend.
+Etapa 12 - Estrutura de pastas do monorepo.
 
 ## Proxima etapa sugerida
 
-Etapa 14 - Criar arquivos base do frontend.
+Etapa 13 - Criar arquivos base do backend.

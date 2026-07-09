@@ -10,8 +10,6 @@ Documentacao inicial concluida.
 
 Estrutura real do monorepo iniciada.
 
-Backend base criado.
-
 ## Pasta base
 
 saas-whatsapp-meta/
@@ -34,7 +32,6 @@ saas-whatsapp-meta/
 - docs/DEPLOY.md
 - docs/VALIDACAO_FINAL.md
 - docs/ESTRUTURA_PROJETO.md
-- docs/BACKEND_BASE.md
 
 ## Estrutura real criada
 
@@ -50,38 +47,34 @@ saas-whatsapp-meta/
 - infra/redis
 - infra/scripts
 
-## Backend base
-
-- apps/backend/package.json
-- apps/backend/tsconfig.json
-- apps/backend/src/main.ts
-- apps/backend/src/app.module.ts
-- apps/backend/src/health.controller.ts
-- apps/backend/src/config/app.config.ts
-- apps/backend/src/config/env.example.ts
-- apps/backend/src/common/README.md
-
 ## Pastas de apoio
 
 - scripts/
 - logs/
 - backups/
 
+## Scripts executados
+
+- scripts/setup_01_prepare_docs_env.sh
+- scripts/setup_02_readme.sh
+- scripts/setup_03_arquitetura.sh
+- scripts/setup_04_banco_dados.sh
+- scripts/setup_05_api.sh
+- scripts/setup_06_seguranca.sh
+- scripts/setup_07_webhooks_meta.sh
+- scripts/setup_08_frontend.sh
+- scripts/setup_09_backend.sh
+- scripts/setup_10_deploy.sh
+- scripts/setup_11_manifesto_validacao.sh
+- scripts/setup_12_estrutura_monorepo.sh
+
 ## Proxima etapa
 
-- Etapa 14 - Arquivos base do frontend
+- Etapa 13 - Arquivos base do backend
 
-## Arquivos atualizados na Etapa 13
+## Arquivos atualizados na Etapa 12
 
-- apps/backend/package.json
-- apps/backend/tsconfig.json
-- apps/backend/src/main.ts
-- apps/backend/src/app.module.ts
-- apps/backend/src/health.controller.ts
-- apps/backend/src/config/app.config.ts
-- apps/backend/src/config/env.example.ts
-- apps/backend/src/common/README.md
-- docs/BACKEND_BASE.md
+- docs/ESTRUTURA_PROJETO.md
 - 00_CONTROLE.md
 - MANIFESTO.md
-- logs/setup_13.log
+- logs/setup_12.log

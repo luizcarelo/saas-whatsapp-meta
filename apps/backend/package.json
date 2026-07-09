@@ -1,0 +1,36 @@
+{
+  "name": "saas-whatsapp-meta-backend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Backend do SaaS de Chatbot WhatsApp com API Oficial da Meta",
+  "scripts": {
+    "dev": "nest start --watch",
+    "build": "nest build",
+    "start": "node dist/main.js",
+    "start:prod": "node dist/main.js",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@nestjs/common": "latest",
+    "@nestjs/core": "latest",
+    "@nestjs/platform-fastify": "latest",
+    "@nestjs/config": "latest",
+    "@nestjs/jwt": "latest",
+    "@nestjs/passport": "latest",
+    "fastify": "latest",
+    "reflect-metadata": "latest",
+    "rxjs": "latest"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "latest",
+    "@nestjs/testing": "latest",
+    "@types/node": "latest",
+    "typescript": "latest",
+    "ts-node": "latest",
+    "eslint": "latest",
+    "jest": "latest",
+    "ts-jest": "latest"
+  }
+}

@@ -1,0 +1,25 @@
+Etapa: 12
+Acao: Estrutura de pastas do monorepo
+Data: 2026-07-08 21:25:09
+Pasta: /home/luizcarelo/saas-whatsapp-meta
+Arquivos alterados:
+- docs/ESTRUTURA_PROJETO.md
+- 00_CONTROLE.md
+- MANIFESTO.md
+Pastas criadas:
+- apps/backend
+- apps/frontend
+- apps/worker
+- packages/shared
+- packages/types
+- packages/config
+- infra/docker
+- infra/nginx
+- infra/postgres
+- infra/redis
+- infra/scripts
+Backups:
+- backups/ESTRUTURA_PROJETO_20260708_212509.md quando existia
+- backups/00_CONTROLE_20260708_212509.md
+- backups/MANIFESTO_20260708_212509.md
+Status: Concluido
