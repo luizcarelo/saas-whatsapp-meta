@@ -24,13 +24,13 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 - [x] Etapa 13 - Arquivos base do backend
 - [x] Etapa 14 - Arquivos base do frontend
 - [x] Etapa 15 - Docker Compose inicial
-- [x] Etapa 16 - Arquivo env example
-- [x] Etapa 17 - Validacao do ambiente inicial
+- [ ] Etapa 16 - Arquivo env example
+- [ ] Etapa 17 - Validacao do ambiente inicial
 
 ## Ultima etapa executada
 
-Etapa 17 - Validacao do ambiente inicial.
+Etapa 15 - Docker Compose inicial.
 
 ## Proxima etapa sugerida
 
-Etapa 18 - Preparar instalacao e validacao de dependencias.
+Etapa 16 - Criar arquivo env example.

@@ -12,7 +12,7 @@ LOG_FILE="${LOGS_DIR}/setup_16.log"
 ENV_FILE="${BASE_DIR}/.env.example"
 ENV_DOC="${DOCS_DIR}/ENV_EXAMPLE.md"
 
-echo "== Etapa 16: Arquivo env example =="
+echo "== Etapa 16: Arquivo env example com portas alternativas =="
 
 cd "${BASE_DIR}"
 
@@ -42,29 +42,32 @@ cat > "${ENV_FILE}" <<'DOC'
 NODE_ENV=development
 
 # Aplicacao backend
-APP_PORT=3000
-APP_URL=http://localhost:3000
-FRONTEND_URL=http://localhost:5173
+APP_PORT=3300
+APP_URL=http://localhost:3300
+FRONTEND_URL=http://localhost:5573
 
 # Aplicacao frontend
-FRONTEND_PORT=5173
-VITE_API_URL=http://localhost:3000/api/v1
-VITE_SOCKET_URL=http://localhost:3000/realtime
+FRONTEND_PORT=5573
+VITE_API_URL=http://localhost:3300/api/v1
+VITE_SOCKET_URL=http://localhost:3300/realtime
 VITE_APP_NAME=SaaS WhatsApp Meta
 
 # Proxy
-PROXY_HTTP_PORT=8080
+PROXY_HTTP_PORT=8180
 
 # PostgreSQL
 POSTGRES_DB=saas_whatsapp
 POSTGRES_USER=saas_user
 POSTGRES_PASSWORD=saas_password
-POSTGRES_PORT=5432
+POSTGRES_PORT=55432
 DATABASE_URL=postgresql://saas_user:saas_password@postgres:5432/saas_whatsapp
 
 # Redis
 REDIS_HOST=redis
-REDIS_PORT=6379
+REDIS_PORT=56379
+
+# Redis interno do container
+REDIS_CONTAINER_PORT=6379
 
 # Autenticacao
 JWT_SECRET=change_me_jwt_secret
@@ -89,13 +92,31 @@ cat > "${ENV_DOC}" <<'DOC'
 
 Este documento registra a criacao do arquivo .env.example do projeto.
 
-A Etapa 16 criou um modelo de variaveis de ambiente para desenvolvimento local e futuras configuracoes de deploy.
+A Etapa 16 criou um modelo de variaveis de ambiente usando portas alternativas para evitar conflito com outros containers Docker existentes no host.
 
 ## Objetivo
 
 O arquivo .env.example serve como referencia para criar o arquivo .env real.
 
 O arquivo .env real nao deve ser versionado.
+
+## Portas alternativas definidas
+
+Portas externas do host:
+
+- APP_PORT 3300
+- FRONTEND_PORT 5573
+- PROXY_HTTP_PORT 8180
+- POSTGRES_PORT 55432
+- REDIS_PORT 56379
+
+Portas internas dos containers continuam as portas padrao de cada servico.
+
+## Motivo das portas alternativas
+
+Foi identificado que outro container Docker ja usa a porta 6379 no host.
+
+Para evitar conflito, o Redis deste projeto usara a porta externa 56379 apontando para a porta interna 6379 do container.
 
 ## Arquivo criado
 
@@ -117,57 +138,13 @@ Grupos definidos:
 - Criptografia
 - Meta WhatsApp
 
-## Variaveis de ambiente
+## Como usar futuramente
 
-Ambiente:
+Copiar o modelo para .env:
 
-- NODE_ENV
+    cp .env.example .env
 
-Backend:
-
-- APP_PORT
-- APP_URL
-- FRONTEND_URL
-
-Frontend:
-
-- FRONTEND_PORT
-- VITE_API_URL
-- VITE_SOCKET_URL
-- VITE_APP_NAME
-
-Proxy:
-
-- PROXY_HTTP_PORT
-
-PostgreSQL:
-
-- POSTGRES_DB
-- POSTGRES_USER
-- POSTGRES_PASSWORD
-- POSTGRES_PORT
-- DATABASE_URL
-
-Redis:
-
-- REDIS_HOST
-- REDIS_PORT
-
-Autenticacao:
-
-- JWT_SECRET
-- JWT_REFRESH_SECRET
-
-Criptografia:
-
-- ENCRYPTION_KEY
-
-Meta WhatsApp:
-
-- META_GRAPH_BASE_URL
-- META_API_VERSION
-- META_WEBHOOK_VERIFY_TOKEN
-- META_APP_SECRET
+Depois editar o arquivo .env com valores reais quando necessario.
 
 ## Regras de seguranca
 
@@ -177,18 +154,9 @@ Regras obrigatorias:
 - Nao usar valores change_me em producao
 - Usar secrets fortes em producao
 - Separar secrets por ambiente
-- Rotacionar secrets quando houver suspeita de vazamento
 - Nao colocar token real da Meta no frontend
 - Nao expor JWT_SECRET no frontend
 - Nao expor ENCRYPTION_KEY no frontend
-
-## Como usar futuramente
-
-Quando for iniciar o ambiente real, copiar o modelo:
-
-    cp .env.example .env
-
-Depois editar o arquivo .env com valores reais.
 
 ## Observacoes
 
@@ -200,7 +168,7 @@ A validacao do ambiente sera feita na Etapa 17.
 
 ## Decisao final desta etapa
 
-O projeto agora possui um arquivo .env.example inicial, alinhado com Docker Compose, backend, frontend, PostgreSQL, Redis e integracao futura com Meta WhatsApp.
+O projeto agora possui um arquivo .env.example inicial com portas alternativas, alinhado com Docker Compose, backend, frontend, PostgreSQL, Redis e integracao futura com Meta WhatsApp.
 DOC
 
 echo "Atualizando 00_CONTROLE.md..."
@@ -237,7 +205,7 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 
 ## Ultima etapa executada
 
-Etapa 16 - Arquivo env example.
+Etapa 16 - Arquivo env example com portas alternativas.
 
 ## Proxima etapa sugerida
 
@@ -265,7 +233,7 @@ Frontend base criado.
 
 Docker Compose inicial criado.
 
-Env example criado.
+Env example criado com portas alternativas.
 
 ## Pasta base
 
@@ -296,33 +264,13 @@ saas-whatsapp-meta/
 - docs/DOCKER_COMPOSE_BASE.md
 - docs/ENV_EXAMPLE.md
 
-## Estrutura real criada
+## Portas alternativas do projeto
 
-- apps/backend
-- apps/frontend
-- apps/worker
-- packages/shared
-- packages/types
-- packages/config
-- infra/docker
-- infra/nginx
-- infra/postgres
-- infra/redis
-- infra/scripts
-
-## Docker base
-
-- docker-compose.yml
-- infra/docker/backend.Dockerfile
-- infra/docker/frontend.Dockerfile
-- infra/docker/worker.Dockerfile
-- infra/nginx/nginx.conf
-- infra/postgres/init/001_init.sql
-- infra/redis/redis.conf
-
-## Env base
-
-- .env.example
+- Backend host 3300
+- Frontend host 5573
+- Proxy host 8180
+- PostgreSQL host 55432
+- Redis host 56379
 
 ## Pastas de apoio
 
@@ -370,6 +318,7 @@ for key in \
   DATABASE_URL \
   REDIS_HOST \
   REDIS_PORT \
+  REDIS_CONTAINER_PORT \
   JWT_SECRET \
   JWT_REFRESH_SECRET \
   ENCRYPTION_KEY \
@@ -409,7 +358,7 @@ echo "Gravando log..."
 
 cat > "${LOG_FILE}" <<DOC
 Etapa: 16
-Acao: Arquivo env example
+Acao: Arquivo env example com portas alternativas
 Data: $(date '+%Y-%m-%d %H:%M:%S')
 Pasta: ${BASE_DIR}
 Arquivos criados ou atualizados:
@@ -417,6 +366,12 @@ Arquivos criados ou atualizados:
 - docs/ENV_EXAMPLE.md
 - 00_CONTROLE.md
 - MANIFESTO.md
+Portas alternativas:
+- APP_PORT=3300
+- FRONTEND_PORT=5573
+- PROXY_HTTP_PORT=8180
+- POSTGRES_PORT=55432
+- REDIS_PORT=56379
 Status: Concluido
 DOC
 
@@ -425,9 +380,6 @@ echo "== Etapa 16 concluida com sucesso =="
 echo ""
 echo "Arquivo .env.example:"
 sed -n '1,220p' "${ENV_FILE}"
-echo ""
-echo "Resumo de docs/ENV_EXAMPLE.md:"
-sed -n '1,180p' "${ENV_DOC}"
 echo ""
 echo "Proxima etapa sugerida:"
 echo "Etapa 17 - Validacao do ambiente inicial"

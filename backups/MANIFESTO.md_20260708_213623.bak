@@ -8,7 +8,7 @@ SaaS de Chatbot WhatsApp com API Oficial da Meta
 
 Documentacao inicial concluida.
 
-Estrutura real do monorepo criada.
+Estrutura real do monorepo iniciada.
 
 Backend base criado.
 
@@ -18,7 +18,9 @@ Docker Compose inicial criado.
 
 Env example criado.
 
-Ambiente inicial validado.
+## Pasta base
+
+saas-whatsapp-meta/
 
 ## Arquivos principais
 
@@ -27,7 +29,6 @@ Ambiente inicial validado.
 - 00_CONTROLE.md
 - docker-compose.yml
 - .env.example
-- .env
 
 ## Documentos tecnicos
 
@@ -45,23 +46,49 @@ Ambiente inicial validado.
 - docs/FRONTEND_BASE.md
 - docs/DOCKER_COMPOSE_BASE.md
 - docs/ENV_EXAMPLE.md
-- docs/VALIDACAO_AMBIENTE.md
 
-## Etapas concluidas
+## Estrutura real criada
 
-- Etapa 01 ate Etapa 17 concluidas
+- apps/backend
+- apps/frontend
+- apps/worker
+- packages/shared
+- packages/types
+- packages/config
+- infra/docker
+- infra/nginx
+- infra/postgres
+- infra/redis
+- infra/scripts
+
+## Docker base
+
+- docker-compose.yml
+- infra/docker/backend.Dockerfile
+- infra/docker/frontend.Dockerfile
+- infra/docker/worker.Dockerfile
+- infra/nginx/nginx.conf
+- infra/postgres/init/001_init.sql
+- infra/redis/redis.conf
+
+## Env base
+
+- .env.example
+
+## Pastas de apoio
+
+- scripts/
+- logs/
+- backups/
 
 ## Proxima etapa
 
-- Etapa 18 - Preparar instalacao e validacao de dependencias
+- Etapa 17 - Validacao do ambiente inicial
 
-## Arquivos atualizados na Etapa 17
+## Arquivos atualizados na Etapa 16
 
-- docker-compose.yml
-- apps/frontend/index.html
 - .env.example
-- .env
-- docs/VALIDACAO_AMBIENTE.md
+- docs/ENV_EXAMPLE.md
 - 00_CONTROLE.md
 - MANIFESTO.md
-- logs/setup_17.log
+- logs/setup_16.log

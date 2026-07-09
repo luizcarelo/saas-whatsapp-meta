@@ -1,0 +1,92 @@
+# Manifesto do Projeto
+
+## Projeto
+
+SaaS de Chatbot WhatsApp com API Oficial da Meta
+
+## Status
+
+Documentacao inicial concluida.
+
+Estrutura real do monorepo iniciada.
+
+Backend base criado.
+
+Frontend base criado.
+
+Docker Compose inicial criado.
+
+## Pasta base
+
+saas-whatsapp-meta/
+
+## Arquivos principais
+
+- README.md
+- MANIFESTO.md
+- 00_CONTROLE.md
+- docker-compose.yml
+
+## Documentos tecnicos
+
+- docs/ARQUITETURA.md
+- docs/BANCO_DADOS.md
+- docs/API.md
+- docs/SEGURANCA.md
+- docs/WEBHOOKS_META.md
+- docs/FRONTEND.md
+- docs/BACKEND.md
+- docs/DEPLOY.md
+- docs/VALIDACAO_FINAL.md
+- docs/ESTRUTURA_PROJETO.md
+- docs/BACKEND_BASE.md
+- docs/FRONTEND_BASE.md
+- docs/DOCKER_COMPOSE_BASE.md
+
+## Estrutura real criada
+
+- apps/backend
+- apps/frontend
+- apps/worker
+- packages/shared
+- packages/types
+- packages/config
+- infra/docker
+- infra/nginx
+- infra/postgres
+- infra/redis
+- infra/scripts
+
+## Docker base
+
+- docker-compose.yml
+- infra/docker/backend.Dockerfile
+- infra/docker/frontend.Dockerfile
+- infra/docker/worker.Dockerfile
+- infra/nginx/nginx.conf
+- infra/postgres/init/001_init.sql
+- infra/redis/redis.conf
+
+## Pastas de apoio
+
+- scripts/
+- logs/
+- backups/
+
+## Proxima etapa
+
+- Etapa 16 - Arquivo env example
+
+## Arquivos atualizados na Etapa 15
+
+- docker-compose.yml
+- infra/docker/backend.Dockerfile
+- infra/docker/frontend.Dockerfile
+- infra/docker/worker.Dockerfile
+- infra/nginx/nginx.conf
+- infra/postgres/init/001_init.sql
+- infra/redis/redis.conf
+- docs/DOCKER_COMPOSE_BASE.md
+- 00_CONTROLE.md
+- MANIFESTO.md
+- logs/setup_15.log

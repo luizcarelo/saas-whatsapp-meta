@@ -1,0 +1,16 @@
+Etapa: 16
+Acao: Arquivo env example com portas alternativas
+Data: 2026-07-08 21:36:23
+Pasta: /home/luizcarelo/saas-whatsapp-meta
+Arquivos criados ou atualizados:
+- .env.example
+- docs/ENV_EXAMPLE.md
+- 00_CONTROLE.md
+- MANIFESTO.md
+Portas alternativas:
+- APP_PORT=3300
+- FRONTEND_PORT=5573
+- PROXY_HTTP_PORT=8180
+- POSTGRES_PORT=55432
+- REDIS_PORT=56379
+Status: Concluido
