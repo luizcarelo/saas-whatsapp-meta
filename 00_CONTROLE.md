@@ -69,12 +69,15 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 - [x] Etapa 35 - Modulo backend de WhatsApp Accounts
 - [x] Etapa 36 - Frontend de WhatsApp Accounts integrado
 - [x] Etapa 37 - Modulo backend de webhooks da Meta
-- [ ] Etapa 38 - Validacao de assinatura dos webhooks da Meta
+- [x] Etapa 38 - Validacao de assinatura dos webhooks da Meta
+- [x] Etapa 39 - Processamento de status no frontend
+- [x] Etapa 40 - Envio real pela API oficial da Meta
+- [ ] Etapa 41 - Templates oficiais da Meta
 
 ## Ultima etapa executada
 
-Etapa 37 - Modulo backend de webhooks da Meta.
+Etapa 40 - Envio real de mensagens pela API oficial da Meta.
 
 ## Proxima etapa sugerida
 
-Etapa 38 - Criar validacao de assinatura dos webhooks da Meta.
+Etapa 41 - Criar suporte a templates oficiais da Meta.

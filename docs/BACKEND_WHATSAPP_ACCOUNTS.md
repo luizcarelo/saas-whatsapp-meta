@@ -2,7 +2,7 @@
 
 ## Visao geral
 
-Este documento registra a criacao do modulo backend de WhatsApp Accounts.
+Este documento registra a criacao e ajustes do modulo backend de WhatsApp Accounts.
 
 ## Resultado
 
@@ -12,9 +12,11 @@ Status:
 
 ## Correcao aplicada
 
-Foi corrigida a tipagem do campo status para usar o enum WhatsappAccountStatus do Prisma.
+Foi adicionada restauracao automatica de contas removidas logicamente.
 
-## Endpoints criados
+Quando uma conta com o mesmo tenant e phoneNumberId existe com deletedAt preenchido, o cadastro passa a reativar a conta em vez de falhar por duplicidade.
+
+## Endpoints
 
 Endpoints:
 
@@ -31,9 +33,10 @@ Funcionalidades:
 - listar contas WhatsApp do tenant autenticado
 - buscar conta por id
 - criar conta WhatsApp
+- restaurar conta removida logicamente pelo mesmo phoneNumberId
 - atualizar conta WhatsApp
 - remover conta com deletedAt
-- validar phoneNumberId duplicado por tenant
+- validar phoneNumberId duplicado quando a conta ativa ja existe
 - filtrar contas por busca simples
 - armazenar token em formato codificado local
 
@@ -41,11 +44,7 @@ Funcionalidades:
 
 Arquivos:
 
-- apps/backend/src/modules/whatsapp-accounts/whatsapp-accounts.module.ts
-- apps/backend/src/modules/whatsapp-accounts/whatsapp-accounts.controller.ts
 - apps/backend/src/modules/whatsapp-accounts/whatsapp-accounts.service.ts
-- apps/backend/src/modules/whatsapp-accounts/whatsapp-accounts.types.ts
-- apps/backend/src/app.module.ts
 - docs/BACKEND_WHATSAPP_ACCOUNTS.md
 - 00_CONTROLE.md
 - MANIFESTO.md
@@ -60,42 +59,39 @@ Validacoes:
 - docker compose up backend
 - login local
 - criar conta local
-- listar contas local
-- buscar conta local
-- atualizar conta local
 - remover conta local
+- recriar mesma conta local com mesmo phoneNumberId
 - login dominio
-- listar contas dominio
 - criar conta dominio
+- remover conta dominio
+- recriar mesma conta dominio com mesmo phoneNumberId
+- listar contas dominio
 
 ## Logs gerados
 
 Logs:
 
-- logs/setup_35_backend_typecheck.log
-- logs/setup_35_backend_build.log
-- logs/setup_35_backend_docker_build.log
-- logs/setup_35_backend_docker_up.log
-- logs/setup_35_auth_login_local.log
-- logs/setup_35_auth_login_domain.log
-- logs/setup_35_whatsapp_accounts_create_local.log
-- logs/setup_35_whatsapp_accounts_list_local.log
-- logs/setup_35_whatsapp_accounts_get_local.log
-- logs/setup_35_whatsapp_accounts_update_local.log
-- logs/setup_35_whatsapp_accounts_delete_local.log
-- logs/setup_35_whatsapp_accounts_list_domain.log
-- logs/setup_35_whatsapp_accounts_create_domain.log
-- logs/fix_35_whatsapp_accounts_enum_status.log
-- logs/setup_35.log
+- logs/fix_39_backend_typecheck_whatsapp_restore.log
+- logs/fix_39_backend_build_whatsapp_restore.log
+- logs/fix_39_backend_docker_build_whatsapp_restore.log
+- logs/fix_39_backend_docker_up_whatsapp_restore.log
+- logs/fix_39_auth_login_local.log
+- logs/fix_39_auth_login_domain.log
+- logs/fix_39_whatsapp_account_create_local.log
+- logs/fix_39_whatsapp_account_delete_local.log
+- logs/fix_39_whatsapp_account_restore_local.log
+- logs/fix_39_whatsapp_account_create_domain.log
+- logs/fix_39_whatsapp_account_delete_domain.log
+- logs/fix_39_whatsapp_account_restore_domain.log
+- logs/fix_39_whatsapp_accounts_list_domain.log
+- logs/fix_39_whatsapp_accounts_restore_deleted.log
 
 ## Observacoes
 
-Esta etapa ainda nao integra com a API oficial da Meta.
-
-A integracao real sera criada em etapa futura.
+Este ajuste permite corrigir cadastros errados removidos pela tela sem intervenção manual no banco.
 
 ## Proxima etapa sugerida
 
-Etapa 36:
+Etapa 40:
 
-    Criar frontend de WhatsApp Accounts integrado ao backend
+    Criar envio real de mensagens pela API oficial da Meta

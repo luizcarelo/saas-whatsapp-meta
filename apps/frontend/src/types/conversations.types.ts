@@ -5,6 +5,14 @@ export type ConversationContact = {
   email: string | null;
 };
 
+export type MessageStatus =
+  | 'pending'
+  | 'received'
+  | 'sent'
+  | 'delivered'
+  | 'read'
+  | 'failed';
+
 export type ConversationLastMessage = {
   id: string;
   direction: string;
@@ -17,7 +25,7 @@ export type ConversationMessage = {
   direction: string;
   type: string;
   body: string | null;
-  status: string;
+  status: MessageStatus | string;
   createdAt: string;
 };
 
@@ -54,4 +62,13 @@ export type ConversationFormData = {
   name: string;
   phone: string;
   initialMessage: string;
+};
+
+export type MessageStatusSummary = {
+  pending: number;
+  received: number;
+  sent: number;
+  delivered: number;
+  read: number;
+  failed: number;
 };

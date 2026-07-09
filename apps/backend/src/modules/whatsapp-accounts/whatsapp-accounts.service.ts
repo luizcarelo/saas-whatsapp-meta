@@ -113,13 +113,37 @@ export class WhatsappAccountsService {
     const existing = await this.prismaService.whatsappAccount.findFirst({
       where: {
         tenantId,
-        phoneNumberId,
-        deletedAt: null
+        phoneNumberId
       }
     });
 
-    if (existing) {
+    if (existing && !existing.deletedAt) {
       throw new ConflictException('Conta WhatsApp ja existe para este phoneNumberId');
+    }
+
+    if (existing && existing.deletedAt) {
+      const restored = await this.prismaService.whatsappAccount.update({
+        where: {
+          id: existing.id
+        },
+        data: {
+          deletedAt: null,
+          wabaId,
+          phoneNumberId,
+          displayPhoneNumber,
+          verifiedName: this.cleanOptional(payload.verifiedName),
+          accessTokenEncrypted: this.encodeToken(payload.accessToken),
+          status: this.normalizeStatus(payload.status)
+        }
+      });
+
+      return {
+        success: true,
+        data: {
+          account: this.toItem(restored)
+        },
+        meta: {}
+      };
     }
 
     const account = await this.prismaService.whatsappAccount.create({

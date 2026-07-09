@@ -41,6 +41,9 @@ export type ConversationMessageItem = {
   type: string;
   body: string | null;
   status: string;
+  providerMessageId: string | null;
+  sentAt: string | null;
+  metadata: unknown;
   createdAt: string;
 };
 

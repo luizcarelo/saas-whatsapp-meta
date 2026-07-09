@@ -10,7 +10,9 @@ import { useAuthStore } from '../../stores/auth.store';
 import type {
   ConversationDetail,
   ConversationFormData,
-  ConversationItem
+  ConversationItem,
+  ConversationMessage,
+  MessageStatusSummary
 } from '../../types/conversations.types';
 
 const initialForm: ConversationFormData = {
@@ -19,7 +21,7 @@ const initialForm: ConversationFormData = {
   initialMessage: ''
 };
 
-const statusLabel: Record<string, string> = {
+const conversationStatusLabel: Record<string, string> = {
   open: 'Aberta',
   pending: 'Pendente',
   bot: 'Bot',
@@ -27,6 +29,96 @@ const statusLabel: Record<string, string> = {
   resolved: 'Resolvida',
   closed: 'Fechada'
 };
+
+const messageStatusLabel: Record<string, string> = {
+  pending: 'Pendente',
+  received: 'Recebida',
+  sent: 'Enviada',
+  delivered: 'Entregue',
+  read: 'Lida',
+  failed: 'Falhou'
+};
+
+const emptyStatusSummary: MessageStatusSummary = {
+  pending: 0,
+  received: 0,
+  sent: 0,
+  delivered: 0,
+  read: 0,
+  failed: 0
+};
+
+function getMessageStatusLabel(status: string) {
+  return messageStatusLabel[status] || status;
+}
+
+function getMessageStatusClass(status: string) {
+  if (status === 'read') {
+    return 'status-read';
+  }
+
+  if (status === 'delivered') {
+    return 'status-delivered';
+  }
+
+  if (status === 'sent') {
+    return 'status-sent';
+  }
+
+  if (status === 'received') {
+    return 'status-received';
+  }
+
+  if (status === 'failed') {
+    return 'status-failed';
+  }
+
+  return 'status-pending';
+}
+
+function summarizeMessageStatuses(messages: ConversationMessage[]): MessageStatusSummary {
+  return messages.reduce<MessageStatusSummary>((summary, message) => {
+    if (message.status === 'received') {
+      return {
+        ...summary,
+        received: summary.received + 1
+      };
+    }
+
+    if (message.status === 'sent') {
+      return {
+        ...summary,
+        sent: summary.sent + 1
+      };
+    }
+
+    if (message.status === 'delivered') {
+      return {
+        ...summary,
+        delivered: summary.delivered + 1
+      };
+    }
+
+    if (message.status === 'read') {
+      return {
+        ...summary,
+        read: summary.read + 1
+      };
+    }
+
+    if (message.status === 'failed') {
+      return {
+        ...summary,
+        failed: summary.failed + 1
+      };
+    }
+
+    return {
+      ...summary,
+      pending: summary.pending + 1
+    };
+  }, emptyStatusSummary);
+}
 
 export function ConversationsPage() {
   const accessToken = useAuthStore((state) => state.accessToken);
@@ -90,13 +182,21 @@ export function ConversationsPage() {
     void loadConversations('');
   }, []);
 
-  const metrics = useMemo(() => {
+  const conversationMetrics = useMemo(() => {
     return {
       open: conversations.filter((conversation) => conversation.status === 'open').length,
       human: conversations.filter((conversation) => conversation.status === 'human').length,
       closed: conversations.filter((conversation) => conversation.status === 'closed').length
     };
   }, [conversations]);
+
+  const messageStatusSummary = useMemo(() => {
+    if (!selectedConversation) {
+      return emptyStatusSummary;
+    }
+
+    return summarizeMessageStatuses(selectedConversation.messages);
+  }, [selectedConversation]);
 
   async function handleSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -183,26 +283,58 @@ export function ConversationsPage() {
       <div className="page-heading">
         <span>Atendimento</span>
         <h1>Conversas</h1>
-        <p>Caixa de entrada integrada ao backend real de conversas.</p>
+        <p>Caixa de entrada integrada ao backend real com status visual de mensagens.</p>
       </div>
 
       <div className="conversation-metrics">
         <article className="metric-card">
           <span>Abertas</span>
-          <strong>{metrics.open}</strong>
+          <strong>{conversationMetrics.open}</strong>
           <p>Conversas aguardando atendimento.</p>
         </article>
 
         <article className="metric-card">
           <span>Em atendimento</span>
-          <strong>{metrics.human}</strong>
+          <strong>{conversationMetrics.human}</strong>
           <p>Conversas com resposta humana.</p>
         </article>
 
         <article className="metric-card">
           <span>Fechadas</span>
-          <strong>{metrics.closed}</strong>
+          <strong>{conversationMetrics.closed}</strong>
           <p>Conversas encerradas.</p>
+        </article>
+      </div>
+
+      <div className="message-status-summary">
+        <article>
+          <span className="message-status-badge status-pending">Pendente</span>
+          <strong>{messageStatusSummary.pending}</strong>
+        </article>
+
+        <article>
+          <span className="message-status-badge status-received">Recebida</span>
+          <strong>{messageStatusSummary.received}</strong>
+        </article>
+
+        <article>
+          <span className="message-status-badge status-sent">Enviada</span>
+          <strong>{messageStatusSummary.sent}</strong>
+        </article>
+
+        <article>
+          <span className="message-status-badge status-delivered">Entregue</span>
+          <strong>{messageStatusSummary.delivered}</strong>
+        </article>
+
+        <article>
+          <span className="message-status-badge status-read">Lida</span>
+          <strong>{messageStatusSummary.read}</strong>
+        </article>
+
+        <article>
+          <span className="message-status-badge status-failed">Falhou</span>
+          <strong>{messageStatusSummary.failed}</strong>
         </article>
       </div>
 
@@ -287,7 +419,7 @@ export function ConversationsPage() {
 
                 <div className="conversation-preview-meta">
                   <small>{conversation.lastMessageAt || 'Sem data'}</small>
-                  <em>{statusLabel[conversation.status] || conversation.status}</em>
+                  <em>{conversationStatusLabel[conversation.status] || conversation.status}</em>
                 </div>
               </button>
             ))}
@@ -305,7 +437,7 @@ export function ConversationsPage() {
 
                 <div className="thread-header-actions">
                   <span className="thread-status">
-                    {statusLabel[selectedConversation.status] || selectedConversation.status}
+                    {conversationStatusLabel[selectedConversation.status] || selectedConversation.status}
                   </span>
 
                   <button onClick={() => void handleCloseConversation()} type="button">
@@ -313,6 +445,15 @@ export function ConversationsPage() {
                   </button>
                 </div>
               </header>
+
+              <div className="thread-status-legend">
+                <span className="message-status-badge status-pending">Pendente</span>
+                <span className="message-status-badge status-received">Recebida</span>
+                <span className="message-status-badge status-sent">Enviada</span>
+                <span className="message-status-badge status-delivered">Entregue</span>
+                <span className="message-status-badge status-read">Lida</span>
+                <span className="message-status-badge status-failed">Falhou</span>
+              </div>
 
               <div className="thread-messages">
                 {selectedConversation.messages.length === 0 ? (
@@ -331,7 +472,13 @@ export function ConversationsPage() {
                     key={item.id}
                   >
                     <p>{item.body}</p>
-                    <span>{item.createdAt}</span>
+
+                    <footer className="thread-message-footer">
+                      <span>{item.createdAt}</span>
+                      <span className={`message-status-badge ${getMessageStatusClass(item.status)}`}>
+                        {getMessageStatusLabel(item.status)}
+                      </span>
+                    </footer>
                   </article>
                 ))}
               </div>

@@ -1036,3 +1036,109 @@ a:hover {
     align-items: flex-start;
   }
 }
+
+.message-status-summary {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin-top: 20px;
+}
+
+.message-status-summary article {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+  padding: 14px;
+}
+
+.message-status-summary strong {
+  display: block;
+  font-size: 24px;
+  margin-top: 10px;
+}
+
+.thread-status-legend {
+  align-items: center;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 18px;
+}
+
+.thread-message-footer {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.thread-message-footer span:first-child {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.message-status-badge {
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+  padding: 7px 9px;
+  white-space: nowrap;
+}
+
+.status-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-received {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.status-sent {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-delivered {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-read {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.status-failed {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.thread-message.outbound .message-status-badge {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+@media (max-width: 1100px) {
+  .message-status-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .message-status-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .thread-message-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

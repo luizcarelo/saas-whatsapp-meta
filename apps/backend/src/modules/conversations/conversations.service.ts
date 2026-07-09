@@ -3,7 +3,15 @@ import {
   Injectable,
   NotFoundException
 } from '@nestjs/common';
+import {
+  ConversationStatus,
+  MessageDirection,
+  MessageStatus,
+  MessageType,
+  WhatsappAccountStatus
+} from '@prisma/client';
 import { PrismaService } from '../database/prisma.service';
+import { MetaWhatsappService } from '../meta-whatsapp/meta-whatsapp.service';
 import type {
   ConversationDetail,
   ConversationItem,
@@ -24,7 +32,10 @@ type ListConversationsQuery = {
 
 @Injectable()
 export class ConversationsService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly metaWhatsappService: MetaWhatsappService
+  ) {}
 
   async listConversations(
     tenantId: string,
@@ -99,14 +110,14 @@ export class ConversationsService {
     payload: CreateConversationPayload
   ): Promise<ConversationResponse> {
     const contact = await this.resolveContact(tenantId, payload);
-    const whatsappAccount = await this.ensureDefaultWhatsappAccount(tenantId);
+    const whatsappAccount = await this.resolveWhatsappAccountForConversation(tenantId);
 
     const conversation = await this.prismaService.conversation.create({
       data: {
         tenantId,
         contactId: contact.id,
         whatsappAccountId: whatsappAccount.id,
-        status: 'open',
+        status: ConversationStatus.open,
         channel: 'whatsapp',
         lastMessageAt: payload.initialMessage ? new Date() : null,
         messages: payload.initialMessage
@@ -115,10 +126,10 @@ export class ConversationsService {
                 tenantId,
                 contactId: contact.id,
                 whatsappAccountId: whatsappAccount.id,
-                direction: 'inbound',
-                type: 'text',
+                direction: MessageDirection.inbound,
+                type: MessageType.text,
                 body: payload.initialMessage,
-                status: 'received'
+                status: MessageStatus.received
               }
             }
           : undefined
@@ -166,18 +177,48 @@ export class ConversationsService {
     }
 
     const conversation = await this.findConversationOrFail(tenantId, conversationId);
+    const whatsappAccount = await this.resolveWhatsappAccountById(
+      tenantId,
+      conversation.whatsappAccountId
+    );
 
     const message = await this.prismaService.message.create({
       data: {
         tenantId,
         conversationId: conversation.id,
         contactId: conversation.contact.id,
-        whatsappAccountId: conversation.whatsappAccountId,
-        direction: 'outbound',
-        type: 'text',
+        whatsappAccountId: whatsappAccount.id,
+        direction: MessageDirection.outbound,
+        type: MessageType.text,
         body,
-        status: 'pending',
+        status: MessageStatus.pending,
         sentAt: new Date()
+      }
+    });
+
+    const sendResult = await this.metaWhatsappService.sendTextMessage({
+      phoneNumberId: whatsappAccount.phoneNumberId,
+      accessTokenEncrypted: whatsappAccount.accessTokenEncrypted,
+      to: conversation.contact.waId || conversation.contact.phone,
+      body
+    });
+
+    const updatedMessage = await this.prismaService.message.update({
+      where: {
+        id: message.id
+      },
+      data: {
+        providerMessageId: sendResult.providerMessageId,
+        status: sendResult.success ? MessageStatus.sent : MessageStatus.failed,
+        metadata: {
+          metaSend: {
+            success: sendResult.success,
+            statusCode: sendResult.statusCode,
+            providerMessageId: sendResult.providerMessageId,
+            response: sendResult.response,
+            errorMessage: sendResult.errorMessage
+          }
+        } as never
       }
     });
 
@@ -187,14 +228,14 @@ export class ConversationsService {
       },
       data: {
         lastMessageAt: new Date(),
-        status: 'human'
+        status: ConversationStatus.human
       }
     });
 
     return {
       success: true,
       data: {
-        message: this.toMessageItem(message)
+        message: this.toMessageItem(updatedMessage)
       },
       meta: {}
     };
@@ -208,7 +249,7 @@ export class ConversationsService {
         id: conversationId
       },
       data: {
-        status: 'closed',
+        status: ConversationStatus.closed,
         closedAt: new Date()
       },
       include: {
@@ -269,29 +310,93 @@ export class ConversationsService {
       data: {
         tenantId,
         name: this.cleanOptional(payload.name),
-        phone
+        phone,
+        waId: phone
       }
     });
   }
 
-  private async ensureDefaultWhatsappAccount(tenantId: string) {
-    return this.prismaService.whatsappAccount.upsert({
-      where: {
-        tenantId_phoneNumberId: {
+  private async resolveWhatsappAccountForConversation(tenantId: string) {
+    const preferredPhoneNumberId = process.env.META_DEFAULT_PHONE_NUMBER_ID || '';
+
+    if (preferredPhoneNumberId) {
+      const preferred = await this.prismaService.whatsappAccount.findFirst({
+        where: {
           tenantId,
-          phoneNumberId: 'local_default_phone_number'
+          phoneNumberId: preferredPhoneNumberId,
+          deletedAt: null,
+          status: WhatsappAccountStatus.active
         }
+      });
+
+      if (preferred) {
+        return preferred;
+      }
+    }
+
+    const activeAccounts = await this.prismaService.whatsappAccount.findMany({
+      where: {
+        tenantId,
+        deletedAt: null,
+        status: WhatsappAccountStatus.active
       },
-      update: {},
-      create: {
+      orderBy: {
+        updatedAt: 'desc'
+      }
+    });
+
+    const numericActiveAccount = activeAccounts.find((account) =>
+      /^[0-9]+$/.test(account.phoneNumberId)
+    );
+
+    if (numericActiveAccount) {
+      return numericActiveAccount;
+    }
+
+    if (activeAccounts.length > 0) {
+      return activeAccounts[0];
+    }
+
+    const pendingAccount = await this.prismaService.whatsappAccount.findFirst({
+      where: {
+        tenantId,
+        deletedAt: null
+      },
+      orderBy: {
+        updatedAt: 'desc'
+      }
+    });
+
+    if (pendingAccount) {
+      return pendingAccount;
+    }
+
+    return this.prismaService.whatsappAccount.create({
+      data: {
         tenantId,
         wabaId: 'local_default_waba',
         phoneNumberId: 'local_default_phone_number',
         displayPhoneNumber: 'Nao configurado',
         accessTokenEncrypted: 'not_configured',
-        status: 'pending'
+        status: WhatsappAccountStatus.pending
       }
     });
+  }
+
+  private async resolveWhatsappAccountById(tenantId: string, accountId: string) {
+    const account = await this.prismaService.whatsappAccount.findFirst({
+      where: {
+        id: accountId,
+        tenantId,
+        deletedAt: null
+      }
+    });
+
+    if (!account) {
+      throw new NotFoundException('Conta WhatsApp nao encontrada');
+    }
+
+    return account;
   }
 
   private async findConversationOrFail(tenantId: string, conversationId: string) {
@@ -364,6 +469,9 @@ export class ConversationsService {
       type: message.type,
       body: message.body,
       status: message.status,
+      providerMessageId: message.providerMessageId || null,
+      sentAt: message.sentAt ? message.sentAt.toISOString() : null,
+      metadata: message.metadata || null,
       createdAt: message.createdAt.toISOString()
     };
   }

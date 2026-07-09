@@ -60,6 +60,12 @@ Frontend de WhatsApp Accounts integrado criado.
 
 Modulo backend de webhooks da Meta criado.
 
+Validacao de assinatura dos webhooks da Meta criada.
+
+Processamento de status de mensagens no frontend criado.
+
+Envio real de mensagens pela API oficial da Meta criado.
+
 ## Arquivos principais
 
 - README.md
@@ -108,11 +114,14 @@ Modulo backend de webhooks da Meta criado.
 - docs/BACKEND_WHATSAPP_ACCOUNTS.md
 - docs/FRONTEND_WHATSAPP_ACCOUNTS.md
 - docs/BACKEND_META_WEBHOOKS.md
+- docs/BACKEND_META_WEBHOOK_SIGNATURE.md
+- docs/FRONTEND_MESSAGE_STATUS.md
+- docs/BACKEND_META_SEND_MESSAGES.md
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 37 concluidas
+- Etapa 01 ate Etapa 40 concluidas
 
 ## Proxima etapa
 
-- Etapa 38 - Validacao de assinatura dos webhooks da Meta
+- Etapa 41 - Templates oficiais da Meta
