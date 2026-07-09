@@ -30,6 +30,8 @@ Backend real inicial iniciado.
 
 Prisma configurado com conexao real ao PostgreSQL.
 
+Schema inicial do banco criado.
+
 ## Arquivos principais
 
 - README.md
@@ -63,11 +65,12 @@ Prisma configurado com conexao real ao PostgreSQL.
 - docs/EXECUCAO_INICIAL_DOMINIO.md
 - docs/BACKEND_HEALTH_CONFIG_DATABASE.md
 - docs/BACKEND_PRISMA_POSTGRES.md
+- docs/PRISMA_SCHEMA_INICIAL.md
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 22 concluidas
+- Etapa 01 ate Etapa 23 concluidas
 
 ## Proxima etapa
 
-- Etapa 23 - Schema inicial do banco com Prisma
+- Etapa 24 - Seed inicial de tenant, admin, roles e permissoes

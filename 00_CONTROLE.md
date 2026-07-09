@@ -39,12 +39,13 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 
 - [x] Etapa 21 - Health, configuracao e database base
 - [x] Etapa 22 - ORM e conexao real com PostgreSQL
-- [ ] Etapa 23 - Schema inicial do banco com Prisma
+- [x] Etapa 23 - Schema inicial do banco com Prisma
+- [ ] Etapa 24 - Seed inicial de tenant, admin, roles e permissoes
 
 ## Ultima etapa executada
 
-Etapa 22 - ORM e conexao real com PostgreSQL.
+Etapa 23 - Schema inicial do banco com Prisma.
 
 ## Proxima etapa sugerida
 
-Etapa 23 - Criar schema inicial do banco com Prisma.
+Etapa 24 - Criar seed inicial de tenant, usuario admin, roles e permissoes.

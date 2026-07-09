@@ -20,6 +20,7 @@
     "@nestjs/passport": "latest",
     "@nestjs/platform-fastify": "latest",
     "@prisma/client": "^6.19.0",
+    "bcryptjs": "^3.0.3",
     "fastify": "latest",
     "reflect-metadata": "latest",
     "rxjs": "latest"
