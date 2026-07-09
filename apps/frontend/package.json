@@ -12,20 +12,21 @@
     "typecheck": "tsc -b"
   },
   "dependencies": {
+    "@hookform/resolvers": "latest",
+    "@tanstack/react-query": "latest",
     "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "typescript": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-router-dom": "latest",
-    "@tanstack/react-query": "latest",
-    "zustand": "latest",
-    "zod": "latest",
     "react-hook-form": "latest",
-    "@hookform/resolvers": "latest",
-    "socket.io-client": "latest"
+    "react-router-dom": "latest",
+    "socket.io-client": "latest",
+    "typescript": "latest",
+    "vite": "latest",
+    "zod": "latest",
+    "zustand": "latest"
   },
   "devDependencies": {
+    "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "eslint": "latest"
