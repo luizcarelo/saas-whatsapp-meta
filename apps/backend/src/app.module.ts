@@ -6,6 +6,7 @@ import { ConversationsModule } from './modules/conversations/conversations.modul
 import { DatabaseModule } from './modules/database/database.module';
 import { HealthModule } from './modules/health/health.module';
 import { UsersModule } from './modules/users/users.module';
+import { WhatsappAccountsModule } from './modules/whatsapp-accounts/whatsapp-accounts.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { UsersModule } from './modules/users/users.module';
     AuthModule,
     UsersModule,
     ContactsModule,
-    ConversationsModule
+    ConversationsModule,
+    WhatsappAccountsModule
   ],
   controllers: [],
   providers: []
