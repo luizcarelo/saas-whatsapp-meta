@@ -1,0 +1,142 @@
+# ===================================
+# PYTHON
+# ===================================
+__pycache__/
+*.py[cod]
+*$py.class
+
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtualenv
+venv/
+.venv/
+env/
+ENV/
+
+# Cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ===================================
+# VARIÁVEIS E SEGREDOS
+# ===================================
+.env
+.env.*
+!.env.example
+
+# Meta / Facebook
+facebook_tokens.json
+meta_tokens.json
+whatsapp_tokens.json
+
+# Certificados
+*.pem
+*.key
+*.crt
+*.pfx
+
+# ===================================
+# LOGS
+# ===================================
+logs/
+*.log
+
+# ===================================
+# BANCO DE DADOS LOCAL
+# ===================================
+*.db
+*.sqlite
+*.sqlite3
+
+# ===================================
+# UPLOADS E MÍDIAS
+# ===================================
+uploads/
+media/
+storage/
+
+# Arquivos recebidos do WhatsApp
+downloads/
+received_files/
+
+# ===================================
+# BACKUPS
+# ===================================
+backups/
+backup/
+*.bak
+*.backup
+*.old
+
+# ===================================
+# NODE / FRONTEND
+# ===================================
+node_modules/
+
+.next/
+.nuxt/
+dist/
+coverage/
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===================================
+# DOCKER
+# ===================================
+.docker/
+docker-data/
+docker-volumes/
+
+# ===================================
+# IDE
+# ===================================
+.vscode/
+.idea/
+
+# ===================================
+# SISTEMA OPERACIONAL
+# ===================================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ===================================
+# RELATÓRIOS E EXPORTAÇÕES
+# ===================================
+reports/
+exports/
+generated/
+
+# ===================================
+# CACHE DA APLICAÇÃO
+# ===================================
+cache/
+tmp/
+temp/
+
+# ===================================
+# CELERY / REDIS
+# ===================================
+celerybeat-schedule
+*.pid
+
+# ===================================
+# TESTES
+# ===================================
+.pytest_cache/
+coverage.xml
+
+# ===================================
+# ARQUIVOS DE DEPLOY
+# ===================================
+.env.production
+.env.staging
+.env.local

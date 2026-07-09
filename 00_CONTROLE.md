@@ -28,14 +28,15 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 - [x] Etapa 17 - Validacao do ambiente inicial
 - [x] Etapa 18 - Instalacao e validacao de dependencias
 
-## Proxima fase sugerida
+## Fase 03 - Build e execucao inicial com Docker
 
-Fase 03 - Build e execucao inicial com Docker.
+- [x] Etapa 19 - Ajustar Dockerfiles e validar build dos containers
+- [ ] Etapa 20 - Subir containers e validar execucao inicial
 
 ## Ultima etapa executada
 
-Etapa 18 - Instalacao e validacao de dependencias.
+Etapa 19 - Ajustar Dockerfiles e validar build dos containers.
 
 ## Proxima etapa sugerida
 
-Etapa 19 - Ajustar Dockerfiles e validar build dos containers.
+Etapa 20 - Subir containers e validar execucao inicial.

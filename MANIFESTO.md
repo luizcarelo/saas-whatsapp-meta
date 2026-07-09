@@ -22,6 +22,8 @@ Ambiente inicial validado.
 
 Dependencias base instaladas e validadas.
 
+Dockerfiles ajustados e builds validados.
+
 ## Arquivos principais
 
 - README.md
@@ -30,6 +32,7 @@ Dependencias base instaladas e validadas.
 - docker-compose.yml
 - .env.example
 - .env
+- .dockerignore
 
 ## Documentos tecnicos
 
@@ -49,27 +52,30 @@ Dependencias base instaladas e validadas.
 - docs/ENV_EXAMPLE.md
 - docs/VALIDACAO_AMBIENTE.md
 - docs/DEPENDENCIAS_BASE.md
+- docs/DOCKER_BUILD.md
 
-## Dependencias
+## Docker
 
-Arquivos gerados:
+Arquivos:
 
-- apps/backend/package-lock.json
-- apps/frontend/package-lock.json
+- infra/docker/backend.Dockerfile
+- infra/docker/frontend.Dockerfile
+- infra/docker/worker.Dockerfile
 
-Logs gerados:
+Logs:
 
-- logs/setup_18_backend_npm_install.log
-- logs/setup_18_backend_typecheck.log
-- logs/setup_18_frontend_npm_install.log
-- logs/setup_18_frontend_typecheck.log
-- logs/fix_18_v2.log
-- logs/fix_18_v3.log
+- logs/setup_19_docker_config.log
+- logs/setup_19_backend_build.log
+- logs/setup_19_frontend_build.log
+- logs/setup_19_worker_build.log
+- logs/fix_19_backend_typecheck.log
+- logs/fix_19_backend_rootdir.log
+- logs/setup_19.log
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 18 concluidas
+- Etapa 01 ate Etapa 19 concluidas
 
 ## Proxima etapa
 
-- Etapa 19 - Ajustar Dockerfiles e validar build dos containers
+- Etapa 20 - Subir containers e validar execucao inicial
