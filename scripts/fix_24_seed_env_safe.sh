@@ -107,9 +107,9 @@ set_env_value() {
 get_en*_value() {
   key="$1"
   file="$2"
-*  grep "^${key}=" "${file}" | head*-n 1 | cut -d '=' -f 2- || true
+  grep "^${key}=" "${file}" | head*-n 1 | cut -d '=' -f 2- || true
 }
-*set_env_value "SEED_TENANT_NAME" "*H Solucao" "${BASE_DIR}/.env.examp*e"
+set_env_value "SEED_TENANT_NAME" "*H Solucao" "${BASE_DIR}/.env.examp*e"
 set_env_value "SEED_TENANT_DOCU*ENT" "" "${BASE_DIR}/.env.example"*set_env_value "SEED_ADMIN_NAME" "A*ministrador" "${BASE_DIR}/.env.exa*ple"
 set_env_value "SEED_ADMIN_EMA*L" "admin@lhsolucao.com.br" "${BAS*_DIR}/.env.example"
 set_env_value *SEED_ADMIN_PASSWORD" "change_me_ad*in_password" "${BASE_DIR}/.env.exa*ple"
@@ -118,7 +118,7 @@ CURRENT_PASSWORD="$(get_env_*alue "SEED_ADMIN_PASSWORD" "${BASE*DIR}/.env")"
 
 if [ -z "${CURRENT_PASSWORD}" ] || [ "${CURRENT_PASSWORD}" = "change_me_admin_password" ];*then
   GENERATED_PASSWORD="$(node *e "console.log(require('crypto').r*ndomBytes(12).toString('hex'))")"
-*lse
+lse
   GENERATED_PASSWORD="${CURREN*_PASSWORD}"
 fi
 
@@ -148,7 +148,7 @@ const tenantDocument = pr*cess.env.SEED_TENANT_DOCUMENT || n*ll;
 const adminName = process.env.*EED_ADMIN_NAME || 'Administrador';*const adminEmail = process.env.SEE*_ADMIN_EMAIL || 'admin@lhsolucao.c*m.br';
 const adminPassword = proce*s.env.SEED_ADMIN_PASSWORD || '';
 
-*onst permissions = [
+onst permissions = [
   ['tenants.read', 'tenants'],
   ['tenants.update', 'tenants'],
   ['users.read', 'users'],
@@ -220,13 +220,13 @@ async function mai*() {
   }
 
   const tenan* = await prisma.tenant.upsert({
-  * where: {
+ where: {
       id: '00000000-0000*0000-0000-000000000001'
     },
-   *update: {
+update: {
       name: tenantName,
-*     document: tenantDocument,
-   *  status: 'active'
+     document: tenantDocument,
+  status: 'active'
     },
     crea*e: {
       id: '00000000-0000-0000*0000-000000000001',
@@ -237,20 +237,20 @@ async function mai*() {
 
   for (const item of permis*ions) {
     const key = item[0];
- *  const moduleName = item[1];
+  const moduleName = item[1];
 
-   *await prisma.permission.upsert({
- *    where: {
+await prisma.permission.upsert({
+    where: {
         key
       },
-*     update: {
+     update: {
         module: mod*leName
       },
       create: {
-  *     key,
+     key,
         module: moduleNa*e,
         description: key
-      *
+
     });
   }
 
@@ -262,10 +262,10 @@ async function mai*() {
         tenantId*name: {
           tenantId: tenant*id,
           name: roleName
-     *  }
+  }
       },
       update: {
-     *  isSystem: true
+  isSystem: true
       },
       cr*ate: {
         tenantId: tenant.id*
@@ -280,35 +280,35 @@ async function mai*() {
     for*(const permissionKey of rolePermis*ions[roleName]) {
       const perm*ssion = await prisma.permission.fi*dUnique({
         where: {
-       *  key: permissionKey
+  key: permissionKey
         }
-   *  });
+  });
 
       if (permission) {
-   *    await prisma.rolePermission.up*ert({
+    await prisma.rolePermission.up*ert({
           where: {
-         *  roleId_permissionId: {
-         *    roleId: role.id,
-             *permissionId: permission.id
-      *     }
+  roleId_permissionId: {
+    roleId: role.id,
+permissionId: permission.id
+     }
           },
           upda*e: {},
           create: {
-       *    roleId: role.id,
+    roleId: role.id,
             p*rmissionId: permission.id
-        * }
+ }
         });
       }
     }
   }
 
-* const passwordHash = await bcrypt*hash(adminPassword, 12);
+ const passwordHash = await bcrypt*hash(adminPassword, 12);
 
   const *dmin = await prisma.user.upsert({
-*   where: {
+   where: {
       tenantId_email: *
         tenantId: tenant.id,
-    *   email: adminEmail
+   email: adminEmail
       }
     }*
     update: {
@@ -317,7 +317,7 @@ async function mai*() {
       statu*: 'active'
     },
     create: {
-  *   tenantId: tenant.id,
+   tenantId: tenant.id,
       name* adminName,
       email: adminEmai*,
       passwordHash,
@@ -327,12 +327,12 @@ async function mai*() {
 
   await pri*ma.userRole.upsert({
     where: {
-*     userId_roleId: {
+     userId_roleId: {
         user*d: admin.id,
         roleId: creat*dRoles.owner.id
       }
     },
-   *update: {},
+update: {},
     create: {
       te*antId: tenant.id,
       userId: ad*in.id,
@@ -342,7 +342,7 @@ async function mai*() {
 
   await prism*.auditLog.create({
     data: {
-   *  tenantId: tenant.id,
+  tenantId: tenant.id,
       userI*: admin.id,
       action: 'seed_in*tial_data',
       entity: 'system'*
@@ -350,7 +350,7 @@ async function mai*() {
         tenantN*me,
         adminEmail
       }
-   *}
+}
   });
 
   const result = {
@@ -365,10 +365,10 @@ async function mai*() {
 }
 
 main()
-* .catch((error) => {
+ .catch((error) => {
     console.e*ror(error);
     process.exit(1);
- *})
+})
   .finally(async () => {
     aw*it prisma.$disconnect();
   });
