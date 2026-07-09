@@ -58,6 +58,8 @@ Modulo backend de WhatsApp Accounts criado.
 
 Frontend de WhatsApp Accounts integrado criado.
 
+Modulo backend de webhooks da Meta criado.
+
 ## Arquivos principais
 
 - README.md
@@ -105,11 +107,12 @@ Frontend de WhatsApp Accounts integrado criado.
 - docs/FRONTEND_CONVERSATIONS_INTEGRADO.md
 - docs/BACKEND_WHATSAPP_ACCOUNTS.md
 - docs/FRONTEND_WHATSAPP_ACCOUNTS.md
+- docs/BACKEND_META_WEBHOOKS.md
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 36 concluidas
+- Etapa 01 ate Etapa 37 concluidas
 
 ## Proxima etapa
 
-- Etapa 37 - Modulo backend de webhooks da Meta
+- Etapa 38 - Validacao de assinatura dos webhooks da Meta

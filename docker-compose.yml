@@ -46,6 +46,8 @@ services:
     restart: unless-stopped
 
   backend:
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: infra/docker/backend.Dockerfile
