@@ -72,12 +72,16 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 - [x] Etapa 38 - Validacao de assinatura dos webhooks da Meta
 - [x] Etapa 39 - Processamento de status no frontend
 - [x] Etapa 40 - Envio real pela API oficial da Meta
-- [ ] Etapa 41 - Templates oficiais da Meta
+- [x] Etapa 41 - Templates oficiais da Meta
+- [x] Etapa 42 - Frontend para templates oficiais
+- [x] Etapa 43 - Painel de configuracao operacional da conta Meta
+- [x] Etapa 44 - Limpeza operacional de dados de teste
+- [ ] Etapa 45 - Painel de auditoria operacional
 
 ## Ultima etapa executada
 
-Etapa 40 - Envio real de mensagens pela API oficial da Meta.
+Etapa 44 - Limpeza operacional das contas de teste e dados artificiais.
 
 ## Proxima etapa sugerida
 
-Etapa 41 - Criar suporte a templates oficiais da Meta.
+Etapa 45 - Criar painel de auditoria operacional.

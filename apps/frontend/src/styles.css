@@ -1142,3 +1142,242 @@ a:hover {
     flex-direction: column;
   }
 }
+
+.template-composer {
+  align-items: center;
+  background: #fff7ed;
+  border-bottom: 1px solid #fed7aa;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(180px, 1fr) minmax(220px, 1.4fr) auto;
+  padding: 14px 18px;
+}
+
+.template-composer strong {
+  color: #9a3412;
+  display: block;
+}
+
+.template-composer p {
+  color: #9a3412;
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+
+.template-composer select {
+  border: 1px solid #fdba74;
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.template-composer select:focus {
+  border-color: #ea580c;
+  box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.14);
+  outline: none;
+}
+
+.template-composer button {
+  background: #ea580c;
+  border: 0;
+  border-radius: 14px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 900;
+  padding: 12px 16px;
+}
+
+.template-composer span {
+  color: #9a3412;
+  font-size: 13px;
+  font-weight: 800;
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 900px) {
+  .template-composer {
+    grid-template-columns: 1fr;
+  }
+}
+
+.meta-settings-toolbar {
+  align-items: end;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 22px;
+  box-shadow: 0 16px 45px rgba(15, 23, 42, 0.08);
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-top: 26px;
+  padding: 20px;
+}
+
+.meta-settings-toolbar label {
+  color: #374151;
+  display: grid;
+  font-size: 14px;
+  font-weight: 800;
+  gap: 8px;
+}
+
+.meta-settings-toolbar select {
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.meta-settings-toolbar button {
+  background: #b91c1c;
+  border: 0;
+  border-radius: 14px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 900;
+  padding: 12px 18px;
+}
+
+.meta-operational-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 22px;
+}
+
+.meta-operational-grid.small {
+  margin-top: 16px;
+}
+
+.meta-operational-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 22px;
+  box-shadow: 0 16px 45px rgba(15, 23, 42, 0.08);
+  padding: 20px;
+}
+
+.meta-operational-card span {
+  color: #6b7280;
+  display: block;
+  font-size: 13px;
+  font-weight: 900;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.meta-operational-card strong {
+  color: #111827;
+  display: block;
+  font-size: 24px;
+  overflow-wrap: anywhere;
+}
+
+.meta-operational-card p {
+  color: #6b7280;
+  margin: 8px 0 0;
+}
+
+.meta-operational-card small {
+  color: #6b7280;
+  display: block;
+  margin-top: 8px;
+  overflow-wrap: anywhere;
+}
+
+.operational-good {
+  color: #15803d !important;
+}
+
+.operational-warning {
+  color: #a16207 !important;
+}
+
+.operational-danger {
+  color: #b91c1c !important;
+}
+
+.operational-neutral {
+  color: #374151 !important;
+}
+
+.meta-details-panel {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 22px;
+  box-shadow: 0 16px 45px rgba(15, 23, 42, 0.08);
+  margin-top: 22px;
+  padding: 22px;
+}
+
+.meta-details-list {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.meta-details-list div {
+  background: #f9fafb;
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.meta-details-list span {
+  color: #6b7280;
+  display: block;
+  font-size: 12px;
+  font-weight: 900;
+  margin-bottom: 7px;
+  text-transform: uppercase;
+}
+
+.meta-details-list strong {
+  overflow-wrap: anywhere;
+}
+
+.meta-template-table {
+  display: grid;
+  gap: 10px;
+}
+
+.meta-template-table article {
+  align-items: center;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  padding: 14px;
+}
+
+.meta-template-table strong {
+  display: block;
+}
+
+.meta-template-table span,
+.meta-template-table small {
+  color: #6b7280;
+}
+
+.meta-template-table em {
+  background: #f3f4f6;
+  border-radius: 999px;
+  font-style: normal;
+  font-weight: 900;
+  padding: 7px 10px;
+}
+
+@media (max-width: 1100px) {
+  .meta-operational-grid,
+  .meta-details-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .meta-settings-toolbar,
+  .meta-operational-grid,
+  .meta-details-list,
+  .meta-template-table article {
+    grid-template-columns: 1fr;
+  }
+}

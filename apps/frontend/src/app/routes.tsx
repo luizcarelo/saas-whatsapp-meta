@@ -5,10 +5,11 @@ import {
   Routes
 } from 'react-router-dom';
 import { AppLayout } from '../components/layout/AppLayout';
-import { DashboardPage } from '../pages/dashboard/DashboardPage';
 import { ContactsPage } from '../pages/contacts/ContactsPage';
 import { ConversationsPage } from '../pages/conversations/ConversationsPage';
+import { DashboardPage } from '../pages/dashboard/DashboardPage';
 import { LoginPage } from '../pages/login/LoginPage';
+import { MetaSettingsPage } from '../pages/meta-settings/MetaSettingsPage';
 import { ProfilePage } from '../pages/profile/ProfilePage';
 import { WhatsappAccountsPage } from '../pages/whatsapp-accounts/WhatsappAccountsPage';
 import { ProtectedRoute } from './ProtectedRoute';
@@ -32,6 +33,7 @@ export function AppRoutes() {
           <Route path="contacts" element={<ContactsPage />} />
           <Route path="conversations" element={<ConversationsPage />} />
           <Route path="whatsapp-accounts" element={<WhatsappAccountsPage />} />
+          <Route path="meta-settings" element={<MetaSettingsPage />} />
           <Route path="profile" element={<ProfilePage />} />
         </Route>
 

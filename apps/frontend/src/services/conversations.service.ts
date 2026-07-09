@@ -3,13 +3,14 @@ import type {
   ConversationData,
   ConversationFormData,
   ConversationListData,
-  ConversationMessageData
+  ConversationMessageData,
+  SendTemplateFormData
 } from '../types/conversations.types';
 
 export async function listConversationsRequest(token: string, search = '') {
-  const query = search ? `?search=${encodeURIComponent(search)}` : '';
+  const query = search ? '?search=' + encodeURIComponent(search) : '';
 
-  return apiRequest<ConversationListData>(`/conversations${query}`, {
+  return apiRequest<ConversationListData>('/conversations' + query, {
     method: 'GET',
     token
   });
@@ -28,7 +29,7 @@ export async function createConversationRequest(token: string, data: Conversatio
 }
 
 export async function getConversationRequest(token: string, conversationId: string) {
-  return apiRequest<ConversationData>(`/conversations/${conversationId}`, {
+  return apiRequest<ConversationData>('/conversations/' + conversationId, {
     method: 'GET',
     token
   });
@@ -39,7 +40,7 @@ export async function createConversationMessageRequest(
   conversationId: string,
   body: string
 ) {
-  return apiRequest<ConversationMessageData>(`/conversations/${conversationId}/messages`, {
+  return apiRequest<ConversationMessageData>('/conversations/' + conversationId + '/messages', {
     method: 'POST',
     token,
     body: {
@@ -48,8 +49,23 @@ export async function createConversationMessageRequest(
   });
 }
 
+export async function sendConversationTemplateRequest(
+  token: string,
+  conversationId: string,
+  data: SendTemplateFormData
+) {
+  return apiRequest<ConversationMessageData>('/conversations/' + conversationId + '/templates', {
+    method: 'POST',
+    token,
+    body: {
+      templateName: data.templateName,
+      languageCode: data.languageCode
+    }
+  });
+}
+
 export async function closeConversationRequest(token: string, conversationId: string) {
-  return apiRequest<ConversationData>(`/conversations/${conversationId}/close`, {
+  return apiRequest<ConversationData>('/conversations/' + conversationId + '/close', {
     method: 'PATCH',
     token
   });

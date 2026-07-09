@@ -44,3 +44,22 @@ export type WhatsappAccountDeleteResponse = {
   };
   meta: Record<string, never>;
 };
+
+export type WhatsappTemplateListResponse = {
+  success: true;
+  data: {
+    account: WhatsappAccountItem;
+    templates: unknown;
+  };
+  meta: Record<string, never>;
+};
+
+export type WhatsappOperationalResponse = {
+  success: true;
+  data: {
+    account: WhatsappAccountItem;
+    phoneInfo: unknown;
+    templates: unknown;
+  };
+  meta: Record<string, never>;
+};

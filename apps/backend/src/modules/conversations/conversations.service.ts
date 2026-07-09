@@ -20,7 +20,8 @@ import type {
   ConversationMessageResponse,
   ConversationResponse,
   CreateConversationMessagePayload,
-  CreateConversationPayload
+  CreateConversationPayload,
+  SendConversationTemplatePayload
 } from './conversations.types';
 
 type ListConversationsQuery = {
@@ -211,6 +212,92 @@ export class ConversationsService {
         providerMessageId: sendResult.providerMessageId,
         status: sendResult.success ? MessageStatus.sent : MessageStatus.failed,
         metadata: {
+          metaSend: {
+            success: sendResult.success,
+            statusCode: sendResult.statusCode,
+            providerMessageId: sendResult.providerMessageId,
+            response: sendResult.response,
+            errorMessage: sendResult.errorMessage
+          }
+        } as never
+      }
+    });
+
+    await this.prismaService.conversation.update({
+      where: {
+        id: conversation.id
+      },
+      data: {
+        lastMessageAt: new Date(),
+        status: ConversationStatus.human
+      }
+    });
+
+    return {
+      success: true,
+      data: {
+        message: this.toMessageItem(updatedMessage)
+      },
+      meta: {}
+    };
+  }
+
+  async sendConversationTemplate(
+    tenantId: string,
+    conversationId: string,
+    payload: SendConversationTemplatePayload
+  ): Promise<ConversationMessageResponse> {
+    const templateName = payload.templateName?.trim() || process.env.META_TEMPLATE_TEST_NAME || 'hello_world';
+    const languageCode = payload.languageCode?.trim() || process.env.META_TEMPLATE_TEST_LANGUAGE || 'en_US';
+
+    const conversation = await this.findConversationOrFail(tenantId, conversationId);
+    const whatsappAccount = await this.resolveWhatsappAccountById(
+      tenantId,
+      conversation.whatsappAccountId
+    );
+
+    const body = `Template ${templateName} ${languageCode}`;
+
+    const message = await this.prismaService.message.create({
+      data: {
+        tenantId,
+        conversationId: conversation.id,
+        contactId: conversation.contact.id,
+        whatsappAccountId: whatsappAccount.id,
+        direction: MessageDirection.outbound,
+        type: MessageType.template,
+        body,
+        status: MessageStatus.pending,
+        sentAt: new Date(),
+        metadata: {
+          template: {
+            name: templateName,
+            languageCode
+          }
+        } as never
+      }
+    });
+
+    const sendResult = await this.metaWhatsappService.sendTemplateMessage({
+      phoneNumberId: whatsappAccount.phoneNumberId,
+      accessTokenEncrypted: whatsappAccount.accessTokenEncrypted,
+      to: conversation.contact.waId || conversation.contact.phone,
+      templateName,
+      languageCode
+    });
+
+    const updatedMessage = await this.prismaService.message.update({
+      where: {
+        id: message.id
+      },
+      data: {
+        providerMessageId: sendResult.providerMessageId,
+        status: sendResult.success ? MessageStatus.sent : MessageStatus.failed,
+        metadata: {
+          template: {
+            name: templateName,
+            languageCode
+          },
           metaSend: {
             success: sendResult.success,
             statusCode: sendResult.statusCode,

@@ -66,6 +66,14 @@ Processamento de status de mensagens no frontend criado.
 
 Envio real de mensagens pela API oficial da Meta criado.
 
+Suporte a templates oficiais da Meta criado.
+
+Frontend para envio de templates oficiais criado.
+
+Painel de configuracao operacional da conta Meta criado.
+
+Limpeza operacional de dados de teste criada.
+
 ## Arquivos principais
 
 - README.md
@@ -117,11 +125,15 @@ Envio real de mensagens pela API oficial da Meta criado.
 - docs/BACKEND_META_WEBHOOK_SIGNATURE.md
 - docs/FRONTEND_MESSAGE_STATUS.md
 - docs/BACKEND_META_SEND_MESSAGES.md
+- docs/BACKEND_META_TEMPLATES.md
+- docs/FRONTEND_META_TEMPLATES.md
+- docs/META_OPERATIONAL_PANEL.md
+- docs/OPERATIONAL_CLEANUP.md
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 40 concluidas
+- Etapa 01 ate Etapa 44 concluidas
 
 ## Proxima etapa
 
-- Etapa 41 - Templates oficiais da Meta
+- Etapa 45 - Painel de auditoria operacional

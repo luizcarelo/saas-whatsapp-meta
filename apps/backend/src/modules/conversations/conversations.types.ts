@@ -9,6 +9,11 @@ export type CreateConversationMessagePayload = {
   body?: string;
 };
 
+export type SendConversationTemplatePayload = {
+  templateName?: string;
+  languageCode?: string;
+};
+
 export type ConversationContact = {
   id: string;
   name: string | null;

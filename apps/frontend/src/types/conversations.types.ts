@@ -26,6 +26,9 @@ export type ConversationMessage = {
   type: string;
   body: string | null;
   status: MessageStatus | string;
+  providerMessageId?: string | null;
+  sentAt?: string | null;
+  metadata?: unknown;
   createdAt: string;
 };
 
@@ -71,4 +74,9 @@ export type MessageStatusSummary = {
   delivered: number;
   read: number;
   failed: number;
+};
+
+export type SendTemplateFormData = {
+  templateName: string;
+  languageCode: string;
 };

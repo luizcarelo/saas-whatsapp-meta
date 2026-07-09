@@ -3,13 +3,29 @@ import type {
   WhatsappAccountData,
   WhatsappAccountDeleteData,
   WhatsappAccountFormData,
-  WhatsappAccountListData
+  WhatsappAccountListData,
+  WhatsappOperationalData,
+  WhatsappTemplatesData
 } from '../types/whatsapp-accounts.types';
 
 export async function listWhatsappAccountsRequest(token: string, search = '') {
-  const query = search ? `?search=${encodeURIComponent(search)}` : '';
+  const query = search ? '?search=' + encodeURIComponent(search) : '';
 
-  return apiRequest<WhatsappAccountListData>(`/whatsapp-accounts${query}`, {
+  return apiRequest<WhatsappAccountListData>('/whatsapp-accounts' + query, {
+    method: 'GET',
+    token
+  });
+}
+
+export async function listWhatsappTemplatesRequest(token: string, accountId: string) {
+  return apiRequest<WhatsappTemplatesData>('/whatsapp-accounts/' + accountId + '/templates', {
+    method: 'GET',
+    token
+  });
+}
+
+export async function getWhatsappOperationalRequest(token: string, accountId: string) {
+  return apiRequest<WhatsappOperationalData>('/whatsapp-accounts/' + accountId + '/operational', {
     method: 'GET',
     token
   });
@@ -34,7 +50,7 @@ export async function createWhatsappAccountRequest(
 }
 
 export async function deleteWhatsappAccountRequest(token: string, accountId: string) {
-  return apiRequest<WhatsappAccountDeleteData>(`/whatsapp-accounts/${accountId}`, {
+  return apiRequest<WhatsappAccountDeleteData>('/whatsapp-accounts/' + accountId, {
     method: 'DELETE',
     token
   });

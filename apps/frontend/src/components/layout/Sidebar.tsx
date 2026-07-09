@@ -28,6 +28,10 @@ export function Sidebar() {
           WhatsApp
         </NavLink>
 
+        <NavLink to="/app/meta-settings">
+          Meta
+        </NavLink>
+
         <NavLink to="/app/profile">
           Perfil
         </NavLink>

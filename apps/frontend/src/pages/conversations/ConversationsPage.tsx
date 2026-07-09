@@ -4,21 +4,33 @@ import {
   createConversationMessageRequest,
   createConversationRequest,
   getConversationRequest,
-  listConversationsRequest
+  listConversationsRequest,
+  sendConversationTemplateRequest
 } from '../../services/conversations.service';
+import {
+  listWhatsappAccountsRequest,
+  listWhatsappTemplatesRequest
+} from '../../services/whatsapp-accounts.service';
 import { useAuthStore } from '../../stores/auth.store';
 import type {
   ConversationDetail,
   ConversationFormData,
   ConversationItem,
   ConversationMessage,
-  MessageStatusSummary
+  MessageStatusSummary,
+  SendTemplateFormData
 } from '../../types/conversations.types';
+import type { MetaTemplateItem } from '../../types/whatsapp-accounts.types';
 
 const initialForm: ConversationFormData = {
   name: '',
   phone: '',
   initialMessage: ''
+};
+
+const initialTemplateForm: SendTemplateFormData = {
+  templateName: 'hello_world',
+  languageCode: 'en_US'
 };
 
 const conversationStatusLabel: Record<string, string> = {
@@ -120,19 +132,31 @@ function summarizeMessageStatuses(messages: ConversationMessage[]): MessageStatu
   }, emptyStatusSummary);
 }
 
+function templateOptionValue(template: MetaTemplateItem) {
+  return template.name + '|' + template.language;
+}
+
+function templateLabel(template: MetaTemplateItem) {
+  return template.name + ' - ' + template.language + ' - ' + template.status;
+}
+
 export function ConversationsPage() {
   const accessToken = useAuthStore((state) => state.accessToken);
   const loadToken = useAuthStore((state) => state.loadToken);
 
   const [conversations, setConversations] = useState<ConversationItem[]>([]);
   const [selectedConversation, setSelectedConversation] = useState<ConversationDetail | null>(null);
+  const [templates, setTemplates] = useState<MetaTemplateItem[]>([]);
   const [total, setTotal] = useState(0);
   const [search, setSearch] = useState('');
   const [form, setForm] = useState<ConversationFormData>(initialForm);
+  const [templateForm, setTemplateForm] = useState<SendTemplateFormData>(initialTemplateForm);
   const [reply, setReply] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [sendingTemplate, setSendingTemplate] = useState(false);
   const [message, setMessage] = useState('');
+  const [templateMessage, setTemplateMessage] = useState('');
 
   function getToken() {
     return accessToken || loadToken();
@@ -178,8 +202,52 @@ export function ConversationsPage() {
     }
   }
 
+  async function loadTemplates() {
+    const token = getToken();
+
+    if (!token) {
+      return;
+    }
+
+    const accountsResponse = await listWhatsappAccountsRequest(token);
+
+    if (!accountsResponse.success) {
+      return;
+    }
+
+    const activeAccounts = accountsResponse.data.accounts.filter((account) => account.status === 'active');
+    const preferred = activeAccounts.find((account) => account.phoneNumberId === '1235882016268785')
+      || activeAccounts.find((account) => /^[0-9]+$/.test(account.phoneNumberId))
+      || activeAccounts[0];
+
+    if (!preferred) {
+      return;
+    }
+
+    const templatesResponse = await listWhatsappTemplatesRequest(token, preferred.id);
+
+    if (!templatesResponse.success) {
+      return;
+    }
+
+    const items = templatesResponse.data.templates.data || [];
+    const approved = items.filter((item) => item.status === 'APPROVED');
+
+    setTemplates(approved);
+
+    const helloWorld = approved.find((item) => item.name === 'hello_world') || approved[0];
+
+    if (helloWorld) {
+      setTemplateForm({
+        templateName: helloWorld.name,
+        languageCode: helloWorld.language
+      });
+    }
+  }
+
   useEffect(() => {
     void loadConversations('');
+    void loadTemplates();
   }, []);
 
   const conversationMetrics = useMemo(() => {
@@ -259,6 +327,40 @@ export function ConversationsPage() {
     await loadConversations(search);
   }
 
+  async function handleSendTemplate(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const token = getToken();
+
+    if (!token || !selectedConversation || !templateForm.templateName) {
+      return;
+    }
+
+    setSendingTemplate(true);
+    setTemplateMessage('');
+
+    try {
+      const response = await sendConversationTemplateRequest(
+        token,
+        selectedConversation.id,
+        templateForm
+      );
+
+      if (!response.success) {
+        setTemplateMessage(response.error.message || 'Nao foi possivel enviar o template');
+        return;
+      }
+
+      setTemplateMessage('Template enviado com status ' + response.data.message.status);
+      await loadConversation(selectedConversation.id);
+      await loadConversations(search);
+    } catch (_error) {
+      setTemplateMessage('Nao foi possivel conectar ao servidor');
+    } finally {
+      setSendingTemplate(false);
+    }
+  }
+
   async function handleCloseConversation() {
     const token = getToken();
 
@@ -278,12 +380,21 @@ export function ConversationsPage() {
     await loadConversations(search);
   }
 
+  function handleTemplateChange(value: string) {
+    const parts = value.split('|');
+
+    setTemplateForm({
+      templateName: parts[0] || 'hello_world',
+      languageCode: parts[1] || 'en_US'
+    });
+  }
+
   return (
     <section>
       <div className="page-heading">
         <span>Atendimento</span>
         <h1>Conversas</h1>
-        <p>Caixa de entrada integrada ao backend real com status visual de mensagens.</p>
+        <p>Caixa de entrada integrada ao backend real com mensagens e templates da Meta.</p>
       </div>
 
       <div className="conversation-metrics">
@@ -455,6 +566,36 @@ export function ConversationsPage() {
                 <span className="message-status-badge status-failed">Falhou</span>
               </div>
 
+              <form className="template-composer" onSubmit={handleSendTemplate}>
+                <div>
+                  <strong>Template oficial da Meta</strong>
+                  <p>Envie templates aprovados como hello_world.</p>
+                </div>
+
+                <select
+                  onChange={(event) => handleTemplateChange(event.target.value)}
+                  value={templateForm.templateName + '|' + templateForm.languageCode}
+                >
+                  {templates.length === 0 ? (
+                    <option value="hello_world|en_US">
+                      hello_world - en_US
+                    </option>
+                  ) : null}
+
+                  {templates.map((template) => (
+                    <option key={template.id} value={templateOptionValue(template)}>
+                      {templateLabel(template)}
+                    </option>
+                  ))}
+                </select>
+
+                <button disabled={sendingTemplate} type="submit">
+                  {sendingTemplate ? 'Enviando...' : 'Enviar template'}
+                </button>
+
+                {templateMessage ? <span>{templateMessage}</span> : null}
+              </form>
+
               <div className="thread-messages">
                 {selectedConversation.messages.length === 0 ? (
                   <div className="conversation-empty">
@@ -475,7 +616,7 @@ export function ConversationsPage() {
 
                     <footer className="thread-message-footer">
                       <span>{item.createdAt}</span>
-                      <span className={`message-status-badge ${getMessageStatusClass(item.status)}`}>
+                      <span className={'message-status-badge ' + getMessageStatusClass(item.status)}>
                         {getMessageStatusLabel(item.status)}
                       </span>
                     </footer>

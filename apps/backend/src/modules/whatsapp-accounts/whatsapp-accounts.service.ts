@@ -6,12 +6,15 @@ import {
 } from '@nestjs/common';
 import { WhatsappAccountStatus } from '@prisma/client';
 import { PrismaService } from '../database/prisma.service';
+import { MetaWhatsappService } from '../meta-whatsapp/meta-whatsapp.service';
 import type {
   WhatsappAccountDeleteResponse,
   WhatsappAccountItem,
   WhatsappAccountListResponse,
   WhatsappAccountPayload,
-  WhatsappAccountResponse
+  WhatsappAccountResponse,
+  WhatsappTemplateListResponse,
+  WhatsappOperationalResponse
 } from './whatsapp-accounts.types';
 
 type ListAccountsQuery = {
@@ -34,7 +37,10 @@ type AccountShape = {
 
 @Injectable()
 export class WhatsappAccountsService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly metaWhatsappService: MetaWhatsappService
+  ) {}
 
   async listAccounts(
     tenantId: string,
@@ -167,6 +173,54 @@ export class WhatsappAccountsService {
     };
   }
 
+  async listTemplates(
+    tenantId: string,
+    accountId: string
+  ): Promise<WhatsappTemplateListResponse> {
+    const account = await this.findAccountOrFail(tenantId, accountId);
+    const result = await this.metaWhatsappService.listTemplates({
+      wabaId: account.wabaId,
+      accessTokenEncrypted: await this.getAccessTokenEncrypted(account.id)
+    });
+
+    return {
+      success: true,
+      data: {
+        account: this.toItem(account),
+        templates: result.response
+      },
+      meta: {}
+    };
+  }
+
+  async getOperationalStatus(
+    tenantId: string,
+    accountId: string
+  ): Promise<WhatsappOperationalResponse> {
+    const account = await this.findAccountOrFail(tenantId, accountId);
+    const accessTokenEncrypted = await this.getAccessTokenEncrypted(account.id);
+
+    const phoneInfo = await this.metaWhatsappService.getPhoneNumberInfo({
+      phoneNumberId: account.phoneNumberId,
+      accessTokenEncrypted
+    });
+
+    const templates = await this.metaWhatsappService.listTemplates({
+      wabaId: account.wabaId,
+      accessTokenEncrypted
+    });
+
+    return {
+      success: true,
+      data: {
+        account: this.toItem(account),
+        phoneInfo: phoneInfo.response,
+        templates: templates.response
+      },
+      meta: {}
+    };
+  }
+
   async getAccount(tenantId: string, accountId: string): Promise<WhatsappAccountResponse> {
     const account = await this.findAccountOrFail(tenantId, accountId);
 
@@ -265,6 +319,16 @@ export class WhatsappAccountsService {
       },
       meta: {}
     };
+  }
+
+  private async getAccessTokenEncrypted(accountId: string): Promise<string> {
+    const account = await this.prismaService.whatsappAccount.findUnique({
+      where: {
+        id: accountId
+      }
+    });
+
+    return account?.accessTokenEncrypted || 'not_configured';
   }
 
   private async findAccountOrFail(tenantId: string, accountId: string): Promise<AccountShape> {

@@ -14,7 +14,8 @@ import type { AuthenticatedUser } from '../auth/auth.types';
 import { ConversationsService } from './conversations.service';
 import type {
   CreateConversationMessagePayload,
-  CreateConversationPayload
+  CreateConversationPayload,
+  SendConversationTemplatePayload
 } from './conversations.types';
 
 type ListConversationsQuery = {
@@ -60,6 +61,15 @@ export class ConversationsController {
     @Body() body: CreateConversationMessagePayload
   ) {
     return this.conversationsService.createConversationMessage(user.tenantId, id, body);
+  }
+
+  @Post(':id/templates')
+  sendTemplate(
+    @CurrentUser() user: AuthenticatedUser,
+    @Param('id') id: string,
+    @Body() body: SendConversationTemplatePayload
+  ) {
+    return this.conversationsService.sendConversationTemplate(user.tenantId, id, body);
   }
 
   @Patch(':id/close')

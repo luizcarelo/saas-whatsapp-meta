@@ -42,6 +42,22 @@ export class WhatsappAccountsController {
     return this.whatsappAccountsService.createAccount(user.tenantId, body);
   }
 
+  @Get(':id/templates')
+  listTemplates(
+    @CurrentUser() user: AuthenticatedUser,
+    @Param('id') id: string
+  ) {
+    return this.whatsappAccountsService.listTemplates(user.tenantId, id);
+  }
+
+  @Get(':id/operational')
+  getOperationalStatus(
+    @CurrentUser() user: AuthenticatedUser,
+    @Param('id') id: string
+  ) {
+    return this.whatsappAccountsService.getOperationalStatus(user.tenantId, id);
+  }
+
   @Get(':id')
   getAccount(
     @CurrentUser() user: AuthenticatedUser,
