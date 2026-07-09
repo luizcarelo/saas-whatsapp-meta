@@ -16,6 +16,10 @@ export function Sidebar() {
           Dashboard
         </NavLink>
 
+        <NavLink to="/app/contacts">
+          Contatos
+        </NavLink>
+
         <NavLink to="/app/conversations">
           Conversas
         </NavLink>

@@ -44,6 +44,10 @@ Modulo backend de usuarios criado.
 
 Frontend com perfil detalhado criado.
 
+Modulo backend de contatos criado.
+
+Frontend de contatos integrado criado.
+
 ## Arquivos principais
 
 - README.md
@@ -84,11 +88,13 @@ Frontend com perfil detalhado criado.
 - docs/FRONTEND_LAYOUT_PROTECAO_ROTAS.md
 - docs/BACKEND_USERS_PROFILE.md
 - docs/FRONTEND_PROFILE_DETALHADO.md
+- docs/BACKEND_CONTACTS.md
+- docs/FRONTEND_CONTACTS.md
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 29 concluidas
+- Etapa 01 ate Etapa 31 concluidas
 
 ## Proxima etapa
 
-- Etapa 30 - Modulo backend de contatos
+- Etapa 32 - Frontend de conversas com layout inicial

@@ -55,12 +55,17 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 
 ## Fase 07 - Contatos
 
-- [ ] Etapa 30 - Modulo backend de contatos
+- [x] Etapa 30 - Modulo backend de contatos
+- [x] Etapa 31 - Frontend de contatos integrado
+
+## Fase 08 - Conversas
+
+- [ ] Etapa 32 - Frontend de conversas com layout inicial
 
 ## Ultima etapa executada
 
-Etapa 29 - Frontend com perfil detalhado.
+Etapa 31 - Frontend de contatos integrado.
 
 ## Proxima etapa sugerida
 
-Etapa 30 - Criar modulo backend de contatos.
+Etapa 32 - Criar frontend de conversas com layout inicial.

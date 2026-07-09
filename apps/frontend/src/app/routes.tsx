@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import { AppLayout } from '../components/layout/AppLayout';
 import { DashboardPage } from '../pages/dashboard/DashboardPage';
+import { ContactsPage } from '../pages/contacts/ContactsPage';
 import { ConversationsPage } from '../pages/conversations/ConversationsPage';
 import { LoginPage } from '../pages/login/LoginPage';
 import { ProfilePage } from '../pages/profile/ProfilePage';
@@ -27,6 +28,7 @@ export function AppRoutes() {
           }
         >
           <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="contacts" element={<ContactsPage />} />
           <Route path="conversations" element={<ConversationsPage />} />
           <Route path="profile" element={<ProfilePage />} />
         </Route>
