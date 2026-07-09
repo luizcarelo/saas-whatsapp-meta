@@ -1,9 +1,23 @@
 import type { ApiResponse } from '../types/api.types';
 
-const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1';
+function getApiBaseUrl(): string {
+  const configuredUrl = import.meta.env.VITE_API_URL as string | undefined;
+
+  if (configuredUrl && configuredUrl.length > 0) {
+    return configuredUrl;
+  }
+
+  if (typeof window !== 'undefined') {
+    return `${window.location.origin}/api/v1`;
+  }
+
+  return 'http://127.0.0.1:3300/api/v1';
+}
+
+const apiBaseUrl = getApiBaseUrl();
 
 type RequestOptions = {
-  token?: string;
+  token?: string | null;
   method?: string;
   body?: unknown;
 };

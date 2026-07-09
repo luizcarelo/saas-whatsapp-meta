@@ -40,12 +40,23 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 - [x] Etapa 21 - Health, configuracao e database base
 - [x] Etapa 22 - ORM e conexao real com PostgreSQL
 - [x] Etapa 23 - Schema inicial do banco com Prisma
-- [ ] Etapa 24 - Seed inicial de tenant, admin, roles e permissoes
+- [x] Etapa 24 - Seed inicial de tenant, admin, roles e permissoes
+- [x] Etapa 25 - Auth inicial com login real
+
+## Fase 05 - Frontend integrado inicial
+
+- [x] Etapa 26 - Frontend login integrado
+- [x] Etapa 27 - Protecao visual de rotas e layout base
+
+## Fase 06 - Usuarios e perfil
+
+- [x] Etapa 28 - Modulo backend de usuarios
+- [ ] Etapa 29 - Frontend com perfil detalhado
 
 ## Ultima etapa executada
 
-Etapa 23 - Schema inicial do banco com Prisma.
+Etapa 28 - Modulo backend de usuarios e endpoint de perfil detalhado.
 
 ## Proxima etapa sugerida
 
-Etapa 24 - Criar seed inicial de tenant, usuario admin, roles e permissoes.
+Etapa 29 - Integrar frontend ao endpoint users me para perfil detalhado.

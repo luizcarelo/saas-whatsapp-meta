@@ -32,6 +32,16 @@ Prisma configurado com conexao real ao PostgreSQL.
 
 Schema inicial do banco criado.
 
+Seed inicial criado.
+
+Auth inicial com login real criado.
+
+Frontend login integrado criado.
+
+Layout base e protecao visual de rotas criados.
+
+Modulo backend de usuarios criado.
+
 ## Arquivos principais
 
 - README.md
@@ -66,11 +76,16 @@ Schema inicial do banco criado.
 - docs/BACKEND_HEALTH_CONFIG_DATABASE.md
 - docs/BACKEND_PRISMA_POSTGRES.md
 - docs/PRISMA_SCHEMA_INICIAL.md
+- docs/SEED_INICIAL.md
+- docs/AUTH_LOGIN_REAL.md
+- docs/FRONTEND_LOGIN_INTEGRADO.md
+- docs/FRONTEND_LAYOUT_PROTECAO_ROTAS.md
+- docs/BACKEND_USERS_PROFILE.md
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 23 concluidas
+- Etapa 01 ate Etapa 28 concluidas
 
 ## Proxima etapa
 
-- Etapa 24 - Seed inicial de tenant, admin, roles e permissoes
+- Etapa 29 - Frontend com perfil detalhado
