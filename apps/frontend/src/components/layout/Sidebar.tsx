@@ -21,6 +21,7 @@ export function Sidebar() {
         <NavLink to="/app/inbox">Atendimento</NavLink>
         <NavLink to="/app/attendance-dashboard">Dashboard atendimento</NavLink>
         <NavLink to="/app/send-failures">Falhas de envio</NavLink>
+        <NavLink to="/app/attendance-settings">Configuracoes atendimento</NavLink>
         <NavLink to="/app/contacts">Contatos</NavLink>
         <NavLink to="/app/conversations">Conversas</NavLink>
         <NavLink to="/app/whatsapp-accounts">WhatsApp</NavLink>

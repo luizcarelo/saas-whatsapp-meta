@@ -19,6 +19,7 @@ import { ProfilePage } from '../pages/profile/ProfilePage';
 import { WhatsappAccountsPage } from '../pages/whatsapp-accounts/WhatsappAccountsPage';
 import { ProtectedRoute } from './ProtectedRoute';
 import { SendFailuresPage } from '../pages/send-failures/SendFailuresPage';
+import { AttendanceSettingsPage } from '../pages/attendance-settings/AttendanceSettingsPage';
 
 export function AppRoutes() {
   return (
@@ -39,6 +40,7 @@ export function AppRoutes() {
           <Route path="inbox" element={<InboxPage />} />
           <Route path="attendance-dashboard" element={<AttendanceDashboardPage />} />
           <Route path="send-failures" element={<SendFailuresPage />} />
+          <Route path="attendance-settings" element={<AttendanceSettingsPage />} />
           <Route path="contacts" element={<ContactsPage />} />
           <Route path="conversations" element={<ConversationsPage />} />
           <Route path="whatsapp-accounts" element={<WhatsappAccountsPage />} />

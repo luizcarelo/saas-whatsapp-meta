@@ -111,12 +111,14 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 ## Fase 10 - Refino do modulo Atendimento
 <br>
 - [x] Etapa 74 - Refino estrutural do modulo Atendimento
-- [ ] Etapa 75 - Padronizacao dos status de atendimento
+- [x] Etapa 75 - Padronizacao dos status de atendimento
+- [x] Etapa 76 - Reorganizacao visual do app inbox
+- [ ] Etapa 77 - Criacao da tela attendance settings
 
 ## Ultima etapa executada
 
-Etapa 74 - Refino estrutural do modulo Atendimento.
+Etapa 76 - Reorganizacao visual do app inbox.
 
 ## Proxima etapa sugerida
 
-Etapa 75 - Padronizacao dos status de atendimento.
+Etapa 77 - Criacao da tela attendance settings.

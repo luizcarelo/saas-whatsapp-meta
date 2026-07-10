@@ -4584,3 +4584,479 @@ button:hover:not(:disabled) {
     flex-direction: column;
   }
 }
+
+/* Etapa 76 - Reorganizacao visual do app inbox */
+
+.inbox-visual-guide {
+  align-items: center;
+  background: linear-gradient(135deg, rgba(7, 87, 200, 0.08), rgba(220, 38, 38, 0.08));
+  border: 1px solid rgba(7, 87, 200, 0.16);
+  border-radius: 18px;
+  color: var(--lh-blue-950, #04204f);
+  display: grid;
+  font-size: 12px;
+  font-weight: 950;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr;
+  letter-spacing: 0.02em;
+  padding: 10px 14px;
+  text-transform: uppercase;
+}
+
+.inbox-visual-guide span {
+  background: #ffffff;
+  border: 1px solid rgba(4, 32, 79, 0.08);
+  border-radius: 999px;
+  box-shadow: 0 10px 26px rgba(4, 32, 79, 0.08);
+  padding: 8px 10px;
+  text-align: center;
+}
+
+.inbox-shell {
+  display: grid;
+  gap: 20px;
+}
+
+.inbox-hero {
+  overflow: hidden;
+  position: relative;
+}
+
+.inbox-hero::after {
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.28), transparent 60%);
+  content: "";
+  height: 220px;
+  pointer-events: none;
+  position: absolute;
+  right: -70px;
+  top: -90px;
+  width: 220px;
+}
+
+.inbox-grid,
+.inbox-layout,
+.attendance-layout {
+  align-items: start;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr) minmax(280px, 360px);
+}
+
+.conversation-list,
+.inbox-conversations,
+.conversations-panel {
+  min-height: 540px;
+}
+
+.conversation-list,
+.inbox-conversations,
+.conversations-panel,
+.conversation-thread,
+.messages-panel,
+.inbox-thread,
+.attendance-side-panel,
+.metadata-panel,
+.inbox-details,
+.quick-replies-card,
+.closure-card,
+.send-history-card {
+  border-radius: 22px;
+}
+
+.conversation-list,
+.inbox-conversations,
+.conversations-panel {
+  background: #ffffff;
+  border: 1px solid var(--lh-border, #e5e7eb);
+  box-shadow: var(--lh-shadow, 0 18px 50px rgba(4, 32, 79, 0.12));
+  overflow: hidden;
+}
+
+.conversation-list button,
+.inbox-conversations button,
+.conversations-panel button {
+  border-radius: 16px;
+}
+
+.conversation-thread,
+.messages-panel,
+.inbox-thread {
+  background: #ffffff;
+  border: 1px solid var(--lh-border, #e5e7eb);
+  box-shadow: var(--lh-shadow, 0 18px 50px rgba(4, 32, 79, 0.12));
+  min-height: 620px;
+  overflow: hidden;
+}
+
+.message-list,
+.messages-list,
+.chat-messages {
+  background:
+    linear-gradient(rgba(248, 250, 252, 0.92), rgba(248, 250, 252, 0.92)),
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.10), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(220, 38, 38, 0.08), transparent 30%);
+  border-radius: 18px;
+}
+
+.composer-card,
+.message-composer,
+.inbox-composer {
+  background: #ffffff;
+  border: 1px solid rgba(4, 32, 79, 0.10);
+  border-radius: 20px;
+  bottom: 12px;
+  box-shadow: 0 18px 45px rgba(4, 32, 79, 0.16);
+  position: sticky;
+  z-index: 4;
+}
+
+.composer-card textarea,
+.message-composer textarea,
+.inbox-composer textarea {
+  border-radius: 16px;
+  min-height: 84px;
+}
+
+.attendance-side-panel,
+.metadata-panel,
+.inbox-details {
+  display: grid;
+  gap: 14px;
+  position: sticky;
+  top: 18px;
+}
+
+.quick-replies-card,
+.closure-card,
+.send-history-card,
+.notes-card,
+.tags-card,
+.assignee-card,
+.status-card {
+  background: #ffffff;
+  border: 1px solid var(--lh-border, #e5e7eb);
+  box-shadow: 0 12px 34px rgba(4, 32, 79, 0.10);
+  overflow: hidden;
+}
+
+.quick-replies-card,
+.closure-card {
+  padding: 16px;
+}
+
+.quick-replies-card button,
+.closure-card button,
+.status-card button,
+.assignee-card button {
+  min-height: 40px;
+}
+
+.send-history-list {
+  display: grid;
+  gap: 10px;
+  max-height: 300px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.send-history-list article {
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.inbox-panel-title {
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(4, 32, 79, 0.08);
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.inbox-panel-title strong {
+  color: var(--lh-blue-950, #04204f);
+  font-size: 15px;
+}
+
+.inbox-panel-title span {
+  color: var(--lh-muted, #6b7280);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.status-pill,
+.conversation-status,
+.attendance-status {
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 950;
+  line-height: 1;
+  padding: 7px 10px;
+}
+
+.status-pill[data-status="novo"],
+.attendance-status[data-status="novo"] {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-pill[data-status="em_atendimento"],
+.attendance-status[data-status="em_atendimento"] {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-pill[data-status="aguardando_cliente"],
+.attendance-status[data-status="aguardando_cliente"] {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-pill[data-status="encerrado"],
+.attendance-status[data-status="encerrado"] {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.form-message {
+  border-radius: 16px;
+}
+
+@media (max-width: 1280px) {
+  .inbox-grid,
+  .inbox-layout,
+  .attendance-layout {
+    grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
+  }
+
+  .attendance-side-panel,
+  .metadata-panel,
+  .inbox-details {
+    grid-column: 1 / -1;
+    position: static;
+  }
+}
+
+@media (max-width: 900px) {
+  .inbox-visual-guide {
+    grid-template-columns: 1fr;
+  }
+
+  .inbox-grid,
+  .inbox-layout,
+  .attendance-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .conversation-list,
+  .inbox-conversations,
+  .conversations-panel,
+  .conversation-thread,
+  .messages-panel,
+  .inbox-thread {
+    min-height: auto;
+  }
+
+  .composer-card,
+  .message-composer,
+  .inbox-composer {
+    bottom: 0;
+  }
+}
+
+/* Etapa 77 - Attendance settings page */
+
+.attendance-settings-shell {
+  display: grid;
+  gap: 20px;
+}
+
+.attendance-settings-actions {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid var(--lh-border, #e5e7eb);
+  border-radius: 18px;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 14px 16px;
+}
+
+.attendance-settings-actions button,
+.attendance-settings-actions a {
+  background: linear-gradient(135deg, var(--lh-blue-800, #0757c8), var(--lh-blue-600, #2563eb));
+  border: none;
+  border-radius: 999px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 950;
+  padding: 10px 14px;
+  text-decoration: none;
+}
+
+.attendance-settings-summary {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.attendance-settings-summary article {
+  background: #ffffff;
+  border: 1px solid var(--lh-border, #e5e7eb);
+  border-radius: 20px;
+  box-shadow: var(--lh-shadow, 0 18px 50px rgba(4, 32, 79, 0.12));
+  display: grid;
+  gap: 6px;
+  padding: 18px;
+}
+
+.attendance-settings-summary strong {
+  color: var(--lh-red-600, #dc2626);
+  font-size: 30px;
+  line-height: 1;
+}
+
+.attendance-settings-summary span {
+  color: var(--lh-blue-950, #04204f);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.attendance-settings-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.attendance-settings-card {
+  background: #ffffff;
+  border: 1px solid var(--lh-border, #e5e7eb);
+  border-radius: 22px;
+  box-shadow: var(--lh-shadow, 0 18px 50px rgba(4, 32, 79, 0.12));
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+}
+
+.attendance-settings-card header {
+  border-bottom: 1px solid rgba(4, 32, 79, 0.08);
+  padding-bottom: 12px;
+}
+
+.attendance-settings-card header strong {
+  color: var(--lh-blue-950, #04204f);
+  display: block;
+  font-size: 17px;
+}
+
+.attendance-settings-card header span {
+  color: var(--lh-muted, #6b7280);
+  display: block;
+  font-size: 13px;
+  font-weight: 800;
+  margin-top: 4px;
+}
+
+.attendance-settings-list {
+  display: grid;
+  gap: 10px;
+  max-height: 380px;
+  overflow: auto;
+}
+
+.attendance-settings-list > div {
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  display: grid;
+  gap: 5px;
+  padding: 12px;
+}
+
+.attendance-settings-list strong {
+  color: var(--lh-blue-950, #04204f);
+}
+
+.attendance-settings-list span {
+  color: #4b5563;
+  font-size: 13px;
+}
+
+.attendance-settings-list em {
+  color: var(--lh-red-600, #dc2626);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 950;
+}
+
+.attendance-settings-status {
+  display: grid;
+  gap: 14px;
+}
+
+.attendance-settings-status > div {
+  display: grid;
+  gap: 8px;
+}
+
+.attendance-settings-status > div > strong {
+  color: var(--lh-blue-950, #04204f);
+}
+
+.attendance-settings-status > div > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.attendance-settings-status span {
+  background: #eef2ff;
+  border-radius: 999px;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 7px 10px;
+}
+
+.attendance-settings-wide {
+  grid-column: 1 / -1;
+}
+
+.attendance-settings-roadmap {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.attendance-settings-roadmap span {
+  background: linear-gradient(135deg, rgba(7, 87, 200, 0.08), rgba(220, 38, 38, 0.08));
+  border: 1px solid rgba(4, 32, 79, 0.08);
+  border-radius: 16px;
+  color: var(--lh-blue-950, #04204f);
+  font-weight: 900;
+  padding: 14px;
+}
+
+@media (max-width: 1100px) {
+  .attendance-settings-summary,
+  .attendance-settings-grid,
+  .attendance-settings-roadmap {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .attendance-settings-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .attendance-settings-summary,
+  .attendance-settings-grid,
+  .attendance-settings-roadmap {
+    grid-template-columns: 1fr;
+  }
+}

@@ -615,6 +615,12 @@ export function InboxPage() {
 
       {notice ? <div className="form-message">{notice}</div> : null}
 
+      <section className="inbox-visual-guide" aria-label="Etapa 76 - layout refinado">
+        <span>Conversas e filtros</span>
+        <span>Mensagens e envio</span>
+        <span>Dados operacionais</span>
+      </section>
+
       <section className="department-manager">
         <div>
           <strong>Departamentos</strong>

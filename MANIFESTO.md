@@ -224,11 +224,11 @@ Revisao final da fase de automacao e envio real concluida.
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 74 concluidas
+- Etapa 01 ate Etapa 76 concluidas
 
 ## Proxima etapa
 
-- Etapa 75 - Padronizacao dos status de atendimento
+- Etapa 77 - Criacao da tela attendance settings
 
 Refino estrutural do modulo Atendimento planejado.
 - docs/ATTENDANCE_MODULE_REFINEMENT_PLAN.md
@@ -236,3 +236,11 @@ Refino estrutural do modulo Atendimento planejado.
 - docs/ATTENDANCE_SCREEN_REORGANIZATION.md
 - docs/ATTENDANCE_STATUS_MODEL.md
 - docs/ATTENDANCE_REFINEMENT_ROADMAP.md
+
+Padronizacao dos status de atendimento criada.
+- docs/ATTENDANCE_STATUS_STANDARDIZATION.md
+- docs/ATTENDANCE_STATUS_COMPATIBILITY_MAP.md
+
+Reorganizacao visual do app inbox criada.
+- docs/ATTENDANCE_INBOX_VISUAL_REORGANIZATION.md
+- docs/ATTENDANCE_INBOX_VISUAL_CHECKLIST.md
