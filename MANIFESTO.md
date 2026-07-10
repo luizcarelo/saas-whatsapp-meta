@@ -126,6 +126,8 @@ Envio real da mensagem de encerramento com avaliacao criado.
 
 Registro do atendente nas mensagens enviadas criado.
 
+Automacoes basicas por status e departamento criadas.
+
 ## Arquivos principais
 
 - README.md
@@ -138,6 +140,7 @@ Registro do atendente nas mensagens enviadas criado.
 
 ## Documentos tecnicos
 
+- docs/ATTENDANCE_BASIC_AUTOMATIONS.md
 - docs/ATTENDANCE_SENT_MESSAGE_ATTENDANT_TRACKING.md
 - docs/ATTENDANCE_CLOSING_RATING_SEND.md
 - docs/ATTENDANCE_QUICK_REPLY_SEND.md
@@ -214,8 +217,8 @@ Registro do atendente nas mensagens enviadas criado.
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 70 concluidas
+- Etapa 01 ate Etapa 71 concluidas
 
 ## Proxima etapa
 
-- Etapa 71 - Automacoes basicas por status e departamento
+- Etapa 72 - Painel de falhas e retentativas de envio

@@ -102,12 +102,13 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 - [x] Etapa 68 - Envio real usando respostas rapidas
 - [x] Etapa 69 - Envio real da mensagem de encerramento com avaliacao
 - [x] Etapa 70 - Registro do atendente nas mensagens enviadas
-- [ ] Etapa 71 - Automacoes basicas por status e departamento
+- [x] Etapa 71 - Automacoes basicas por status e departamento
+- [ ] Etapa 72 - Painel de falhas e retentativas de envio
 
 ## Ultima etapa executada
 
-Etapa 70 - Registro do atendente nas mensagens enviadas.
+Etapa 71 - Automacoes basicas por status e departamento.
 
 ## Proxima etapa sugerida
 
-Etapa 71 - Automacoes basicas por status e departamento.
+Etapa 72 - Painel de falhas e retentativas de envio.
