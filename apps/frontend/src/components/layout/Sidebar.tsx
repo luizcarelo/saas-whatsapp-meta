@@ -4,10 +4,10 @@ export function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
-        <div className="sidebar-logo">LH</div>
+        /assets/lh_chatbot_favicon.png
         <div>
-          <strong>LH Bot</strong>
-          <span>WhatsApp Meta</span>
+          <strong>LH Solucao</strong>
+          <span>Chat Bot Meta</span>
         </div>
       </div>
 
