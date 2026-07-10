@@ -1,3 +1,74 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJECT_NAME="saas-whatsapp-meta"
+BASE_DIR="${HOME}/${PROJECT_NAME}"
+FRONTEND_DIR="${BASE_DIR}/apps/frontend"
+DOCS_DIR="${BASE_DIR}/docs"
+LOGS_DIR="${BASE_DIR}/logs"
+BACKUPS_DIR="${BASE_DIR}/backups"
+STAMP="$(date '+%Y%m%d_%H%M%S')"
+
+LOG_FILE="${LOGS_DIR}/setup_60.log"
+FIX_LOG_FILE="${LOGS_DIR}/fix_60_inbox_quick_replies_frontend.log"
+
+FRONTEND_TYPECHECK_LOG="${LOGS_DIR}/setup_60_frontend_typecheck.log"
+FRONTEND_BUILD_LOG="${LOGS_DIR}/setup_60_frontend_build.log"
+DOCKER_BACKEND_BUILD_LOG="${LOGS_DIR}/setup_60_backend_docker_build.log"
+DOCKER_FRONTEND_BUILD_LOG="${LOGS_DIR}/setup_60_frontend_docker_build.log"
+DOCKER_UP_LOG="${LOGS_DIR}/setup_60_docker_up.log"
+BACKEND_WAIT_LOG="${LOGS_DIR}/setup_60_backend_wait.log"
+BACKEND_CRASH_LOG="${LOGS_DIR}/setup_60_backend_crash.log"
+
+DOMAIN_LOGIN_LOG="${LOGS_DIR}/setup_60_auth_login_domain.log"
+DOMAIN_QUICK_REPLIES_LOG="${LOGS_DIR}/setup_60_quick_replies_domain.log"
+DOMAIN_QUICK_REPLY_CREATE_LOG="${LOGS_DIR}/setup_60_quick_reply_create_domain.log"
+DOMAIN_INBOX_PAGE_LOG="${LOGS_DIR}/setup_60_domain_inbox_page.log"
+DOMAIN_DASHBOARD_LOG="${LOGS_DIR}/setup_60_domain_dashboard.log"
+DOMAIN_AUDIT_PAGE_LOG="${LOGS_DIR}/setup_60_domain_audit_page.log"
+
+DOC_FILE="${DOCS_DIR}/ATTENDANCE_QUICK_REPLIES.md"
+
+DOMAIN_BASE_URL="https://bot.lhsolucao.com.br"
+DOMAIN_LOGIN_URL="${DOMAIN_BASE_URL}/api/v1/auth/login"
+DOMAIN_ATTENDANCE_URL="${DOMAIN_BASE_URL}/api/v1/attendance"
+DOMAIN_INBOX_PAGE_URL="${DOMAIN_BASE_URL}/app/inbox"
+DOMAIN_DASHBOARD_URL="${DOMAIN_BASE_URL}/app/dashboard"
+DOMAIN_AUDIT_PAGE_URL="${DOMAIN_BASE_URL}/app/audit"
+
+echo "== Fix final Etapa 60: Inbox respostas rapidas =="
+
+cd "${BASE_DIR}"
+
+mkdir -p "${DOCS_DIR}"
+mkdir -p "${LOGS_DIR}"
+mkdir -p "${BACKUPS_DIR}"
+mkdir -p "${FRONTEND_DIR}/src/pages/inbox"
+
+echo "Criando backups..."
+
+for file in \
+  "${FRONTEND_DIR}/src/pages/inbox/InboxPage.tsx" \
+  "${FRONTEND_DIR}/src/services/attendance.service.ts" \
+  "${FRONTEND_DIR}/src/types/attendance.types.ts" \
+  "${FRONTEND_DIR}/src/styles.css" \
+  "${DOC_FILE}" \
+  "${BASE_DIR}/00_CONTROLE.md" \
+  "${BASE_DIR}/MANIFESTO.md" \
+  "${BASE_DIR}/CONTEXTO_PROJETO.md" \
+  "${BASE_DIR}/CHANGELOG.md" \
+  "${BASE_DIR}/DECISOES_TECNICAS.md" \
+  "${BASE_DIR}/PENDENCIAS.md"
+do
+  if [ -f "${file}" ]; then
+    base_name="$(basename "${file}")"
+    cp "${file}" "${BACKUPS_DIR}/${base_name}_${STAMP}.bak"
+  fi
+done
+
+echo "Regravando InboxPage.tsx completo e seguro..."
+
+cat > "${FRONTEND_DIR}/src/pages/inbox/InboxPage.tsx" <<'TSX'
 import { FormEvent, useEffect, useMemo, useState } from 'react';
 import {
   assignAttendanceConversationRequest,
@@ -9,38 +80,12 @@ import {
   listAttendanceQuickRepliesRequest,
   updateAttendanceConversationStatusRequest
 } from '../../services/attendance.service';
-import {
-  attachConversationTagRequest,
-  createConversationNoteRequest,
-  listAttendanceTagsRequest,
-  listConversationNotesRequest,
-  listConversationTagsRequest
-} from '../../services/attendance-metadata.service';
-import {
-  closeAttendanceConversationRequest,
-  createAttendanceRatingRequest,
-  listAttendanceClosuresRequest,
-  listAttendanceRatingsRequest
-} from '../../services/attendance-closure.service';
-import {
-  listAttendanceSendHistoryRequest,
-  sendAttendanceManualMessageRequest
-} from '../../services/attendance-send.service';
 import { useAuthStore } from '../../stores/auth.store';
 import type {
   AttendanceConversationItem,
   AttendanceDepartmentItem,
   AttendanceQuickReplyItem
 } from '../../types/attendance.types';
-import type {
-  AttendanceInternalNoteItem,
-  AttendanceTagItem
-} from '../../types/attendance-metadata.types';
-import type {
-  AttendanceClosureItem,
-  AttendanceRatingItem
-} from '../../types/attendance-closure.types';
-import type { AttendanceSendItem } from '../../types/attendance-send.types';
 
 const fallbackConversations: AttendanceConversationItem[] = [
   {
@@ -114,78 +159,10 @@ export function InboxPage() {
   const [assigneeName, setAssigneeName] = useState('');
   const [composerText, setComposerText] = useState('');
   const [notice, setNotice] = useState('');
-  const [internalNotes, setInternalNotes] = useState<AttendanceInternalNoteItem[]>([]);
-  const [availableTags, setAvailableTags] = useState<AttendanceTagItem[]>([]);
-  const [conversationTags, setConversationTags] = useState<AttendanceTagItem[]>([]);
-  const [newInternalNote, setNewInternalNote] = useState('');
-  const [newTagName, setNewTagName] = useState('');
-  const [closures, setClosures] = useState<AttendanceClosureItem[]>([]);
-  const [ratings, setRatings] = useState<AttendanceRatingItem[]>([]);
-  const [closingMessage, setClosingMessage] = useState('Atendimento finalizado.\n\nComo voce avalia nosso atendimento de 1 a 5?\n\n1 - Muito ruim\n2 - Ruim\n3 - Regular\n4 - Bom\n5 - Excelente\n\nObrigado por falar com a LH Solucao.');
-  const [ratingValue, setRatingValue] = useState('5');
-  const [ratingComment, setRatingComment] = useState('');
-  const [sendHistory, setSendHistory] = useState<AttendanceSendItem[]>([]);
-  const [sendDryRun, setSendDryRun] = useState(true);
-  const [sendingMessage, setSendingMessage] = useState(false);
-  const [selectedQuickReplyId, setSelectedQuickReplyId] = useState<string | null>(null);
-  const [selectedQuickReplyTitle, setSelectedQuickReplyTitle] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   function getToken() {
     return accessToken || loadToken();
-  }
-
-  async function loadMetadata(conversationId: string) {
-    const token = getToken();
-
-    if (!token || !conversationId || conversationId.startsWith('demo-')) {
-      setInternalNotes([]);
-      setConversationTags([]);
-      return;
-    }
-
-    const [notesResponse, tagsResponse, conversationTagsResponse, closuresResponse, ratingsResponse] = await Promise.all([
-      listConversationNotesRequest(token, conversationId),
-      listAttendanceTagsRequest(token),
-      listConversationTagsRequest(token, conversationId),
-      listAttendanceClosuresRequest(token, conversationId),
-      listAttendanceRatingsRequest(token, conversationId)
-    ]);
-
-    if (notesResponse.success) {
-      setInternalNotes(notesResponse.data.notes);
-    }
-
-    if (tagsResponse.success) {
-      setAvailableTags(tagsResponse.data.tags);
-    }
-
-    if (conversationTagsResponse.success) {
-      setConversationTags(conversationTagsResponse.data.tags);
-    }
-
-    if (closuresResponse.success) {
-      setClosures(closuresResponse.data.closures);
-    }
-
-    if (ratingsResponse.success) {
-      setRatings(ratingsResponse.data.ratings);
-    }
-  }
-
-  async function loadSendHistory(conversationId: string) {
-    const token = getToken();
-
-    if (!token || !conversationId || conversationId.startsWith('demo-')) {
-      setSendHistory([]);
-      return;
-    }
-
-    const response = await listAttendanceSendHistoryRequest(token, conversationId);
-
-    if (response.success) {
-      setSendHistory(response.data.sends);
-    }
   }
 
   async function loadInbox() {
@@ -264,18 +241,6 @@ export function InboxPage() {
       return array.findIndex((candidate) => candidate.id === item.id) === index;
     });
   }, [quickReplies, selectedConversation.departmentName]);
-
-  useEffect(() => {
-    if (selectedConversation.id) {
-      void loadMetadata(selectedConversation.id);
-    }
-  }, [selectedConversation.id]);
-
-  useEffect(() => {
-    if (selectedConversation.id) {
-      void loadSendHistory(selectedConversation.id);
-    }
-  }, [selectedConversation.id]);
 
   const visibleConversations = useMemo(() => {
     if (selectedQueue === 'Fila geral') {
@@ -385,183 +350,6 @@ export function InboxPage() {
       setNotice('Departamento criado com sucesso.');
     } else {
       setNotice(response.error.message || 'Nao foi possivel criar departamento.');
-    }
-  }
-
-  function applyQuickReply(reply: AttendanceQuickReplyItem) {
-    setComposerText(reply.message);
-    setSelectedQuickReplyId(reply.id);
-    setSelectedQuickReplyTitle(reply.title);
-    setNotice('Resposta rapida selecionada: ' + reply.title);
-  }
-
-  function clearQuickReplySelection() {
-    setSelectedQuickReplyId(null);
-    setSelectedQuickReplyTitle(null);
-  }
-
-  async function handleSendComposerMessage() {
-    const token = getToken();
-    const messageBody = composerText.trim();
-
-    if (!messageBody) {
-      setNotice('Digite uma mensagem antes de enviar.');
-      return;
-    }
-
-    if (!token || selectedConversation.id.startsWith('demo-')) {
-      setNotice('Mensagem validada localmente para demonstracao.');
-      return;
-    }
-
-    setSendingMessage(true);
-
-    const response = await sendAttendanceManualMessageRequest(token, selectedConversation.id, {
-      messageBody,
-      sentByUserId: null,
-      sentByName: assigneeName.trim() || selectedConversation.assignedUserName || 'Atendente',
-      departmentName: selectedConversation.departmentName,
-      messageOrigin: selectedQuickReplyId ? 'quick_reply' : 'manual',
-      quickReplyId: selectedQuickReplyId,
-      quickReplyTitle: selectedQuickReplyTitle,
-      dryRun: sendDryRun
-    });
-
-    if (response.success) {
-      await loadSendHistory(selectedConversation.id);
-
-      if (sendDryRun) {
-        setNotice(selectedQuickReplyId ? 'Resposta rapida validada em modo dryRun.' : 'Envio validado em modo dryRun. Nenhuma mensagem real foi enviada.');
-      } else if (response.data.send.status === 'sent') {
-        setComposerText('');
-        clearQuickReplySelection();
-        setNotice(selectedQuickReplyId ? 'Resposta rapida enviada com sucesso.' : 'Mensagem enviada com sucesso.');
-      } else {
-        setNotice(response.data.send.errorMessage || 'Envio registrado com falha.');
-      }
-    } else {
-      setNotice(response.error.message || 'Nao foi possivel enviar a mensagem.');
-    }
-
-    setSendingMessage(false);
-  }
-
-  async function handleCloseConversation() {
-    const token = getToken();
-
-    if (!token || selectedConversation.id.startsWith('demo-')) {
-      setComposerText(closingMessage);
-      setNotice('Mensagem de encerramento preparada para demonstracao.');
-      return;
-    }
-
-    const response = await closeAttendanceConversationRequest(token, selectedConversation.id, {
-      closingMessage,
-      closedByUserId: null,
-      closedByName: assigneeName.trim() || selectedConversation.assignedUserName || 'Atendente',
-      departmentName: selectedConversation.departmentName,
-      ratingRequested: true
-    });
-
-    if (!response.success) {
-      setNotice(response.error.message || 'Nao foi possivel encerrar atendimento.');
-      return;
-    }
-
-    const preparedMessage = response.data.closure.closingMessage;
-
-    setComposerText(preparedMessage);
-
-    const sendResponse = await sendAttendanceManualMessageRequest(token, selectedConversation.id, {
-      messageBody: preparedMessage,
-      sentByUserId: null,
-      sentByName: assigneeName.trim() || selectedConversation.assignedUserName || 'Atendente',
-      departmentName: selectedConversation.departmentName,
-      messageOrigin: 'closing_rating',
-      quickReplyId: null,
-      quickReplyTitle: null,
-      dryRun: sendDryRun
-    });
-
-    await loadInbox();
-    await loadMetadata(selectedConversation.id);
-    await loadSendHistory(selectedConversation.id);
-
-    if (sendResponse.success) {
-      if (sendDryRun) {
-        setNotice('Encerramento registrado e mensagem de avaliacao validada em dryRun.');
-      } else if (sendResponse.data.send.status === 'sent') {
-        setNotice('Encerramento registrado e mensagem de avaliacao enviada.');
-      } else {
-        setNotice(sendResponse.data.send.errorMessage || 'Encerramento registrado, mas o envio retornou falha.');
-      }
-    } else {
-      setNotice(sendResponse.error.message || 'Encerramento registrado, mas nao foi possivel enviar a mensagem.');
-    }
-  }
-
-  async function handleCreateRating(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const token = getToken();
-
-    if (!token || selectedConversation.id.startsWith('demo-')) {
-      setNotice('Avaliacao registrada localmente para demonstracao.');
-      return;
-    }
-
-    const response = await createAttendanceRatingRequest(token, selectedConversation.id, {
-      rating: Number(ratingValue),
-      comment: ratingComment.trim() || null
-    });
-
-    if (response.success) {
-      setRatingComment('');
-      await loadMetadata(selectedConversation.id);
-      setNotice('Avaliacao registrada com sucesso.');
-    } else {
-      setNotice(response.error.message || 'Nao foi possivel registrar avaliacao.');
-    }
-  }
-
-  async function handleCreateInternalNote(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const token = getToken();
-
-    if (!token || !newInternalNote.trim() || selectedConversation.id.startsWith('demo-')) {
-      return;
-    }
-
-    const response = await createConversationNoteRequest(token, selectedConversation.id, {
-      note: newInternalNote.trim(),
-      createdByUserId: null,
-      createdByName: assigneeName.trim() || selectedConversation.assignedUserName || 'Atendente'
-    });
-
-    if (response.success) {
-      setNewInternalNote('');
-      await loadMetadata(selectedConversation.id);
-      setNotice('Nota interna criada com sucesso.');
-    } else {
-      setNotice(response.error.message || 'Nao foi possivel criar nota interna.');
-    }
-  }
-
-  async function handleAttachTag(tagId: string) {
-    const token = getToken();
-
-    if (!token || !tagId || selectedConversation.id.startsWith('demo-')) {
-      return;
-    }
-
-    const response = await attachConversationTagRequest(token, selectedConversation.id, tagId);
-
-    if (response.success) {
-      setConversationTags(response.data.tags);
-      setNotice('Tag vinculada com sucesso.');
-    } else {
-      setNotice(response.error.message || 'Nao foi possivel vincular tag.');
     }
   }
 
@@ -774,21 +562,9 @@ export function InboxPage() {
             </article>
           </section>
 
-          {selectedQuickReplyTitle ? (
-            <div className="quick-reply-selected-box">
-              <span>Resposta rapida selecionada: {selectedQuickReplyTitle}</span>
-              <button onClick={clearQuickReplySelection} type="button">Limpar</button>
-            </div>
-          ) : null}
-
           <section className="inbox-quick-replies">
             {visibleQuickReplies.length ? visibleQuickReplies.map((reply) => (
-              <button
-                className={selectedQuickReplyId === reply.id ? 'active' : ''}
-                key={reply.id}
-                onClick={() => applyQuickReply(reply)}
-                type="button"
-              >
+              <button key={reply.id} onClick={() => setComposerText(reply.message)} type="button">
                 {reply.title}
               </button>
             )) : fallbackQuickReplies.map((reply) => (
@@ -819,43 +595,8 @@ export function InboxPage() {
               placeholder="Digite uma mensagem para o cliente"
               value={composerText}
             />
-            <button disabled={sendingMessage} onClick={() => void handleSendComposerMessage()} type="button">
-              {sendingMessage ? 'Enviando...' : sendDryRun ? 'Validar envio' : 'Enviar'}
-            </button>
+            <button type="button">Enviar</button>
           </footer>
-
-          <section className="send-history-panel">
-            <label className="send-dry-run-toggle">
-              <input
-                checked={sendDryRun}
-                onChange={(event) => setSendDryRun(event.target.checked)}
-                type="checkbox"
-              />
-              Modo dryRun ativo para validar sem envio real
-            </label>
-
-            <div className="inbox-panel-title">
-              <strong>Historico de envios da central</strong>
-              <span>Mensagens enviadas ou validadas pelo backend de atendimento</span>
-            </div>
-
-            <div className="send-history-list">
-              {sendHistory.length ? sendHistory.map((send) => (
-                <article key={send.id}>
-                  <div>
-                    <strong>Atendente: {send.sentByName}</strong>
-                    <span>{send.status}{send.dryRun ? ' - dryRun' : ''}{send.messageOrigin === 'quick_reply' ? ' - resposta rapida' : ''}{send.messageOrigin === 'closing_rating' ? ' - encerramento' : ''}</span>
-                  </div>
-                  {send.assignedUserNameAtSend ? <small>Responsavel no momento do envio: {send.assignedUserNameAtSend}</small> : null}
-                  {send.attendantSource ? <small>Origem do atendente: {send.attendantSource}</small> : null}
-                  {send.quickReplyTitle ? <small>Resposta rapida: {send.quickReplyTitle}</small> : null}
-                  <p>{send.messageBody}</p>
-                  <small>{send.createdAt}</small>
-                  {send.errorMessage ? <em>{send.errorMessage}</em> : null}
-                </article>
-              )) : <small>Nenhum envio registrado para esta conversa.</small>}
-            </div>
-          </section>
         </main>
 
         <aside className="inbox-contact-panel">
@@ -876,42 +617,6 @@ export function InboxPage() {
             <span>Prioridade: {priorityLabels[selectedConversation.priority] || selectedConversation.priority}</span>
             <span>Status: {statusLabels[selectedConversation.status] || selectedConversation.status}</span>
           </div>
-
-          <section className="metadata-card">
-            <strong>Tags da conversa</strong>
-            <div className="tag-list">
-              {conversationTags.length ? conversationTags.map((tag) => (
-                <span key={tag.id} style={{ backgroundColor: tag.color }}>{tag.name}</span>
-              )) : <small>Nenhuma tag vinculada.</small>}
-            </div>
-
-            <select onChange={(event) => void handleAttachTag(event.target.value)} value="">
-              <option value="">Adicionar tag</option>
-              {availableTags.map((tag) => (
-                <option key={tag.id} value={tag.id}>{tag.name}</option>
-              ))}
-            </select>
-          </section>
-
-          <form className="metadata-card" onSubmit={handleCreateInternalNote}>
-            <strong>Notas internas</strong>
-            <textarea
-              onChange={(event) => setNewInternalNote(event.target.value)}
-              placeholder="Escreva uma nota interna para a equipe"
-              value={newInternalNote}
-            />
-            <button type="submit">Salvar nota interna</button>
-
-            <div className="note-list">
-              {internalNotes.length ? internalNotes.map((note) => (
-                <article key={note.id}>
-                  <span>{note.createdByName}</span>
-                  <p>{note.note}</p>
-                  <small>{note.createdAt}</small>
-                </article>
-              )) : <small>Nenhuma nota interna registrada.</small>}
-            </div>
-          </form>
 
           <section className="assignment-card">
             <strong>Atribuicao de responsavel</strong>
@@ -934,61 +639,448 @@ export function InboxPage() {
             </div>
           </section>
 
-          <section className="closing-card closure-card">
+          <section className="closing-card">
             <strong>Encerramento com avaliacao</strong>
-            <p>Prepare a mensagem de encerramento, envie pela central com origem closing_rating e registre a avaliacao quando o cliente responder.</p>
-
-            <textarea
-              onChange={(event) => setClosingMessage(event.target.value)}
-              value={closingMessage}
-            />
-
-            <button onClick={() => void handleCloseConversation()} type="button">
-              Encerrar e preparar mensagem
-            </button>
-
-            <form className="rating-form" onSubmit={handleCreateRating}>
-              <label>
-                Nota
-                <select onChange={(event) => setRatingValue(event.target.value)} value={ratingValue}>
-                  <option value="1">1 - Muito ruim</option>
-                  <option value="2">2 - Ruim</option>
-                  <option value="3">3 - Regular</option>
-                  <option value="4">4 - Bom</option>
-                  <option value="5">5 - Excelente</option>
-                </select>
-              </label>
-
-              <textarea
-                onChange={(event) => setRatingComment(event.target.value)}
-                placeholder="Comentario opcional da avaliacao"
-                value={ratingComment}
-              />
-
-              <button type="submit">Registrar avaliacao</button>
-            </form>
-
-            <div className="closure-history">
-              <strong>Historico</strong>
-              {closures.length ? closures.map((closure) => (
-                <article key={closure.id}>
-                  <span>{closure.closedByName}</span>
-                  <p>{closure.closingMessage}</p>
-                  <small>{closure.createdAt}</small>
-                </article>
-              )) : <small>Nenhum encerramento registrado.</small>}
-
-              {ratings.length ? ratings.map((rating) => (
-                <article key={rating.id}>
-                  <span>Avaliacao {rating.rating}</span>
-                  <p>{rating.comment || 'Sem comentario.'}</p>
-                  <small>{rating.createdAt}</small>
-                </article>
-              )) : <small>Nenhuma avaliacao registrada.</small>}
-            </div>
+            <p>Mensagem padrao pronta para finalizar o atendimento e solicitar nota de 1 a 5.</p>
+            <button type="button">Preparar encerramento</button>
           </section>
         </aside>
       </section>
     </section>
   );
 }
+TSX
+
+echo "Garantindo CSS das respostas rapidas..."
+
+if ! grep -q "Etapa 60 - Respostas rapidas por departamento" "${FRONTEND_DIR}/src/styles.css"; then
+cat >> "${FRONTEND_DIR}/src/styles.css" <<'CSS'
+
+/* Etapa 60 - Respostas rapidas por departamento */
+
+.quick-reply-manager {
+  background: #f8fafc;
+  border-top: 1px solid #e5e7eb;
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+}
+
+.quick-reply-manager strong {
+  color: var(--lh-blue-950, #04204f);
+}
+
+.quick-reply-manager input,
+.quick-reply-manager textarea {
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  padding: 11px 13px;
+  width: 100%;
+}
+
+.quick-reply-manager textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.quick-reply-manager button {
+  background: linear-gradient(135deg, var(--lh-blue-800, #0757c8), var(--lh-blue-700, #0a6de8));
+  border: 0;
+  border-radius: 14px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 950;
+  padding: 11px 13px;
+}
+CSS
+fi
+
+echo "Validando arquivos sem HTML injetado..."
+
+if grep -R "fai-ChatInputEntity" \
+  "${FRONTEND_DIR}/src/pages/inbox/InboxPage.tsx" \
+  "${FRONTEND_DIR}/src/services/attendance.service.ts" \
+  "${FRONTEND_DIR}/src/types/attendance.types.ts" \
+  "${FRONTEND_DIR}/src/styles.css"
+then
+  echo "ERRO: HTML injetado encontrado."
+  exit 1
+fi
+
+echo "Rodando typecheck do frontend..."
+
+cd "${FRONTEND_DIR}"
+npm run typecheck 2>&1 | tee "${FRONTEND_TYPECHECK_LOG}"
+
+echo "Rodando build do frontend..."
+
+npm run build 2>&1 | tee "${FRONTEND_BUILD_LOG}"
+
+cd "${BASE_DIR}"
+
+echo "Rebuildando backend e frontend..."
+
+docker compose build backend 2>&1 | tee "${DOCKER_BACKEND_BUILD_LOG}"
+docker compose build frontend 2>&1 | tee "${DOCKER_FRONTEND_BUILD_LOG}"
+
+echo "Subindo backend, frontend e proxy..."
+
+docker compose up -d backend frontend proxy 2>&1 | tee "${DOCKER_UP_LOG}"
+
+echo "Aguardando backend estabilizar..."
+
+: > "${BACKEND_WAIT_LOG}"
+
+BACKEND_READY="false"
+
+for i in $(seq 1 30); do
+  STATUS="$(docker inspect -f '{{.State.Status}}' saas_whatsapp_backend 2>/dev/null || echo unknown)"
+  RESTARTING="$(docker inspect -f '{{.State.Restarting}}' saas_whatsapp_backend 2>/dev/null || echo unknown)"
+
+  echo "tentativa=${i} status=${STATUS} restarting=${RESTARTING}" | tee -a "${BACKEND_WAIT_LOG}"
+
+  if [ "${STATUS}" = "running" ] && [ "${RESTARTING}" = "false" ]; then
+    if curl -s --max-time 5 "http://127.0.0.1:3300/api/v1/health" >/dev/null 2>&1; then
+      BACKEND_READY="true"
+      break
+    fi
+  fi
+
+  sleep 3
+done
+
+if [ "${BACKEND_READY}" != "true" ]; then
+  echo "ERRO: backend nao estabilizou."
+  docker compose logs --tail=220 backend 2>&1 | tee "${BACKEND_CRASH_LOG}"
+  exit 1
+fi
+
+sleep 8
+
+echo "Validando credenciais e dominio..."
+
+if [ ! -f "${LOGS_DIR}/setup_24_seed_credentials.log" ]; then
+  echo "ERRO: credenciais da Etapa 24 ausentes."
+  exit 1
+fi
+
+ADMIN_EMAIL="$(grep '^Email:' "${LOGS_DIR}/setup_24_seed_credentials.log" | head -n 1 | cut -d ':' -f 2- | xargs)"
+ADMIN_PASSWORD="$(grep '^Senha:' "${LOGS_DIR}/setup_24_seed_credentials.log" | head -n 1 | cut -d ':' -f 2- | xargs)"
+
+LOGIN_PAYLOAD="$(node -e "console.log(JSON.stringify({email: process.argv[1], password: process.argv[2]}))" "${ADMIN_EMAIL}" "${ADMIN_PASSWORD}")"
+
+DOMAIN_LOGIN_STATUS="$(curl -L -s -o "${DOMAIN_LOGIN_LOG}" -w "%{http_code}" --max-time 30 \
+  -H "Content-Type: application/json" \
+  -d "${LOGIN_PAYLOAD}" \
+  "${DOMAIN_LOGIN_URL}" || true)"
+
+if [ "${DOMAIN_LOGIN_STATUS}" != "200" ] && [ "${DOMAIN_LOGIN_STATUS}" != "201" ]; then
+  echo "ERRO: login dominio falhou. Status ${DOMAIN_LOGIN_STATUS}"
+  cat "${DOMAIN_LOGIN_LOG}"
+  exit 1
+fi
+
+DOMAIN_ACCESS_TOKEN="$(node -e "const fs=require('fs'); const data=JSON.parse(fs.readFileSync(process.argv[1],'utf8')); console.log(data.data.access_token)" "${DOMAIN_LOGIN_LOG}")"
+
+DOMAIN_QUICK_REPLIES_STATUS="$(curl -L -s -o "${DOMAIN_QUICK_REPLIES_LOG}" -w "%{http_code}" --max-time 30 \
+  -H "Authorization: Bearer ${DOMAIN_ACCESS_TOKEN}" \
+  "${DOMAIN_ATTENDANCE_URL}/quick-replies?departmentName=Comercial" || true)"
+
+if [ "${DOMAIN_QUICK_REPLIES_STATUS}" != "200" ]; then
+  echo "ERRO: quick replies falhou. Status ${DOMAIN_QUICK_REPLIES_STATUS}"
+  cat "${DOMAIN_QUICK_REPLIES_LOG}"
+  exit 1
+fi
+
+if ! grep -q "quickReplies" "${DOMAIN_QUICK_REPLIES_LOG}"; then
+  echo "ERRO: quick replies nao retornou lista esperada."
+  cat "${DOMAIN_QUICK_REPLIES_LOG}"
+  exit 1
+fi
+
+CREATE_PAYLOAD="$(node -e "console.log(JSON.stringify({departmentName:'Comercial', title:'Validacao Etapa 60 Final', message:'Resposta rapida criada na validacao final da Etapa 60.', sortOrder:100}))")"
+
+DOMAIN_QUICK_REPLY_CREATE_STATUS="$(curl -L -s -o "${DOMAIN_QUICK_REPLY_CREATE_LOG}" -w "%{http_code}" --max-time 30 \
+  -H "Authorization: Bearer ${DOMAIN_ACCESS_TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d "${CREATE_PAYLOAD}" \
+  "${DOMAIN_ATTENDANCE_URL}/quick-replies" || true)"
+
+if [ "${DOMAIN_QUICK_REPLY_CREATE_STATUS}" != "200" ] && [ "${DOMAIN_QUICK_REPLY_CREATE_STATUS}" != "201" ]; then
+  echo "ERRO: create quick reply falhou. Status ${DOMAIN_QUICK_REPLY_CREATE_STATUS}"
+  cat "${DOMAIN_QUICK_REPLY_CREATE_LOG}"
+  exit 1
+fi
+
+if ! grep -q "Validacao Etapa 60 Final" "${DOMAIN_QUICK_REPLY_CREATE_LOG}"; then
+  echo "ERRO: create quick reply nao retornou titulo esperado."
+  cat "${DOMAIN_QUICK_REPLY_CREATE_LOG}"
+  exit 1
+fi
+
+DOMAIN_INBOX_PAGE_STATUS="$(curl -L -s -o "${DOMAIN_INBOX_PAGE_LOG}" -w "%{http_code}" --max-time 30 \
+  "${DOMAIN_INBOX_PAGE_URL}" || true)"
+
+if [ "${DOMAIN_INBOX_PAGE_STATUS}" != "200" ]; then
+  echo "ERRO: pagina inbox nao respondeu 200."
+  exit 1
+fi
+
+DOMAIN_DASHBOARD_STATUS="$(curl -L -s -o "${DOMAIN_DASHBOARD_LOG}" -w "%{http_code}" --max-time 30 \
+  "${DOMAIN_DASHBOARD_URL}" || true)"
+
+if [ "${DOMAIN_DASHBOARD_STATUS}" != "200" ]; then
+  echo "ERRO: dashboard nao respondeu 200."
+  exit 1
+fi
+
+DOMAIN_AUDIT_PAGE_STATUS="$(curl -L -s -o "${DOMAIN_AUDIT_PAGE_LOG}" -w "%{http_code}" --max-time 30 \
+  "${DOMAIN_AUDIT_PAGE_URL}" || true)"
+
+if [ "${DOMAIN_AUDIT_PAGE_STATUS}" != "200" ]; then
+  echo "ERRO: auditoria nao respondeu 200."
+  exit 1
+fi
+
+echo "Gerando documentacao da Etapa 60..."
+
+cat > "${DOC_FILE}" <<'DOC'
+# Attendance Quick Replies
+
+## Visao geral
+
+Este documento registra a criacao de respostas rapidas por departamento.
+
+## Resultado
+
+Status:
+
+    concluido
+
+## Correcao aplicada
+
+A Etapa 60 foi concluida com fix final da tela app inbox, corrigindo erro TypeScript na importacao de tipos da pagina.
+
+## Funcionalidades criadas
+
+Funcionalidades:
+
+- tabela attendance quick replies
+- respostas rapidas por tenant
+- respostas rapidas por departamento
+- seed inicial de respostas
+- endpoint para listar respostas rapidas
+- endpoint para criar resposta rapida
+- endpoint para atualizar resposta rapida
+- integracao da central app inbox com respostas rapidas reais
+- botao para aplicar resposta rapida ao campo de mensagem
+- formulario visual para criar nova resposta rapida por departamento
+
+## Respostas iniciais
+
+Respostas:
+
+- Saudacao inicial
+- Pedido de dados
+- Solicitar interesse
+- Solicitar detalhes
+- Comprovante
+- Encerramento com avaliacao
+
+## Endpoints criados
+
+Endpoints:
+
+- GET api v1 attendance quick replies
+- POST api v1 attendance quick replies
+- PATCH api v1 attendance quick replies quick reply id
+
+## Tabela criada
+
+Tabela:
+
+- attendance quick replies
+
+Campos:
+
+- id
+- tenant id
+- department name
+- title
+- message
+- is active
+- sort order
+- created at
+- updated at
+
+## Arquivos criados ou alterados
+
+Arquivos:
+
+- apps/backend/src/modules/attendance/attendance.types.ts
+- apps/backend/src/modules/attendance/attendance.service.ts
+- apps/backend/src/modules/attendance/attendance.controller.ts
+- apps/frontend/src/types/attendance.types.ts
+- apps/frontend/src/services/attendance.service.ts
+- apps/frontend/src/pages/inbox/InboxPage.tsx
+- apps/frontend/src/styles.css
+- docs/ATTENDANCE_QUICK_REPLIES.md
+- 00_CONTROLE.md
+- MANIFESTO.md
+
+## Validacoes executadas
+
+Validacoes:
+
+- criacao idempotente da tabela attendance quick replies
+- npm run typecheck no frontend
+- npm run build no frontend
+- docker compose build backend
+- docker compose build frontend
+- docker compose up backend frontend proxy
+- login dominio
+- endpoint quick replies dominio
+- criacao de resposta rapida dominio
+- rota app inbox
+- rota app dashboard
+- rota app audit
+
+## Logs gerados
+
+Logs:
+
+- logs/setup_60_frontend_typecheck.log
+- logs/setup_60_frontend_build.log
+- logs/setup_60_backend_docker_build.log
+- logs/setup_60_frontend_docker_build.log
+- logs/setup_60_docker_up.log
+- logs/setup_60_backend_wait.log
+- logs/setup_60_auth_login_domain.log
+- logs/setup_60_quick_replies_domain.log
+- logs/setup_60_quick_reply_create_domain.log
+- logs/setup_60_domain_inbox_page.log
+- logs/setup_60_domain_dashboard.log
+- logs/setup_60_domain_audit_page.log
+- logs/setup_60.log
+- logs/fix_60_inbox_quick_replies_frontend.log
+
+## Proxima etapa sugerida
+
+Etapa 61:
+
+    Criar notas internas e tags
+DOC
+
+echo "Atualizando 00_CONTROLE.md..."
+
+python3 <<'PY'
+from pathlib import Path
+
+path = Path("00_CONTROLE.md")
+text = path.read_text()
+
+text = text.replace(
+    "- [ ] Etapa 60 - Criar respostas rapidas por departamento",
+    "- [x] Etapa 60 - Criar respostas rapidas por departamento\n- [ ] Etapa 61 - Criar notas internas e tags"
+)
+
+text = text.replace(
+    "Etapa 60 - Criar respostas rapidas por departamento.",
+    "Etapa 61 - Criar notas internas e tags."
+)
+
+text = text.replace(
+    "Etapa 59 - Criar atribuicao de responsavel e nome do atendente.",
+    "Etapa 60 - Criar respostas rapidas por departamento."
+)
+
+path.write_text(text)
+PY
+
+echo "Atualizando MANIFESTO.md..."
+
+python3 <<'PY'
+from pathlib import Path
+
+path = Path("MANIFESTO.md")
+text = path.read_text()
+
+if "Respostas rapidas por departamento criadas." not in text:
+    text = text.replace(
+        "Atribuicao de responsavel e nome do atendente criada.",
+        "Atribuicao de responsavel e nome do atendente criada.\n\nRespostas rapidas por departamento criadas."
+    )
+
+if "- docs/ATTENDANCE_QUICK_REPLIES.md" not in text:
+    text = text.replace(
+        "- docs/ATTENDANCE_RESPONSIBLE_ASSIGNMENT.md",
+        "- docs/ATTENDANCE_QUICK_REPLIES.md\n- docs/ATTENDANCE_RESPONSIBLE_ASSIGNMENT.md"
+    )
+
+text = text.replace(
+    "- Etapa 01 ate Etapa 59 concluidas",
+    "- Etapa 01 ate Etapa 60 concluidas"
+)
+
+text = text.replace(
+    "- Etapa 60 - Criar respostas rapidas por departamento",
+    "- Etapa 61 - Criar notas internas e tags"
+)
+
+path.write_text(text)
+PY
+
+echo "Atualizando documentos auxiliares se existirem..."
+
+for doc_file in CONTEXTO_PROJETO.md CHANGELOG.md DECISOES_TECNICAS.md PENDENCIAS.md; do
+  if [ -f "${BASE_DIR}/${doc_file}" ]; then
+    cat >> "${BASE_DIR}/${doc_file}" <<DOC
+
+Etapa 60 - Criar respostas rapidas por departamento
+Data: $(date '+%Y-%m-%d %H:%M:%S')
+Resumo: Criada persistencia de respostas rapidas por departamento, endpoints de listagem e criacao, e integracao da central app inbox com aplicacao da resposta no campo de mensagem.
+DOC
+  fi
+done
+
+echo "Validando ausencia de caractere proibido nos arquivos finais..."
+
+BAD_CHAR="$(printf '\052')"
+
+if grep -n "${BAD_CHAR}" \
+  "${DOC_FILE}" \
+  "${BASE_DIR}/00_CONTROLE.md" \
+  "${BASE_DIR}/MANIFESTO.md"
+then
+  echo "ERRO: caractere proibido encontrado nos arquivos finais."
+  exit 1
+fi
+
+cat > "${LOG_FILE}" <<DOC
+Etapa: 60
+Acao: Criar respostas rapidas por departamento
+Data: $(date '+%Y-%m-%d %H:%M:%S')
+Login dominio status: ${DOMAIN_LOGIN_STATUS}
+Quick replies status: ${DOMAIN_QUICK_REPLIES_STATUS}
+Quick reply create status: ${DOMAIN_QUICK_REPLY_CREATE_STATUS}
+Inbox page status: ${DOMAIN_INBOX_PAGE_STATUS}
+Dashboard status: ${DOMAIN_DASHBOARD_STATUS}
+Audit page status: ${DOMAIN_AUDIT_PAGE_STATUS}
+Status: Concluido
+DOC
+
+cat > "${FIX_LOG_FILE}" <<DOC
+Etapa: 60
+Acao: Fix final frontend respostas rapidas
+Data: $(date '+%Y-%m-%d %H:%M:%S')
+Status: Concluido
+DOC
+
+echo ""
+echo "== Etapa 60 concluida com sucesso =="
+echo ""
+echo "Resumo:"
+sed -n '1,220p' "${DOC_FILE}"
+echo ""
+echo "Proxima etapa sugerida:"
+echo "Etapa 61 - Criar notas internas e tags"

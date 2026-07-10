@@ -1,19 +1,3 @@
-export type AttendanceConversationStatus =
-  | 'novo'
-  | 'em_atendimento'
-  | 'aguardando_cliente'
-  | 'aguardando_interno'
-  | 'resolvido'
-  | 'encerrado'
-  | 'arquivado';
-
-export type AttendancePriority =
-  | 'baixa'
-  | 'normal'
-  | 'media'
-  | 'alta'
-  | 'urgente';
-
 export type AttendanceDepartmentItem = {
   id: string;
   name: string;
@@ -104,6 +88,78 @@ export type AttendanceUpdateStatusResponse = {
     assignedUserId: string | null;
     assignedUserName: string | null;
     updatedAt: string;
+  };
+  meta: Record<string, never>;
+};
+
+export type AttendanceAssignConversationPayload = {
+  assignedUserId?: string | null;
+  assignedUserName?: string | null;
+  departmentName?: string;
+  action?: string;
+};
+
+export type AttendanceAssignConversationResponse = {
+  success: true;
+  data: {
+    conversationId: string;
+    assignedUserId: string | null;
+    assignedUserName: string | null;
+    departmentName: string;
+    updatedAt: string;
+  };
+  meta: Record<string, never>;
+};
+
+export type AttendanceAssignmentHistoryItem = {
+  id: string;
+  conversationId: string;
+  assignedUserId: string | null;
+  assignedUserName: string;
+  departmentName: string;
+  action: string;
+  createdAt: string;
+};
+
+export type AttendanceAssignmentHistoryResponse = {
+  success: true;
+  data: {
+    assignments: AttendanceAssignmentHistoryItem[];
+  };
+  meta: Record<string, never>;
+};
+
+export type AttendanceQuickReplyItem = {
+  id: string;
+  departmentName: string;
+  title: string;
+  message: string;
+  isActive: boolean;
+  sortOrder: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type AttendanceQuickRepliesResponse = {
+  success: true;
+  data: {
+    quickReplies: AttendanceQuickReplyItem[];
+  };
+  meta: Record<string, never>;
+};
+
+export type AttendanceQuickReplyPayload = {
+  departmentName?: string;
+  title?: string;
+  message?: string;
+  isActive?: boolean;
+  sortOrder?: number;
+};
+
+export type AttendanceQuickReplyResponse = {
+  success: true;
+  data: {
+    quickReply: AttendanceQuickReplyItem;
   };
   meta: Record<string, never>;
 };

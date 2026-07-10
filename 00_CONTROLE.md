@@ -90,12 +90,24 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 - [x] Etapa 56 - Criar layout responsivo profissional da central de atendimento
 - [x] Etapa 57 - Criar status operacional das conversas
 - [x] Etapa 58 - Criar departamentos e filas de atendimento
-- [ ] Etapa 59 - Criar atribuicao de responsavel e nome do atendente
+- [x] Etapa 59 - Criar atribuicao de responsavel e nome do atendente
+- [x] Etapa 60 - Criar respostas rapidas por departamento
+- [x] Etapa 61 - Criar notas internas e tags
+- [x] Etapa 62 - Criar encerramento com avaliacao do atendimento
+- [x] Etapa 63 - Criar dashboard de atendimento
+- [x] Etapa 64 - Revisao final da fase de atendimento profissional
+- [x] Etapa 65 - Planejamento da proxima fase de automacao e envio real pela central de atendimento
+- [x] Etapa 66 - Backend de envio manual pela central de atendimento
+- [x] Etapa 67 - Frontend de envio real no app inbox
+- [x] Etapa 68 - Envio real usando respostas rapidas
+- [x] Etapa 69 - Envio real da mensagem de encerramento com avaliacao
+- [x] Etapa 70 - Registro do atendente nas mensagens enviadas
+- [ ] Etapa 71 - Automacoes basicas por status e departamento
 
 ## Ultima etapa executada
 
-Etapa 58 - Criar departamentos e filas de atendimento.
+Etapa 70 - Registro do atendente nas mensagens enviadas.
 
 ## Proxima etapa sugerida
 
-Etapa 59 - Criar atribuicao de responsavel e nome do atendente.
+Etapa 71 - Automacoes basicas por status e departamento.

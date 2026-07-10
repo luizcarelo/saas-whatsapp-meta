@@ -102,6 +102,30 @@ Status operacional das conversas criado.
 
 Departamentos e filas de atendimento criados.
 
+Atribuicao de responsavel e nome do atendente criada.
+
+Respostas rapidas por departamento criadas.
+
+Notas internas e tags criadas.
+
+Encerramento com avaliacao do atendimento criado.
+
+Dashboard de atendimento criado.
+
+Revisao final da fase de atendimento profissional concluida.
+
+Planejamento da fase de automacao e envio real pela central de atendimento criado.
+
+Backend de envio manual pela central de atendimento criado.
+
+Frontend de envio real no app inbox criado.
+
+Envio real usando respostas rapidas criado.
+
+Envio real da mensagem de encerramento com avaliacao criado.
+
+Registro do atendente nas mensagens enviadas criado.
+
 ## Arquivos principais
 
 - README.md
@@ -114,6 +138,20 @@ Departamentos e filas de atendimento criados.
 
 ## Documentos tecnicos
 
+- docs/ATTENDANCE_SENT_MESSAGE_ATTENDANT_TRACKING.md
+- docs/ATTENDANCE_CLOSING_RATING_SEND.md
+- docs/ATTENDANCE_QUICK_REPLY_SEND.md
+- docs/ATTENDANCE_SEND_FRONTEND.md
+- docs/ATTENDANCE_MANUAL_SEND_BACKEND.md
+- docs/ATTENDANCE_AUTOMATION_SEND_PLAN.md
+- docs/ATTENDANCE_SEND_FLOW.md
+- docs/ATTENDANCE_AUTOMATION_RULES.md
+- docs/ATTENDANCE_PHASE_FINAL_REVIEW.md
+- docs/ATTENDANCE_DASHBOARD.md
+- docs/ATTENDANCE_CLOSURE_RATING.md
+- docs/ATTENDANCE_INTERNAL_NOTES_TAGS.md
+- docs/ATTENDANCE_QUICK_REPLIES.md
+- docs/ATTENDANCE_RESPONSIBLE_ASSIGNMENT.md
 - docs/ATTENDANCE_DEPARTMENTS_QUEUES.md
 - docs/CONVERSATION_OPERATIONAL_STATUS.md
 - docs/RESPONSIVE_ATTENDANCE_CENTER_LAYOUT.md
@@ -176,8 +214,8 @@ Departamentos e filas de atendimento criados.
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 58 concluidas
+- Etapa 01 ate Etapa 70 concluidas
 
 ## Proxima etapa
 
-- Etapa 59 - Criar atribuicao de responsavel e nome do atendente
+- Etapa 71 - Automacoes basicas por status e departamento

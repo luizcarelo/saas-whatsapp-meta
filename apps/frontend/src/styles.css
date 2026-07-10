@@ -3920,3 +3920,546 @@ button:hover:not(:disabled) {
     grid-template-columns: 1fr;
   }
 }
+
+/* Etapa 59 - Atribuicao de responsavel */
+
+.assignment-card {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 18px;
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 14px;
+}
+
+.assignment-card strong {
+  color: var(--lh-blue-950, #04204f);
+}
+
+.assignment-card p {
+  color: var(--lh-muted, #6b7280);
+  margin: 0;
+}
+
+.assignment-card input {
+  border: 1px solid #93c5fd;
+  border-radius: 14px;
+  padding: 11px 13px;
+  width: 100%;
+}
+
+.assignment-card div {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr;
+}
+
+.assignment-card button {
+  background: linear-gradient(135deg, var(--lh-blue-800, #0757c8), var(--lh-blue-700, #0a6de8));
+  border: 0;
+  border-radius: 14px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 950;
+  padding: 11px 13px;
+}
+
+.assignment-card button:nth-child(2) {
+  background: linear-gradient(135deg, var(--lh-orange-700, #f97316), var(--lh-orange-500, #ff9f1c));
+}
+
+/* Etapa 59 - Atribuicao de responsavel */
+
+.assignment-card {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 18px;
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 14px;
+}
+
+.assignment-card strong {
+  color: var(--lh-blue-950, #04204f);
+}
+
+.assignment-card p {
+  color: var(--lh-muted, #6b7280);
+  margin: 0;
+}
+
+.assignment-card input {
+  border: 1px solid #93c5fd;
+  border-radius: 14px;
+  padding: 11px 13px;
+  width: 100%;
+}
+
+.assignment-card div {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr;
+}
+
+.assignment-card button {
+  background: linear-gradient(135deg, var(--lh-blue-800, #0757c8), var(--lh-blue-700, #0a6de8));
+  border: 0;
+  border-radius: 14px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 950;
+  padding: 11px 13px;
+}
+
+.assignment-card button:nth-child(2) {
+  background: linear-gradient(135deg, var(--lh-orange-700, #f97316), var(--lh-orange-500, #ff9f1c));
+}
+
+/* Etapa 60 - Respostas rapidas por departamento */
+
+.quick-reply-manager {
+  background: #f8fafc;
+  border-top: 1px solid #e5e7eb;
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+}
+
+.quick-reply-manager strong {
+  color: var(--lh-blue-950, #04204f);
+}
+
+.quick-reply-manager input,
+.quick-reply-manager textarea {
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  padding: 11px 13px;
+  width: 100%;
+}
+
+.quick-reply-manager textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.quick-reply-manager button {
+  background: linear-gradient(135deg, var(--lh-blue-800, #0757c8), var(--lh-blue-700, #0a6de8));
+  border: 0;
+  border-radius: 14px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 950;
+  padding: 11px 13px;
+}
+
+/* Etapa 61 - Notas internas e tags */
+
+.metadata-card {
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 14px;
+}
+
+.metadata-card strong {
+  color: var(--lh-blue-950, #04204f);
+}
+
+.metadata-card textarea,
+.metadata-card select,
+.metadata-card input {
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  padding: 11px 13px;
+  width: 100%;
+}
+
+.metadata-card textarea {
+  min-height: 82px;
+  resize: vertical;
+}
+
+.metadata-card button {
+  background: linear-gradient(135deg, var(--lh-blue-800, #0757c8), var(--lh-blue-700, #0a6de8));
+  border: 0;
+  border-radius: 14px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 950;
+  padding: 11px 13px;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-list span {
+  border-radius: 999px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 950;
+  padding: 7px 10px;
+}
+
+.note-list {
+  display: grid;
+  gap: 10px;
+  max-height: 260px;
+  overflow: auto;
+}
+
+.note-list article {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 10px;
+}
+
+.note-list span {
+  color: var(--lh-blue-950, #04204f);
+  display: block;
+  font-weight: 900;
+}
+
+.note-list p {
+  color: #374151;
+  margin: 5px 0;
+}
+
+.note-list small,
+.metadata-card small {
+  color: var(--lh-muted, #6b7280);
+}
+
+/* Etapa 62 - Encerramento com avaliacao */
+
+.closure-card textarea,
+.rating-form textarea,
+.rating-form select {
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  padding: 11px 13px;
+  width: 100%;
+}
+
+.closure-card textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.rating-form {
+  display: grid;
+  gap: 10px;
+}
+
+.rating-form label {
+  color: #374151;
+  display: grid;
+  font-size: 12px;
+  font-weight: 950;
+  gap: 6px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.closure-history {
+  display: grid;
+  gap: 10px;
+  max-height: 320px;
+  overflow: auto;
+}
+
+.closure-history article {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 10px;
+}
+
+.closure-history span {
+  color: var(--lh-blue-950, #04204f);
+  display: block;
+  font-weight: 900;
+}
+
+.closure-history p {
+  color: #374151;
+  margin: 5px 0;
+  white-space: pre-wrap;
+}
+
+.closure-history small {
+  color: var(--lh-muted, #6b7280);
+}
+
+/* Etapa 63 - Dashboard de atendimento */
+
+.attendance-dashboard-shell {
+  display: grid;
+  gap: 22px;
+}
+
+.attendance-dashboard-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.attendance-dashboard-grid article,
+.attendance-dashboard-panels article {
+  background: #ffffff;
+  border: 1px solid var(--lh-border, #e5e7eb);
+  border-radius: 22px;
+  box-shadow: var(--lh-shadow, 0 18px 50px rgba(4, 32, 79, 0.12));
+  padding: 18px;
+}
+
+.attendance-dashboard-grid span {
+  color: var(--lh-muted, #6b7280);
+  display: block;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.attendance-dashboard-grid strong {
+  color: var(--lh-blue-950, #04204f);
+  display: block;
+  font-size: 30px;
+  margin-top: 6px;
+}
+
+.attendance-dashboard-grid p {
+  color: var(--lh-muted, #6b7280);
+  margin: 6px 0 0;
+}
+
+.attendance-dashboard-panels {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+}
+
+.department-metric-list,
+.activity-metric-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.department-metric-list div {
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  padding: 12px;
+}
+
+.department-metric-list div span {
+  border-radius: 999px;
+  display: block;
+  height: 14px;
+  width: 14px;
+}
+
+.department-metric-list div strong {
+  color: var(--lh-blue-950, #04204f);
+}
+
+.department-metric-list div em {
+  color: var(--lh-orange-700, #f97316);
+  font-style: normal;
+  font-weight: 950;
+}
+
+.department-metric-list div small {
+  color: var(--lh-muted, #6b7280);
+  grid-column: 2 / -1;
+}
+
+.activity-metric-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.activity-metric-list div {
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.activity-metric-list strong {
+  color: var(--lh-blue-950, #04204f);
+  display: block;
+  font-size: 28px;
+}
+
+.activity-metric-list span {
+  color: var(--lh-muted, #6b7280);
+  display: block;
+  margin-top: 4px;
+}
+
+@media (max-width: 1300px) {
+  .attendance-dashboard-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .attendance-dashboard-panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .attendance-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .activity-metric-list {
+    grid-template-columns: 1fr;
+  }
+
+  .department-metric-list div {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .department-metric-list div em {
+    grid-column: 2;
+  }
+}
+
+/* Etapa 67 - Frontend de envio real no app inbox */
+
+.send-history-panel {
+  background: #f8fafc;
+  border-top: 1px solid #e5e7eb;
+  display: grid;
+  gap: 12px;
+  padding: 14px 16px;
+}
+
+.send-dry-run-toggle {
+  align-items: center;
+  color: #374151;
+  display: flex;
+  font-size: 13px;
+  font-weight: 900;
+  gap: 8px;
+}
+
+.send-dry-run-toggle input {
+  height: 16px;
+  width: 16px;
+}
+
+.send-history-list {
+  display: grid;
+  gap: 10px;
+  max-height: 260px;
+  overflow: auto;
+}
+
+.send-history-list article {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+}
+
+.send-history-list article div {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.send-history-list strong {
+  color: var(--lh-blue-950, #04204f);
+}
+
+.send-history-list span {
+  background: #eff6ff;
+  border-radius: 999px;
+  color: var(--lh-blue-800, #0757c8);
+  font-size: 12px;
+  font-weight: 950;
+  padding: 5px 8px;
+}
+
+.send-history-list p {
+  color: #374151;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.send-history-list small {
+  color: var(--lh-muted, #6b7280);
+}
+
+.send-history-list em {
+  color: var(--lh-red-700, #b91c1c);
+  font-style: normal;
+  font-weight: 800;
+}
+
+/* Etapa 68 - Envio usando respostas rapidas */
+
+.inbox-quick-replies button.active {
+  background: linear-gradient(135deg, var(--lh-orange-700, #f97316), var(--lh-orange-500, #ff9f1c)) !important;
+  color: #ffffff !important;
+}
+
+.quick-reply-selected-box {
+  align-items: center;
+  background: #fff7ed;
+  border-top: 1px solid #fed7aa;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  padding: 12px 16px;
+}
+
+.quick-reply-selected-box span {
+  color: #9a3412;
+  font-weight: 900;
+}
+
+.quick-reply-selected-box button {
+  background: #ffffff;
+  border: 1px solid #fed7aa;
+  border-radius: 999px;
+  color: #9a3412;
+  cursor: pointer;
+  font-weight: 900;
+  padding: 7px 10px;
+}
+
+/* Etapa 69 - Envio de encerramento com avaliacao */
+
+.closure-card button {
+  min-height: 42px;
+}
+
+.closure-card .rating-form button {
+  background: linear-gradient(135deg, var(--lh-orange-700, #f97316), var(--lh-orange-500, #ff9f1c));
+}
+
+/* Etapa 70 - Registro do atendente nas mensagens enviadas */
+
+.send-history-list article small {
+  display: block;
+  line-height: 1.35;
+}

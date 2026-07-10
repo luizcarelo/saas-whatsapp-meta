@@ -56,3 +56,44 @@ export type AttendanceUpdateStatusData = {
   assignedUserName: string | null;
   updatedAt: string;
 };
+
+export type AttendanceAssignConversationData = {
+  conversationId: string;
+  assignedUserId: string | null;
+  assignedUserName: string | null;
+  departmentName: string;
+  updatedAt: string;
+};
+
+export type AttendanceAssignmentHistoryItem = {
+  id: string;
+  conversationId: string;
+  assignedUserId: string | null;
+  assignedUserName: string;
+  departmentName: string;
+  action: string;
+  createdAt: string;
+};
+
+export type AttendanceAssignmentHistoryData = {
+  assignments: AttendanceAssignmentHistoryItem[];
+};
+
+export type AttendanceQuickReplyItem = {
+  id: string;
+  departmentName: string;
+  title: string;
+  message: string;
+  isActive: boolean;
+  sortOrder: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type AttendanceQuickRepliesData = {
+  quickReplies: AttendanceQuickReplyItem[];
+};
+
+export type AttendanceQuickReplyData = {
+  quickReply: AttendanceQuickReplyItem;
+};

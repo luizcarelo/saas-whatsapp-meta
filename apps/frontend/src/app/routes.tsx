@@ -11,6 +11,7 @@ import { AuditRealRunPage } from '../pages/audit-real-run/AuditRealRunPage';
 import { ContactsPage } from '../pages/contacts/ContactsPage';
 import { ConversationsPage } from '../pages/conversations/ConversationsPage';
 import { DashboardPage } from '../pages/dashboard/DashboardPage';
+import { AttendanceDashboardPage } from '../pages/attendance-dashboard/AttendanceDashboardPage';
 import { InboxPage } from '../pages/inbox/InboxPage';
 import { LoginPage } from '../pages/login/LoginPage';
 import { MetaSettingsPage } from '../pages/meta-settings/MetaSettingsPage';
@@ -35,6 +36,7 @@ export function AppRoutes() {
         >
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="inbox" element={<InboxPage />} />
+          <Route path="attendance-dashboard" element={<AttendanceDashboardPage />} />
           <Route path="contacts" element={<ContactsPage />} />
           <Route path="conversations" element={<ConversationsPage />} />
           <Route path="whatsapp-accounts" element={<WhatsappAccountsPage />} />
