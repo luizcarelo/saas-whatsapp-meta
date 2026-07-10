@@ -89,12 +89,13 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 - [x] Etapa 55 - Aplicar identidade visual com logos e favicon
 - [x] Etapa 56 - Criar layout responsivo profissional da central de atendimento
 - [x] Etapa 57 - Criar status operacional das conversas
-- [ ] Etapa 58 - Criar departamentos e filas de atendimento
+- [x] Etapa 58 - Criar departamentos e filas de atendimento
+- [ ] Etapa 59 - Criar atribuicao de responsavel e nome do atendente
 
 ## Ultima etapa executada
 
-Etapa 57 - Criar status operacional das conversas.
+Etapa 58 - Criar departamentos e filas de atendimento.
 
 ## Proxima etapa sugerida
 
-Etapa 58 - Criar departamentos e filas de atendimento.
+Etapa 59 - Criar atribuicao de responsavel e nome do atendente.

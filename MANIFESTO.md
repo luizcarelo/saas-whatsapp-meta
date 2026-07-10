@@ -100,6 +100,8 @@ Layout responsivo profissional da central de atendimento criado.
 
 Status operacional das conversas criado.
 
+Departamentos e filas de atendimento criados.
+
 ## Arquivos principais
 
 - README.md
@@ -112,6 +114,7 @@ Status operacional das conversas criado.
 
 ## Documentos tecnicos
 
+- docs/ATTENDANCE_DEPARTMENTS_QUEUES.md
 - docs/CONVERSATION_OPERATIONAL_STATUS.md
 - docs/RESPONSIVE_ATTENDANCE_CENTER_LAYOUT.md
 - docs/VISUAL_IDENTITY_LOGOS_FAVICON.md
@@ -173,8 +176,8 @@ Status operacional das conversas criado.
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 57 concluidas
+- Etapa 01 ate Etapa 58 concluidas
 
 ## Proxima etapa
 
-- Etapa 58 - Criar departamentos e filas de atendimento
+- Etapa 59 - Criar atribuicao de responsavel e nome do atendente
