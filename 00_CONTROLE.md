@@ -79,12 +79,17 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 - [x] Etapa 45 - Painel de auditoria operacional
 - [x] Etapa 46 - Relatorio operacional exportavel
 - [x] Etapa 47 - Higienizacao de dados de auditoria antigos
-- [ ] Etapa 48 - Configuracao visual de politica de retencao
+- [x] Etapa 48 - Configuracao visual de politica de retencao
+- [x] Etapa 49 - Persistencia backend da politica de retencao por tenant
+- [x] Etapa 50 - Execucao operacional controlada de higienizacao real
+- [x] Etapa 51 - Relatorio historico das execucoes reais de higienizacao
+- [x] Etapa 52 - Exportacao CSV do historico de higienizacoes reais
+- [ ] Etapa 53 - Encerramento e revisao final da fase operacional de auditoria
 
 ## Ultima etapa executada
 
-Etapa 47 - Higienizacao de dados de auditoria antigos.
+Etapa 52 - Exportacao CSV do historico de higienizacoes reais.
 
 ## Proxima etapa sugerida
 
-Etapa 48 - Criar configuracao visual de politica de retencao.
+Etapa 53 - Criar encerramento e revisao final da fase operacional de auditoria.

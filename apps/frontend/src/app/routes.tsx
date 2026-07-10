@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom';
 import { AppLayout } from '../components/layout/AppLayout';
 import { AuditPage } from '../pages/audit/AuditPage';
+import { AuditRealHistoryPage } from '../pages/audit-real-history/AuditRealHistoryPage';
+import { AuditRealRunPage } from '../pages/audit-real-run/AuditRealRunPage';
 import { ContactsPage } from '../pages/contacts/ContactsPage';
 import { ConversationsPage } from '../pages/conversations/ConversationsPage';
 import { DashboardPage } from '../pages/dashboard/DashboardPage';
@@ -36,6 +38,8 @@ export function AppRoutes() {
           <Route path="whatsapp-accounts" element={<WhatsappAccountsPage />} />
           <Route path="meta-settings" element={<MetaSettingsPage />} />
           <Route path="audit" element={<AuditPage />} />
+          <Route path="audit-real-run" element={<AuditRealRunPage />} />
+          <Route path="audit-real-history" element={<AuditRealHistoryPage />} />
           <Route path="profile" element={<ProfilePage />} />
         </Route>
 

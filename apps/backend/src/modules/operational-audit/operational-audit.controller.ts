@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Patch,
   Post,
   Query,
   Res,
@@ -15,13 +16,46 @@ import type {
   OperationalAuditExportQuery,
   OperationalAuditHygienePayload,
   OperationalAuditHygieneQuery,
-  OperationalAuditQuery
+  OperationalAuditQuery,
+  OperationalAuditRealHygienePayload,
+  OperationalAuditRetentionPolicyPayload
 } from './operational-audit.types';
 
 @Controller('operational-audit')
 @UseGuards(JwtAuthGuard)
 export class OperationalAuditController {
   constructor(private readonly operationalAuditService: OperationalAuditService) {}
+
+  @Get('hygiene-runs/export')
+  async exportRealHygieneRuns(
+    @CurrentUser() user: AuthenticatedUser,
+    @Res() response: any
+  ) {
+    const file = await this.operationalAuditService.exportRealHygieneRunsCsv(user.tenantId);
+
+    response.setHeader('Content-Type', file.contentType);
+    response.setHeader('Content-Disposition', 'attachment; filename="' + file.filename + '"');
+
+    return response.send(file.content);
+  }
+
+  @Get('hygiene-runs')
+  listRealHygieneRuns(@CurrentUser() user: AuthenticatedUser) {
+    return this.operationalAuditService.listRealHygieneRuns(user.tenantId);
+  }
+
+  @Get('retention-policy')
+  getRetentionPolicy(@CurrentUser() user: AuthenticatedUser) {
+    return this.operationalAuditService.getRetentionPolicy(user.tenantId);
+  }
+
+  @Patch('retention-policy')
+  updateRetentionPolicy(
+    @CurrentUser() user: AuthenticatedUser,
+    @Body() body: OperationalAuditRetentionPolicyPayload
+  ) {
+    return this.operationalAuditService.updateRetentionPolicy(user.tenantId, body);
+  }
 
   @Get('summary')
   getSummary(@CurrentUser() user: AuthenticatedUser) {
@@ -64,6 +98,14 @@ export class OperationalAuditController {
     @Query() query: OperationalAuditHygieneQuery
   ) {
     return this.operationalAuditService.previewHygiene(user.tenantId, query);
+  }
+
+  @Post('hygiene-real-run')
+  runRealHygiene(
+    @CurrentUser() user: AuthenticatedUser,
+    @Body() body: OperationalAuditRealHygienePayload
+  ) {
+    return this.operationalAuditService.runRealHygiene(user.tenantId, body);
   }
 
   @Post('hygiene-run')

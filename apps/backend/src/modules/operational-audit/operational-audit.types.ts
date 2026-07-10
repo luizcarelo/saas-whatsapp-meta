@@ -19,6 +19,25 @@ export type OperationalAuditHygienePayload = {
   dryRun?: boolean;
 };
 
+export type OperationalAuditRealHygienePayload = {
+  days?: number;
+  confirmationPhrase?: string;
+};
+
+export type OperationalAuditRetentionPolicyPayload = {
+  auditRetentionDays?: number;
+};
+
+export type OperationalAuditRetentionPolicyResponse = {
+  success: true;
+  data: {
+    auditRetentionDays: number;
+    source: string;
+    updatedAt: string | null;
+  };
+  meta: Record<string, never>;
+};
+
 export type OperationalAuditSummaryResponse = {
   success: true;
   data: {
@@ -110,6 +129,29 @@ export type OperationalAuditHygieneResponse = {
       messagesRedacted: number;
       webhookEventsRedacted: number;
     };
+  };
+  meta: Record<string, never>;
+};
+
+
+export type OperationalAuditHygieneRunItem = {
+  id: string;
+  tenantId: string;
+  retentionDays: number;
+  dryRun: boolean;
+  oldMessages: number;
+  oldFailedMessagesWithMetadata: number;
+  oldWebhookEvents: number;
+  messagesRedacted: number;
+  webhookEventsRedacted: number;
+  createdAt: string;
+};
+
+export type OperationalAuditHygieneRunsResponse = {
+  success: true;
+  data: {
+    runs: OperationalAuditHygieneRunItem[];
+    total: number;
   };
   meta: Record<string, never>;
 };

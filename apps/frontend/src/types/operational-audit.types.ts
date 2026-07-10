@@ -63,6 +63,12 @@ export type AuditHygieneResult = {
   };
 };
 
+export type AuditRetentionPolicy = {
+  auditRetentionDays: number;
+  source: string;
+  updatedAt: string | null;
+};
+
 export type AuditSummaryData = AuditSummary;
 
 export type AuditMessagesData = {
@@ -74,3 +80,30 @@ export type AuditWebhooksData = {
 };
 
 export type AuditHygieneData = AuditHygieneResult;
+
+export type AuditRetentionPolicyData = AuditRetentionPolicy;
+
+
+export type AuditRealHygienePayload = {
+  days: number;
+  confirmationPhrase: string;
+};
+
+
+export type AuditHygieneRunItem = {
+  id: string;
+  tenantId: string;
+  retentionDays: number;
+  dryRun: boolean;
+  oldMessages: number;
+  oldFailedMessagesWithMetadata: number;
+  oldWebhookEvents: number;
+  messagesRedacted: number;
+  webhookEventsRedacted: number;
+  createdAt: string;
+};
+
+export type AuditHygieneRunsData = {
+  runs: AuditHygieneRunItem[];
+  total: number;
+};

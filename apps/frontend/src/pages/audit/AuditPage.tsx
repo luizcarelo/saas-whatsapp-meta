@@ -1,19 +1,32 @@
 import { FormEvent, useEffect, useState } from 'react';
 import {
   downloadAuditExportRequest,
+  getAuditRetentionPolicyRequest,
   getAuditSummaryRequest,
   listAuditMessagesRequest,
   listAuditWebhooksRequest,
   previewAuditHygieneRequest,
-  runAuditHygieneRequest
+  runAuditHygieneRequest,
+  updateAuditRetentionPolicyRequest
 } from '../../services/operational-audit.service';
 import { useAuthStore } from '../../stores/auth.store';
 import type {
   AuditHygieneResult,
   AuditMessageItem,
+  AuditRetentionPolicy,
   AuditSummary,
   AuditWebhookItem
 } from '../../types/operational-audit.types';
+
+const retentionStorageKey = 'lhbot.audit.retention.days';
+
+const retentionOptions = [
+  30,
+  60,
+  90,
+  180,
+  365
+];
 
 const emptySummary: AuditSummary = {
   messages: {
@@ -57,6 +70,17 @@ function statusBadgeClass(status: string) {
   return 'audit-status-neutral';
 }
 
+function loadFallbackRetentionDays() {
+  const saved = window.localStorage.getItem(retentionStorageKey);
+  const parsed = Number(saved);
+
+  if (Number.isNaN(parsed) || parsed < 1) {
+    return 90;
+  }
+
+  return parsed;
+}
+
 export function AuditPage() {
   const accessToken = useAuthStore((state) => state.accessToken);
   const loadToken = useAuthStore((state) => state.loadToken);
@@ -75,11 +99,56 @@ export function AuditPage() {
   const [exporting, setExporting] = useState(false);
   const [notice, setNotice] = useState('');
 
-  const [hygieneDays, setHygieneDays] = useState(90);
+  const [retentionDays, setRetentionDays] = useState(loadFallbackRetentionDays);
+  const [retentionPolicy, setRetentionPolicy] = useState<AuditRetentionPolicy | null>(null);
   const [hygieneResult, setHygieneResult] = useState<AuditHygieneResult | null>(null);
 
   function getToken() {
     return accessToken || loadToken();
+  }
+
+  async function loadRetentionPolicy() {
+    const token = getToken();
+
+    if (!token) {
+      return;
+    }
+
+    const response = await getAuditRetentionPolicyRequest(token);
+
+    if (response.success) {
+      setRetentionPolicy(response.data);
+      setRetentionDays(response.data.auditRetentionDays);
+      window.localStorage.setItem(retentionStorageKey, String(response.data.auditRetentionDays));
+      return;
+    }
+
+    setNotice('Nao foi possivel carregar politica backend. Usando fallback local.');
+  }
+
+  async function saveRetentionPolicy(days: number) {
+    const token = getToken();
+    const normalized = Number.isNaN(days) || days < 1 ? 90 : days;
+
+    setRetentionDays(normalized);
+    window.localStorage.setItem(retentionStorageKey, String(normalized));
+
+    if (!token) {
+      setNotice('Politica salva localmente com ' + normalized + ' dias.');
+      return;
+    }
+
+    const response = await updateAuditRetentionPolicyRequest(token, normalized);
+
+    if (response.success) {
+      setRetentionPolicy(response.data);
+      setRetentionDays(response.data.auditRetentionDays);
+      window.localStorage.setItem(retentionStorageKey, String(response.data.auditRetentionDays));
+      setNotice('Politica de retencao salva no backend com ' + response.data.auditRetentionDays + ' dias.');
+      return;
+    }
+
+    setNotice(response.error.message || 'Nao foi possivel salvar politica no backend.');
   }
 
   async function loadAudit() {
@@ -124,6 +193,7 @@ export function AuditPage() {
   }
 
   useEffect(() => {
+    void loadRetentionPolicy();
     void loadAudit();
   }, []);
 
@@ -171,11 +241,11 @@ export function AuditPage() {
       return;
     }
 
-    const response = await previewAuditHygieneRequest(token, hygieneDays);
+    const response = await previewAuditHygieneRequest(token, retentionDays);
 
     if (response.success) {
       setHygieneResult(response.data);
-      setNotice('Preview de higienizacao carregado.');
+      setNotice('Preview carregado usando politica backend de ' + response.data.days + ' dias.');
       return;
     }
 
@@ -189,11 +259,11 @@ export function AuditPage() {
       return;
     }
 
-    const response = await runAuditHygieneRequest(token, hygieneDays, true);
+    const response = await runAuditHygieneRequest(token, retentionDays, true);
 
     if (response.success) {
       setHygieneResult(response.data);
-      setNotice('Dry-run de higienizacao executado sem alterar dados.');
+      setNotice('Dry-run executado sem alterar dados usando politica de ' + response.data.days + ' dias.');
       return;
     }
 
@@ -205,10 +275,47 @@ export function AuditPage() {
       <div className="page-heading">
         <span>Auditoria</span>
         <h1>Painel de auditoria operacional</h1>
-        <p>Acompanhe mensagens, webhooks, status, exportacoes e higienizacao segura.</p>
+        <p>Acompanhe mensagens, webhooks, exportacoes e politica de retencao persistida.</p>
       </div>
 
       {notice ? <div className="form-message">{notice}</div> : null}
+
+      <section className="retention-policy-panel">
+        <div>
+          <strong>Politica de retencao persistida</strong>
+          <p>
+            Configure a retencao usada nos previews e dry-runs. Fonte atual:
+            {' '}
+            {retentionPolicy?.source || 'local'}
+          </p>
+        </div>
+
+        <label>
+          Dias de retencao
+          <input
+            min="1"
+            onChange={(event) => setRetentionDays(Number(event.target.value))}
+            type="number"
+            value={retentionDays}
+          />
+        </label>
+
+        <div className="retention-quick-options">
+          {retentionOptions.map((days) => (
+            <button
+              key={days}
+              onClick={() => void saveRetentionPolicy(days)}
+              type="button"
+            >
+              {days} dias
+            </button>
+          ))}
+        </div>
+
+        <button onClick={() => void saveRetentionPolicy(retentionDays)} type="button">
+          Salvar no backend
+        </button>
+      </section>
 
       <div className="audit-export-toolbar">
         <div>
@@ -236,16 +343,15 @@ export function AuditPage() {
       <section className="audit-hygiene-panel">
         <div>
           <strong>Higienizacao de auditoria</strong>
-          <p>Simule a higienizacao de dados antigos antes de qualquer execucao real.</p>
+          <p>Use a politica persistida para simular a higienizacao de dados antigos.</p>
         </div>
 
         <label>
-          Retencao em dias
+          Politica atual
           <input
-            min="1"
-            onChange={(event) => setHygieneDays(Number(event.target.value))}
+            readOnly
             type="number"
-            value={hygieneDays}
+            value={retentionDays}
           />
         </label>
 
