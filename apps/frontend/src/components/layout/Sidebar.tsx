@@ -4,7 +4,12 @@ export function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
-        /assets/lh_chatbot_favicon.png
+        <img
+          alt="LH Solucao Chat Bot"
+          className="sidebar-brand-icon"
+          src="/assets/lh_chatbot_favicon.png"
+        />
+
         <div>
           <strong>LH Solucao</strong>
           <span>Chat Bot Meta</span>
@@ -13,6 +18,7 @@ export function Sidebar() {
 
       <nav className="sidebar-nav">
         <NavLink to="/app/dashboard">Dashboard</NavLink>
+        <NavLink to="/app/inbox">Atendimento</NavLink>
         <NavLink to="/app/contacts">Contatos</NavLink>
         <NavLink to="/app/conversations">Conversas</NavLink>
         <NavLink to="/app/whatsapp-accounts">WhatsApp</NavLink>
