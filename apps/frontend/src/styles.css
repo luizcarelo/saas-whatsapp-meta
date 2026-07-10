@@ -5060,3 +5060,169 @@ button:hover:not(:disabled) {
     grid-template-columns: 1fr;
   }
 }
+
+/* Etapa 78 - Separacao visual de envio encerramento e historico */
+
+.inbox-thread,
+.messages-panel,
+.conversation-thread {
+  display: grid;
+  gap: 14px;
+}
+
+.message-composer,
+.inbox-composer,
+.composer-card {
+  border: 2px solid rgba(7, 87, 200, 0.18);
+  position: sticky;
+}
+
+.message-composer::before,
+.inbox-composer::before,
+.composer-card::before {
+  color: var(--lh-blue-950, #04204f);
+  content: "Envio de mensagem";
+  display: block;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.quick-replies-card {
+  border-left: 5px solid var(--lh-blue-600, #2563eb);
+}
+
+.quick-replies-card::before {
+  color: var(--lh-blue-950, #04204f);
+  content: "Respostas rapidas";
+  display: block;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.03em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.closure-card {
+  border-left: 5px solid var(--lh-red-600, #dc2626);
+}
+
+.closure-card::before {
+  color: var(--lh-blue-950, #04204f);
+  content: "Encerramento e avaliacao";
+  display: block;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.03em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.send-history-card {
+  border-left: 5px solid #7c3aed;
+}
+
+.send-history-card::before {
+  color: var(--lh-blue-950, #04204f);
+  content: "Historico de envios";
+  display: block;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.03em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.send-history-list article {
+  position: relative;
+}
+
+.send-history-list article::before {
+  background: #7c3aed;
+  border-radius: 999px;
+  content: "";
+  height: 8px;
+  left: 10px;
+  position: absolute;
+  top: 14px;
+  width: 8px;
+}
+
+.send-history-list article {
+  padding-left: 28px;
+}
+
+.status-card,
+.assignee-card,
+.notes-card,
+.tags-card {
+  border-left: 5px solid #0f766e;
+}
+
+.status-card::before,
+.assignee-card::before,
+.notes-card::before,
+.tags-card::before {
+  color: var(--lh-blue-950, #04204f);
+  display: block;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.03em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.status-card::before {
+  content: "Status operacional";
+}
+
+.assignee-card::before {
+  content: "Responsavel";
+}
+
+.notes-card::before {
+  content: "Notas internas";
+}
+
+.tags-card::before {
+  content: "Tags";
+}
+
+.send-failure-list header span,
+.status-pill[data-status="failed"],
+.attendance-status[data-status="failed"] {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.status-pill[data-status="dry_run"],
+.attendance-status[data-status="dry_run"] {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.inbox-visual-guide {
+  margin-bottom: 4px;
+}
+
+.inbox-visual-guide::after {
+  color: var(--lh-muted, #6b7280);
+  content: "Fluxo operacional separado para reduzir confusao entre atendimento, envio, encerramento e historico.";
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  grid-column: 1 / -1;
+  padding: 2px 6px 0;
+  text-align: center;
+  text-transform: none;
+}
+
+@media (max-width: 900px) {
+  .message-composer,
+  .inbox-composer,
+  .composer-card {
+    position: static;
+  }
+}

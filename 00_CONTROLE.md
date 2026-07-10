@@ -113,12 +113,22 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 - [x] Etapa 74 - Refino estrutural do modulo Atendimento
 - [x] Etapa 75 - Padronizacao dos status de atendimento
 - [x] Etapa 76 - Reorganizacao visual do app inbox
-- [ ] Etapa 77 - Criacao da tela attendance settings
+- [x] Etapa 77 - Criacao da tela attendance settings
+- [x] Etapa 78 - Separacao visual de envio encerramento e historico
+- [x] Etapa 79 - Revisao de dados sinteticos e limpeza operacional
+- [x] Etapa 80 - Revisao final do modulo Atendimento refinado
+
+
+<br>
+## Fase 11 - Produto operacional e gestao comercial do atendimento
+<br>
+- [x] Etapa 81 - Planejamento da fase de gestao comercial do atendimento
+- [ ] Etapa 82 - Modelo de oportunidades no atendimento
 
 ## Ultima etapa executada
 
-Etapa 76 - Reorganizacao visual do app inbox.
+Etapa 81 - Planejamento da fase de gestao comercial do atendimento.
 
 ## Proxima etapa sugerida
 
-Etapa 77 - Criacao da tela attendance settings.
+Etapa 82 - Modelo de oportunidades no atendimento.

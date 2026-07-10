@@ -224,11 +224,11 @@ Revisao final da fase de automacao e envio real concluida.
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 76 concluidas
+- Etapa 01 ate Etapa 81 concluidas
 
 ## Proxima etapa
 
-- Etapa 77 - Criacao da tela attendance settings
+- Etapa 82 - Modelo de oportunidades no atendimento
 
 Refino estrutural do modulo Atendimento planejado.
 - docs/ATTENDANCE_MODULE_REFINEMENT_PLAN.md
@@ -244,3 +244,26 @@ Padronizacao dos status de atendimento criada.
 Reorganizacao visual do app inbox criada.
 - docs/ATTENDANCE_INBOX_VISUAL_REORGANIZATION.md
 - docs/ATTENDANCE_INBOX_VISUAL_CHECKLIST.md
+
+Tela attendance settings criada.
+- docs/ATTENDANCE_SETTINGS_PAGE.md
+- docs/ATTENDANCE_SETTINGS_CHECKLIST.md
+
+Separacao visual de envio encerramento e historico criada.
+- docs/ATTENDANCE_SEND_CLOSURE_HISTORY_VISUAL_SPLIT.md
+- docs/ATTENDANCE_SEND_CLOSURE_HISTORY_CHECKLIST.md
+
+Revisao de dados sinteticos e limpeza operacional concluida.
+- docs/SYNTHETIC_DATA_OPERATIONAL_REVIEW.md
+- docs/SYNTHETIC_DATA_CLEANUP_PLAN.md
+
+Revisao final do modulo Atendimento refinado concluida.
+- docs/ATTENDANCE_REFINEMENT_FINAL_REVIEW.md
+- docs/ATTENDANCE_REFINEMENT_NEXT_DECISIONS.md
+
+Planejamento da fase de gestao comercial do atendimento criado.
+- docs/COMMERCIAL_ATTENDANCE_PHASE_PLAN.md
+- docs/COMMERCIAL_ATTENDANCE_SCOPE.md
+- docs/COMMERCIAL_ATTENDANCE_DOMAIN_MODEL.md
+- docs/COMMERCIAL_ATTENDANCE_ROADMAP.md
+- docs/COMMERCIAL_ATTENDANCE_DECISIONS.md

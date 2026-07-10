@@ -95,7 +95,10 @@ export function AttendanceSettingsPage() {
         <div>
           <span>Configuracoes de atendimento</span>
           <h1>Attendance Settings</h1>
-          <p>Centralize departamentos, respostas rapidas, automacoes e status padronizados fora do fluxo principal do inbox.</p>
+          <p>
+            Centralize departamentos, respostas rapidas, automacoes e status padronizados
+            fora do fluxo principal do inbox.
+          </p>
         </div>
 
         <div className="inbox-hero-brand">
@@ -115,7 +118,9 @@ export function AttendanceSettingsPage() {
         <a href="/app/inbox">Voltar para atendimento</a>
       </section>
 
-      {loading ? <div className="conversation-empty">Carregando configuracoes...</div> : null}
+      {loading ? (
+        <div className="conversation-empty">Carregando configuracoes...</div>
+      ) : null}
 
       <section className="attendance-settings-summary">
         <article>
@@ -149,13 +154,17 @@ export function AttendanceSettingsPage() {
           </header>
 
           <div className="attendance-settings-list">
-            {departments.length ? departments.map((department) => (
-              <div key={department.id}>
-                <strong>{department.name}</strong>
-                <span>{department.description || 'Sem descricao'}</span>
-                <em>{department.isActive === false ? 'Inativo' : 'Ativo'}</em>
-              </div>
-            )) : <p>Nenhum departamento encontrado.</p>}
+            {departments.length ? (
+              departments.map((department) => (
+                <div key={department.id}>
+                  <strong>{department.name}</strong>
+                  <span>{department.description || 'Sem descricao'}</span>
+                  <em>{department.isActive === false ? 'Inativo' : 'Ativo'}</em>
+                </div>
+              ))
+            ) : (
+              <p>Nenhum departamento encontrado.</p>
+            )}
           </div>
         </article>
 
@@ -168,13 +177,17 @@ export function AttendanceSettingsPage() {
           </header>
 
           <div className="attendance-settings-list">
-            {quickReplies.length ? quickReplies.slice(0, 12).map((reply) => (
-              <div key={reply.id}>
-                <strong>{reply.title}</strong>
-                <span>{reply.departmentName || 'Sem departamento'}</span>
-                <em>{reply.isActive === false ? 'Inativa' : 'Ativa'}</em>
-              </div>
-            )) : <p>Nenhuma resposta rapida encontrada.</p>}
+            {quickReplies.length ? (
+              quickReplies.slice(0, 12).map((reply) => (
+                <div key={reply.id}>
+                  <strong>{reply.title}</strong>
+                  <span>{reply.departmentName || 'Sem departamento'}</span>
+                  <em>{reply.isActive === false ? 'Inativa' : 'Ativa'}</em>
+                </div>
+              ))
+            ) : (
+              <p>Nenhuma resposta rapida encontrada.</p>
+            )}
           </div>
         </article>
 
@@ -187,13 +200,22 @@ export function AttendanceSettingsPage() {
           </header>
 
           <div className="attendance-settings-list">
-            {automationRules.length ? automationRules.map((rule) => (
-              <div key={rule.id}>
-                <strong>{rule.name}</strong>
-                <span>{rule.departmentName} / {rule.triggerStatus}</span>
-                <em>{rule.isActive ? 'Ativa' : 'Inativa'} {rule.sendDryRun ? '- dryRun' : ''}</em>
-              </div>
-            )) : <p>Nenhuma automacao encontrada.</p>}
+            {automationRules.length ? (
+              automationRules.map((rule) => (
+                <div key={rule.id}>
+                  <strong>{rule.name}</strong>
+                  <span>
+                    {rule.departmentName} / {rule.triggerStatus}
+                  </span>
+                  <em>
+                    {rule.isActive ? 'Ativa' : 'Inativa'}
+                    {rule.sendDryRun ? ' - dryRun' : ''}
+                  </em>
+                </div>
+              ))
+            ) : (
+              <p>Nenhuma automacao encontrada.</p>
+            )}
           </div>
         </article>
 
@@ -213,7 +235,9 @@ export function AttendanceSettingsPage() {
                 <StatusGroup title="Send" items={statusModel.groups.send} />
                 <StatusGroup title="Closure" items={statusModel.groups.closure} />
               </>
-            ) : <p>Modelo de status nao carregado.</p>}
+            ) : (
+              <p>Modelo de status nao carregado.</p>
+            )}
           </div>
         </article>
 
