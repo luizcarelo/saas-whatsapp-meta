@@ -4463,3 +4463,124 @@ button:hover:not(:disabled) {
   display: block;
   line-height: 1.35;
 }
+
+/* Etapa 72 - Painel de falhas e retentativas de envio */
+
+.send-failures-shell {
+  display: grid;
+  gap: 20px;
+}
+
+.send-failures-toolbar {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid var(--lh-border, #e5e7eb);
+  border-radius: 18px;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+  padding: 14px 16px;
+}
+
+.send-failures-toolbar label {
+  align-items: center;
+  color: #374151;
+  display: flex;
+  font-weight: 900;
+  gap: 8px;
+}
+
+.send-failures-toolbar button,
+.send-failure-list button {
+  background: linear-gradient(135deg, var(--lh-blue-800, #0757c8), var(--lh-blue-600, #2563eb));
+  border: none;
+  border-radius: 999px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 950;
+  padding: 10px 14px;
+}
+
+.send-failure-list button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.send-failures-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.send-failures-grid > article {
+  background: #ffffff;
+  border: 1px solid var(--lh-border, #e5e7eb);
+  border-radius: 22px;
+  box-shadow: var(--lh-shadow, 0 18px 50px rgba(4, 32, 79, 0.12));
+  padding: 18px;
+}
+
+.send-failure-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+  max-height: 640px;
+  overflow: auto;
+}
+
+.send-failure-list > div {
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+}
+
+.send-failure-list header {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.send-failure-list strong {
+  color: var(--lh-blue-950, #04204f);
+}
+
+.send-failure-list header span {
+  background: #fee2e2;
+  border-radius: 999px;
+  color: #991b1b;
+  font-size: 12px;
+  font-weight: 950;
+  padding: 5px 8px;
+}
+
+.send-failure-list p {
+  color: #374151;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.send-failure-list small {
+  color: var(--lh-muted, #6b7280);
+  display: block;
+}
+
+.send-failure-list em {
+  color: #b91c1c;
+  font-style: normal;
+  font-weight: 850;
+}
+
+@media (max-width: 1000px) {
+  .send-failures-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .send-failures-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

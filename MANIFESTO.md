@@ -128,6 +128,10 @@ Registro do atendente nas mensagens enviadas criado.
 
 Automacoes basicas por status e departamento criadas.
 
+Painel de falhas e retentativas de envio criado.
+
+Revisao final da fase de automacao e envio real concluida.
+
 ## Arquivos principais
 
 - README.md
@@ -140,6 +144,9 @@ Automacoes basicas por status e departamento criadas.
 
 ## Documentos tecnicos
 
+- docs/ATTENDANCE_AUTOMATION_SEND_FINAL_REVIEW.md
+- docs/PENDENCIA_META_WEBHOOK_RECEBIMENTO.md
+- docs/ATTENDANCE_SEND_FAILURES_RETRY_PANEL.md
 - docs/ATTENDANCE_BASIC_AUTOMATIONS.md
 - docs/ATTENDANCE_SENT_MESSAGE_ATTENDANT_TRACKING.md
 - docs/ATTENDANCE_CLOSING_RATING_SEND.md
@@ -217,8 +224,15 @@ Automacoes basicas por status e departamento criadas.
 
 ## Etapas concluidas
 
-- Etapa 01 ate Etapa 71 concluidas
+- Etapa 01 ate Etapa 74 concluidas
 
 ## Proxima etapa
 
-- Etapa 72 - Painel de falhas e retentativas de envio
+- Etapa 75 - Padronizacao dos status de atendimento
+
+Refino estrutural do modulo Atendimento planejado.
+- docs/ATTENDANCE_MODULE_REFINEMENT_PLAN.md
+- docs/ATTENDANCE_DOMAIN_BOUNDARIES.md
+- docs/ATTENDANCE_SCREEN_REORGANIZATION.md
+- docs/ATTENDANCE_STATUS_MODEL.md
+- docs/ATTENDANCE_REFINEMENT_ROADMAP.md

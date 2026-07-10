@@ -18,6 +18,7 @@ import { MetaSettingsPage } from '../pages/meta-settings/MetaSettingsPage';
 import { ProfilePage } from '../pages/profile/ProfilePage';
 import { WhatsappAccountsPage } from '../pages/whatsapp-accounts/WhatsappAccountsPage';
 import { ProtectedRoute } from './ProtectedRoute';
+import { SendFailuresPage } from '../pages/send-failures/SendFailuresPage';
 
 export function AppRoutes() {
   return (
@@ -37,6 +38,7 @@ export function AppRoutes() {
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="inbox" element={<InboxPage />} />
           <Route path="attendance-dashboard" element={<AttendanceDashboardPage />} />
+          <Route path="send-failures" element={<SendFailuresPage />} />
           <Route path="contacts" element={<ContactsPage />} />
           <Route path="conversations" element={<ConversationsPage />} />
           <Route path="whatsapp-accounts" element={<WhatsappAccountsPage />} />

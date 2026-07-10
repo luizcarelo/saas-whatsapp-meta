@@ -15,9 +15,13 @@ import { AttendanceClosureModule } from './modules/attendance-closure/attendance
 import { AttendanceDashboardModule } from './modules/attendance-dashboard/attendance-dashboard.module';
 import { AttendanceSendModule } from './modules/attendance-send/attendance-send.module';
 import { AttendanceAutomationsModule } from './modules/attendance-automations/attendance-automations.module';
+import { AttendanceSendFailuresModule } from './modules/attendance-send-failures/attendance-send-failures.module';
+import { AttendanceStatusModule } from './modules/attendance-status/attendance-status.module';
 
 @Module({
   imports: [
+    AttendanceStatusModule,
+    AttendanceSendFailuresModule,
     AttendanceAutomationsModule,
     AttendanceSendModule,
     AttendanceDashboardModule,

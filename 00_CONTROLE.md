@@ -103,12 +103,20 @@ Este arquivo registra o controle das etapas de criacao da documentacao e estrutu
 - [x] Etapa 69 - Envio real da mensagem de encerramento com avaliacao
 - [x] Etapa 70 - Registro do atendente nas mensagens enviadas
 - [x] Etapa 71 - Automacoes basicas por status e departamento
-- [ ] Etapa 72 - Painel de falhas e retentativas de envio
+- [x] Etapa 72 - Painel de falhas e retentativas de envio
+- [x] Etapa 73 - Revisao final da fase de automacao e envio real
+
+
+<br>
+## Fase 10 - Refino do modulo Atendimento
+<br>
+- [x] Etapa 74 - Refino estrutural do modulo Atendimento
+- [ ] Etapa 75 - Padronizacao dos status de atendimento
 
 ## Ultima etapa executada
 
-Etapa 71 - Automacoes basicas por status e departamento.
+Etapa 74 - Refino estrutural do modulo Atendimento.
 
 ## Proxima etapa sugerida
 
-Etapa 72 - Painel de falhas e retentativas de envio.
+Etapa 75 - Padronizacao dos status de atendimento.
